@@ -1,13 +1,7 @@
 "use client"
 
 import { TrendingUp } from "lucide-react"
-import {
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-} from "recharts"
+import { PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts"
 
 import {
   Card,

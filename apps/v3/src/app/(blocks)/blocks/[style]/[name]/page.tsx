@@ -14,12 +14,12 @@ import "@/styles/mdx.css"
 export async function generateMetadata({
   params,
 }: {
-  params: {
+  params: Promise<{
     style: Style["name"]
     name: string
-  }
+  }>
 }): Promise<Metadata> {
-  const { name, style } = params
+  const { name, style } = await params
   const block = await getBlock(name, style)
 
   if (!block) {
@@ -68,12 +68,12 @@ export async function generateStaticParams() {
 export default async function BlockPage({
   params,
 }: {
-  params: {
+  params: Promise<{
     style: Style["name"]
     name: string
-  }
+  }>
 }) {
-  const { name, style } = params
+  const { name, style } = await params
   const block = await getBlock(name, style)
 
   if (!block) {

@@ -69,7 +69,7 @@ export default function Component() {
             />
             <PolarAngleAxis
               dataKey="month"
-              tick={({ x, y, textAnchor, value, index, ...props }) => {
+              tick={({ x, y, textAnchor, index, ...props }) => {
                 const data = chartData[index]
 
                 return (

@@ -53,7 +53,7 @@ export const containerClassName = "w-full h-full"
 export default function Dashboard() {
   return (
     <div className="grid h-screen w-full pl-[56px]">
-      <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
+      <aside className="fixed inset-y-0 left-0 z-20 flex h-full flex-col border-r">
         <div className="border-b p-2">
           <Button variant="outline" size="icon" aria-label="Home">
             <Triangle className="size-5 fill-foreground" />
@@ -302,7 +302,8 @@ export default function Dashboard() {
         </header>
         <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
           <div
-            className="relative hidden flex-col items-start gap-8 md:flex" x-chunk="dashboard-03-chunk-0"
+            className="relative hidden flex-col items-start gap-8 md:flex"
+            x-chunk="dashboard-03-chunk-0"
           >
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
@@ -419,7 +420,8 @@ export default function Dashboard() {
             </Badge>
             <div className="flex-1" />
             <form
-              className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring" x-chunk="dashboard-03-chunk-1"
+              className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
+              x-chunk="dashboard-03-chunk-1"
             >
               <Label htmlFor="message" className="sr-only">
                 Message

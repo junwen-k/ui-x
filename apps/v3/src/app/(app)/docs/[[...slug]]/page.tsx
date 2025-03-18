@@ -17,13 +17,13 @@ import { DashboardTableOfContents } from "@/components/toc"
 import { badgeVariants } from "@/registry/new-york/ui/badge"
 
 interface DocPageProps {
-  params: {
+  params: Promise<{
     slug: string[]
-  }
+  }>
 }
 
 async function getDocFromParams({ params }: DocPageProps) {
-  const slug = params.slug?.join("/") || ""
+  const slug = (await params).slug?.join("/") || ""
   const doc = allDocs.find((doc) => doc.slugAsParams === slug)
 
   if (!doc) {
@@ -69,9 +69,7 @@ export async function generateMetadata({
   }
 }
 
-export async function generateStaticParams(): Promise<
-  DocPageProps["params"][]
-> {
+export async function generateStaticParams(): Promise<{ slug: string[] }[]> {
   return allDocs.map((doc) => ({
     slug: doc.slugAsParams.split("/"),
   }))
