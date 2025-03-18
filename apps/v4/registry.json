@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "junwen-k/ui-x",
+  "homepage": "https://ui-x.junwen-k.dev/",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:component",
+      "title": "Button",
+      "description": "A simple button component.",
+      "files": [
+        {
+          "path": "src/registry/new-york/components/ui/button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
