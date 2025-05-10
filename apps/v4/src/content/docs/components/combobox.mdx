@@ -1,0 +1,120 @@
+---
+title: Combobox
+description: Input field with autocomplete & autosuggest functionalities.
+links:
+  doc: /docs/primitives/combobox
+---
+
+<ComponentPreview
+  name="combobox-demo"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/combobox.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-slot
+```
+
+<Step>
+
+Add the `<Badge />`, `<ComboboxPrimitive />` and `<InputBase />` component to your project.
+
+</Step>
+
+The `<Combobox />` component uses `<Badge />`, `<ComboboxPrimitive />` and `<InputBase />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [Badge](/docs/components/badge#installation), [ComboboxPrimitive](/docs/components/combobox-primitive#installation) and the [InputBase](/docs/components/input-base#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="combobox" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxGroup,
+  ComboboxInput,
+  ComboboxItem,
+} from "@/components/ui/combobox";
+```
+
+```tsx
+<Combobox type="single">
+  <ComboboxInput placeholder="Search fruit..." />
+  <ComboboxContent>
+    <ComboboxEmpty>No fruit found.</ComboboxEmpty>
+    <ComboboxGroup heading="Fruits">
+      <ComboboxItem value="apple">Apple</ComboboxItem>
+      <ComboboxItem value="banana">Banana</ComboboxItem>
+      <ComboboxItem value="blueberry">Blueberry</ComboboxItem>
+      <ComboboxItem value="grapes">Grapes</ComboboxItem>
+      <ComboboxItem value="pineapple">Pineapple</ComboboxItem>
+    </ComboboxGroup>
+  </ComboboxContent>
+</Combobox>
+```
+
+## Examples
+
+### Combobox
+
+<ComponentPreview
+  name="combobox-demo"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
+### Loading
+
+<ComponentPreview
+  name="combobox-loading"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
+### Form
+
+<ComponentPreview
+  name="combobox-form"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
+### Virtualized
+
+Visit the [Virtualizer](/docs/components/virtualizer#combobox) page for more information on how to virtualize a `<Combobox />`.
+
+<ComponentPreview
+  name="virtualizer-combobox"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>

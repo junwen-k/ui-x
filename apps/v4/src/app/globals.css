@@ -1,6 +1,5 @@
 @import "tailwindcss";
-
-@plugin "tailwindcss-animate";
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,6 +41,66 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-landing-circle-intro: landing-circle-intro 1.5s ease-in-out forwards;
+  --animate-landing-horizontal-line-intro: landing-horizontal-line-intro
+    var(--animation-duration, 1.25s) ease-in-out forwards;
+  --animate-landing-vertical-line-intro: landing-vertical-line-intro
+    var(--animation-duration, 1s) ease-in-out forwards;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes landing-horizontal-line-intro {
+    from {
+      opacity: 1;
+    }
+    to {
+      width: calc(100% + var(--line-offset));
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes landing-vertical-line-intro {
+    from {
+      opacity: 1;
+    }
+    to {
+      height: calc(100% + var(--line-offset));
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes landing-circle-intro {
+    from {
+      opacity: 0;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      opacity: 0.3;
+    }
+    to {
+      opacity: 0.15;
+      stroke-dashoffset: 400;
+    }
+  }
 }
 
 :root {
@@ -69,8 +128,8 @@
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -103,10 +162,10 @@
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: oklch(0.922 0 0);
+  --sidebar-primary-foreground: oklch(0.205 0 0);
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
@@ -116,8 +175,118 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Custom scrollbar styling. Thanks @pranathiperii. */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+[data-rehype-pretty-code-figure] {
+  @apply relative;
+}
+
+[data-rehype-pretty-code-figure] pre {
+  @apply rounded-xl bg-zinc-950 py-4 dark:bg-zinc-900;
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply grid min-w-full rounded-none border-0 bg-transparent p-0 break-words;
+  counter-reset: line;
+  box-decoration-break: clone;
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
+  @apply inline-block min-h-[1rem] w-full px-4 py-0.5;
+}
+
+[data-rehype-pretty-code-figure] [data-line-numbers] [data-line] {
+  @apply px-2;
+}
+
+[data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+  @apply text-xs text-zinc-50/40;
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.8rem;
+  margin-right: 1.4rem;
+  text-align: right;
+}
+
+/* Highlighted */
+
+[data-rehype-pretty-code-figure] [data-line].highlighted {
+  @apply bg-zinc-700/50;
+}
+
+[data-rehype-pretty-code-figure] [data-line].highlighted span {
+  @apply relative;
+}
+
+[data-rehype-pretty-code-figure] [data-line] .highlighted-word {
+  @apply rounded-md border-zinc-700/70 bg-zinc-700/50 p-1;
+}
+
+/* Diff */
+
+[data-rehype-pretty-code-figure] [data-line].diff {
+  @apply relative;
+}
+[data-rehype-pretty-code-figure] [data-line].diff::after {
+  @apply absolute top-1/2 left-0 ml-2 -translate-y-1/2 text-base;
+}
+
+[data-rehype-pretty-code-figure] [data-line].diff.add {
+  @apply bg-green-500/10;
+}
+[data-rehype-pretty-code-figure] [data-line].diff.add::after {
+  @apply text-green-500 content-['+'];
+}
+
+[data-rehype-pretty-code-figure] [data-line].diff.remove {
+  @apply bg-red-500/10;
+}
+[data-rehype-pretty-code-figure] [data-line].diff.remove::after {
+  @apply text-red-500 content-['–'];
+}
+
+/* Focused */
+
+[data-rehype-pretty-code-figure]:has([data-line].focused)
+  [data-line]:not(.focused) {
+  @apply opacity-50 blur-[0.8px];
+}
+
+/* Title */
+
+[data-rehype-pretty-code-title] {
+  @apply text-foreground mt-2 px-4 pt-6 text-sm font-medium;
+}
+
+[data-rehype-pretty-code-title] + pre {
+  @apply mt-2;
+}
+
+/* Caption */
+
+[data-rehype-pretty-code-caption] {
+  @apply text-muted-foreground text-center text-sm;
 }

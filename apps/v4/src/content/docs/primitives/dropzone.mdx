@@ -1,0 +1,69 @@
+---
+title: Dropzone Primitive
+description: A dropzone is an area into which one or multiple objects can be dragged and dropped.
+component: true
+links:
+  doc: https://react-dropzone.js.org
+  api: https://react-dropzone.js.org/#!/Dropzone
+---
+
+## About
+
+The `<DropzonePrimitive />` component is built on top of [react-dropzone](https://react-dropzone.js.org), wrapping the library to deliver a more consistent API that aligns with Radix UI conventions.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/dropzone-primitive.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/primitive @radix-ui/react-primitive react-dropzone
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="dropzone-primitive" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+```tsx
+import * as DropzonePrimitive from "@/components/ui/dropzone-primitive";
+
+export default () => (
+  <DropzonePrimitive.Root>
+    <DropzonePrimitive.Input />
+    <DropzonePrimitive.Zone />
+    <DropzonePrimitive.Trigger />
+    <DropzonePrimitive.DragAccepted />
+    <DropzonePrimitive.DragRejected />
+    <DropzonePrimitive.DragDefault />
+    <DropzonePrimitive.Accepted />
+    <DropzonePrimitive.Rejected />
+  </DropzonePrimitive.Root>
+);
+```

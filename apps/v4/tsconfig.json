@@ -19,10 +19,16 @@
       }
     ],
     "paths": {
-      "@/.source": ["./.source/index.ts"],
+      "@/.velite": ["./.velite"],
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "velite.config.ts"
+  ],
   "exclude": ["node_modules"]
 }

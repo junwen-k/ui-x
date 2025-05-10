@@ -1,0 +1,124 @@
+---
+title: Confirmer
+description: Imperative confirm dialog implementation.
+links:
+  doc: https://react-call.desko.dev/
+---
+
+<ComponentPreview name="confirmer-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Run the following command:</Step>
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/confirmer.json
+```
+
+<Step>
+  Add the `<Confirmer />` component.
+</Step>
+
+```tsx title="app/layout.tsx" {1,9}
+import { Confirmer } from "@/components/ui/confirmer";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <main>{children}</main>
+        <Confirmer />
+      </body>
+    </html>
+  );
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install use-ask
+```
+
+<Step>
+
+Add the `<AlertDialog />` and `<Button />` component to your project.
+
+</Step>
+
+The `<Confirmer />` component uses `<AlertDialog />` and `<Button />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [AlertDialog](/docs/components/alert-dialog#installation) and the [Button](/docs/components/button#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="confirmer" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+<Step>
+  Add the `<Confirmer />` component.
+</Step>
+
+```tsx title="app/layout.tsx"
+import { Confirmer } from "@/components/ui/confirmer"; // [!code highlight]
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <main>{children}</main>
+        <Confirmer /> // [!code highlight]
+      </body>
+    </html>
+  );
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { confirm } from "@/components/ui/confirmer";
+```
+
+```tsx
+confirm({
+  title: "Are you absolutely sure?",
+  description:
+    "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+}).then((confirmed) => {
+  // ...
+});
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="confirmer-demo" />

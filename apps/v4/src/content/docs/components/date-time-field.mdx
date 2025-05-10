@@ -1,0 +1,94 @@
+---
+title: Date Time Field
+description: Date Time Field allows user to enter date and time value.
+links:
+  doc: /docs/primitives/date-time-field
+---
+
+<ComponentPreview name="date-time-field-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-time-field.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add `<DateTimeFieldPrimitive />` and `<InputBase />` component to your project.
+
+</Step>
+
+The `<DateTimeField />` component uses `<DateTimeFieldPrimitive />` and `<InputBase />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [DateTimeFieldPrimitive](/docs/components/date-time-field-primitive#installation) and [InputBase](/docs/components/input-base#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-time-field" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  DateTimeField,
+  DateTimeFieldAmPm,
+  DateTimeFieldDays,
+  DateTimeFieldHours,
+  DateTimeFieldMinutes,
+  DateTimeFieldMonths,
+  DateTimeFieldSeconds,
+  DateTimeFieldSeparator,
+  DateTimeFieldYears,
+} from "@/components/ui/date-time-field";
+```
+
+```tsx
+<DateTimeField>
+  <DateTimeFieldDays />
+  <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
+  <DateTimeFieldMonths />
+  <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
+  <DateTimeFieldYears />
+  <DateTimeFieldSeparator>·</DateTimeFieldSeparator>
+  <DateTimeFieldHours />
+  <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
+  <DateTimeFieldMinutes />
+  <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
+  <DateTimeFieldSeconds />
+  <DateTimeFieldAmPm />
+</DateTimeField>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="date-time-field-demo" />
+
+### Form
+
+<ComponentPreview name="date-time-field-form" />

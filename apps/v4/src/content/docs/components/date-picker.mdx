@@ -1,0 +1,65 @@
+---
+title: Date Picker
+description: A date picker component lets users select a date.
+links:
+  doc: /docs/primitives/date-picker
+---
+
+<ComponentPreview name="date-picker-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-picker.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add the `<Button />`, `<Calendar />`, `<DateField />`, `<DatePickerPrimitive />` and `<InputBase />` component to your project.
+
+</Step>
+
+The `<DatePicker />` component uses `<Button />`, `<Calendar />`, `<DateField />`, `<DatePickerPrimitive />` and `<InputBase />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [Button](/docs/components/button#installation), [Calendar](/docs/components/calendar#installation), [DateField](/docs/components/date-field#installation), [DatePickerPrimitive](/docs/components/date-picker-primitive#installation) and the [InputBase](/docs/components/input-base#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-picker" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Examples
+
+### Date Picker
+
+<ComponentPreview name="date-picker-demo" />
+
+### Input
+
+<ComponentPreview name="date-picker-input" />
+
+### Form
+
+<ComponentPreview name="date-picker-form" />

@@ -4,14 +4,14 @@
   "homepage": "https://ui-x.junwen-k.dev/",
   "items": [
     {
-      "name": "button",
+      "name": "timeline",
       "type": "registry:component",
-      "title": "Button",
-      "description": "A simple button component.",
+      "title": "Timeline",
+      "description": "Timeline displays a list of events in chronological order.",
       "files": [
         {
-          "path": "src/registry/new-york/components/ui/button.tsx",
-          "type": "registry:component"
+          "path": "src/registry/new-york/ui/timeline.tsx",
+          "type": "registry:ui"
         }
       ]
     }

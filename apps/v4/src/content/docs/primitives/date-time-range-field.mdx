@@ -1,0 +1,118 @@
+---
+title: Date Time Range Field Primitive
+description: Date Time Range Field Primitive allows user to enter date and time value for a range of dates.
+component: true
+links:
+  doc: https://timescape.daniellehr.de
+  api: https://github.com/dan-lee/timescape?tab=readme-ov-file#options
+---
+
+<ComponentPreview name="date-time-range-field-primitive-demo" />
+
+## About
+
+The `<DateTimeRangeFieldPrimitive />` component is built on top of [timescape](https://timescape.daniellehr.de), wrapping the library to deliver a more consistent API that aligns with Radix UI conventions.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-compose-refs @radix-ui/react-primitive timescape
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`date-time-range-field-primitive.tsx`
+
+<ComponentSource name="date-time-range-field-primitive" />
+
+`use-timescape.ts`
+
+<ComponentSource
+  name="date-time-range-field-primitive"
+  fileName="use-timescape"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+Import all parts and piece them together.
+
+```tsx
+import * as DateTimeRangeFieldPrimitive from "@/components/ui/date-time-range-field-primitive";
+
+export default () => (
+  <DateTimeRangeFieldPrimitive.Root>
+    <DateTimeRangeFieldPrimitive.From>
+      <DateTimeRangeFieldPrimitive.Days />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Months />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Years />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Hours />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Minutes />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Seconds />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.AmPm />
+    </DateTimeRangeFieldPrimitive.From>
+
+    <DateTimeRangeFieldPrimitive.Separator />
+
+    <DateTimeRangeFieldPrimitive.To>
+      <DateTimeRangeFieldPrimitive.Days />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Months />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Years />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Hours />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Minutes />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.Seconds />
+      <DateTimeRangeFieldPrimitive.Separator />
+      <DateTimeRangeFieldPrimitive.AmPm />
+    </DateTimeRangeFieldPrimitive.To>
+  </DateTimeRangeFieldPrimitive.Root>
+);
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="date-time-range-field-primitive-demo" />
+
+### Disabled
+
+<ComponentPreview name="date-time-range-field-primitive-disabled" />

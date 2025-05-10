@@ -1,0 +1,62 @@
+---
+title: Kbd
+description: Displays which key or combination of keys performs a given action.
+---
+
+<ComponentPreview name="kbd-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/kbd.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="kbd" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { Kbd } from "@/components/ui/kbd";
+```
+
+```tsx
+<Kbd>K</Kbd>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="kbd-demo" />
+
+### Secondary
+
+<ComponentPreview name="kbd-secondary" />
+
+### Outline
+
+<ComponentPreview name="kbd-outline" />

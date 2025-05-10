@@ -1,0 +1,85 @@
+---
+title: Date Picker Primitive
+description: An unstyled date picker component.
+component: true
+---
+
+<ComponentPreview name="date-picker-primitive-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-picker-primitive.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/primitive @radix-ui/react-popover @radix-ui/react-primitive @radix-ui/react-slot @radix-ui/react-use-controllable-state date-fns react-day-picker
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-picker-primitive" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+Import all parts and piece them together.
+
+```tsx
+import * as DatePickerPrimitive from "@/components/ui/date-picker-primitive";
+
+export default () => (
+  <DatePickerPrimitive.Root>
+    <DatePickerPrimitive.Trigger>
+      <DatePickerPrimitive.Value />
+    </DatePickerPrimitive.Trigger>
+    <DatePickerPrimitive.Input />
+    <DatePickerPrimitive.Clear />
+    <DatePickerPrimitive.Anchor />
+
+    <DatePickerPrimitive.Portal>
+      <DatePickerPrimitive.Content>
+        <DatePickerPrimitive.Calendar />
+      </DatePickerPrimitive.Content>
+    </DatePickerPrimitive.Portal>
+  </DatePickerPrimitive.Root>
+);
+```
+
+## Examples
+
+### Input
+
+<ComponentPreview name="date-picker-primitive-input" />
+
+### Multiple
+
+<ComponentPreview name="date-picker-primitive-multiple" />
+
+### Range
+
+<ComponentPreview name="date-picker-primitive-range" />

@@ -1,0 +1,112 @@
+---
+title: Dropzone
+description: A dropzone is an area into which one or multiple objects can be dragged and dropped.
+links:
+  doc: /docs/primitives/dropzone
+---
+
+<ComponentPreview name="dropzone-demo" />
+
+## About
+
+The `<Dropzone />` component is built on top of [react-dropzone](https://react-dropzone.js.org).
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/dropzone.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-primitive
+```
+
+<Step>
+
+Add the `<DropzonePrimitive />` component to your project.
+
+</Step>
+
+The `<Dropzone />` component uses `<DropzonePrimitive />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [DropzonePrimitive](/docs/components/dropzone-primitive#installation) component.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="dropzone" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Dropzone,
+  DropzoneDescription,
+  DropzoneGroup,
+  DropzoneInput,
+  DropzoneTitle,
+  DropzoneUploadIcon,
+  DropzoneZone,
+} from "@/components/ui/dropzone";
+```
+
+```tsx
+<Dropzone
+  accept={{
+    "image/*": [".jpg", ".png"],
+    "application/pdf": [".pdf"],
+  }}
+  onDropAccepted={setFiles}
+>
+  <DropzoneZone>
+    <DropzoneInput />
+    <DropzoneGroup className="gap-4">
+      <DropzoneUploadIcon />
+      <DropzoneGroup>
+        <DropzoneTitle>Drop files here or click to upload</DropzoneTitle>
+        <DropzoneDescription>
+          You can upload files up to 10MB in size. Supported formats: JPG, PNG,
+          PDF.
+        </DropzoneDescription>
+      </DropzoneGroup>
+    </DropzoneGroup>
+  </DropzoneZone>
+</Dropzone>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="dropzone-demo" />
+
+### Trigger
+
+<ComponentPreview name="dropzone-trigger" />
+
+### Form
+
+<ComponentPreview name="dropzone-form" />

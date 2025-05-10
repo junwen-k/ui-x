@@ -1,0 +1,129 @@
+---
+title: Sortable
+description: Sortable provides a way to sort items in a list or grid.
+component: true
+links:
+  doc: https://docs.dndkit.com/presets/sortable
+---
+
+<ComponentPreview name="sortable-demo" />
+
+## About
+
+The `<Sortable />` component is built on top of [@dnd-kit](https://dndkit.com)'s [sortable](https://docs.dndkit.com/presets/sortable) preset.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/sortable.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities @radix-ui/primitive @radix-ui/react-compose-refs @radix-ui/react-portal @radix-ui/react-primitive
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="sortable" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Sortable,
+  SortableGrid,
+  SortableItem,
+  SortableItemTrigger,
+  SortableList,
+  SortableOverlay,
+} from "@/components/ui/sortable";
+```
+
+```tsx
+<Sortable>
+  <SortableList>
+    <SortableItem>
+      <SortableItemTrigger />
+    </SortableItem>
+  </SortableList>
+  <SortableGrid>
+    <SortableItem>
+      <SortableItemTrigger />
+    </SortableItem>
+  </SortableGrid>
+  <SortableOverlay />
+</Sortable>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="sortable-demo" />
+
+### Trigger
+
+<ComponentPreview name="sortable-trigger" />
+
+### Disabled
+
+<ComponentPreview name="sortable-disabled" />
+
+### Swap
+
+<ComponentPreview name="sortable-swap" />
+
+### Form
+
+<ComponentPreview name="sortable-form" />
+
+<Callout className="mt-4">
+
+**Tip**: When working with database records, items typically include their own `id` field. To prevent conflicts with [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray)'s generated IDs:
+
+1. Use `keyName` prop in `useFieldArray` to specify another name for the temporary ID (e.g., `_id`).
+
+   ```tsx
+   const { fields, move } = useFieldArray({
+     control: form.control,
+     name: "items",
+     keyName: "_id",
+   });
+   ```
+
+2. Pass the temporary IDs to `<SortableList />` or `<SortableGrid />`'s `items` prop to maintain the correct sort order during reordering.
+
+   ```tsx
+   <SortableList items={fields.map((field) => field._id)} />
+   ```
+
+</Callout>
+
+### Virtualized
+
+<ComponentPreview name="virtualizer-sortable" />

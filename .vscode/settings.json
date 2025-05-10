@@ -10,5 +10,9 @@
     { "pattern": "apps/*" },
     { "pattern": "packages/*" }
   ],
-  "files.associations": { "*.css": "tailwindcss" }
+  "files.associations": { "*.css": "tailwindcss" },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/{default,error,forbidden,layout,loading,not-found,page,route,template,unauthorized}.{tsx,ts,js}": "${dirname}/${filename}.${extname}"
+  }
 }

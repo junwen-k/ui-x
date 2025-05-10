@@ -1,0 +1,84 @@
+---
+title: Control Group
+description: A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.
+---
+
+<ComponentPreview name="control-group-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/control-group.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-primitive @radix-ui/react-slot
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="control-group" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { ControlGroup, ControlGroupItem } from "@/components/ui/control-group";
+```
+
+```tsx
+<ControlGroup>
+  <ControlGroupItem />
+  <ControlGroupItem />
+</ControlGroup>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="control-group-demo" />
+
+### Action
+
+<ComponentPreview name="control-group-action" />
+
+### Select
+
+<ComponentPreview name="control-group-select" />
+
+### Split Button
+
+<ComponentPreview name="control-group-split-button" />
+
+### Vertical
+
+<ComponentPreview name="control-group-vertical" />
+
+### Form
+
+<ComponentPreview name="control-group-form" />

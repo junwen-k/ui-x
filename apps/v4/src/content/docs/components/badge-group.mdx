@@ -1,0 +1,73 @@
+---
+title: Badge Group
+description: A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/toggle-group
+  api: https://www.radix-ui.com/docs/primitives/components/toggle-group#api-reference
+---
+
+<ComponentPreview name="badge-group-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/badge-group.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/primitive @radix-ui/react-slot @radix-ui/react-toggle-group @radix-ui/react-use-controllable-state
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="badge-group" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { BadgeGroup, BadgeGroupItem } from "@/components/ui/badge-group";
+```
+
+```tsx
+<BadgeGroup type="single">
+  <BadgeGroupItem value="chocolate">Chocolate</BadgeGroupItem>
+  <BadgeGroupItem value="mint">Mint</BadgeGroupItem>
+  <BadgeGroupItem value="strawberry">Strawberry</BadgeGroupItem>
+  <BadgeGroupItem value="vanilla">Vanilla</BadgeGroupItem>
+</BadgeGroup>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="badge-group-demo" />
+
+### Form
+
+<ComponentPreview name="badge-group-form" />

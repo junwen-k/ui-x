@@ -1,0 +1,95 @@
+---
+title: Date Time Field Primitive
+description: Date Time Field Primitive allows user to enter date and time value.
+component: true
+links:
+  doc: https://timescape.daniellehr.de
+  api: https://github.com/dan-lee/timescape?tab=readme-ov-file#options
+---
+
+<ComponentPreview name="date-time-field-primitive-demo" />
+
+## About
+
+The `<DateTimeFieldPrimitive />` component is built on top of [timescape](https://timescape.daniellehr.de), wrapping the library to deliver a more consistent API that aligns with Radix UI conventions.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-time-field-primitive.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-compose-refs @radix-ui/react-primitive timescape
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`date-time-field-primitive.tsx`
+
+<ComponentSource name="date-time-field-primitive" />
+
+`use-timescape.ts`
+
+<ComponentSource name="date-time-field-primitive" fileName="use-timescape" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+Import all parts and piece them together.
+
+```tsx
+import * as DateTimeFieldPrimitive from "@/components/ui/date-time-field-primitive";
+
+export default () => (
+  <DateTimeFieldPrimitive.Root>
+    <DateTimeFieldPrimitive.Days />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.Months />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.Years />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.Hours />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.Minutes />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.Seconds />
+    <DateTimeFieldPrimitive.Separator />
+    <DateTimeFieldPrimitive.AmPm />
+  </DateTimeFieldPrimitive.Root>
+);
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="date-time-field-primitive-demo" />
+
+### Disabled
+
+<ComponentPreview name="date-time-field-primitive-disabled" />

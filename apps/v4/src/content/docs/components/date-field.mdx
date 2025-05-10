@@ -1,0 +1,83 @@
+---
+title: Date Field
+description: Date Field allows user to enter date value.
+links:
+  doc: /docs/primitives/date-time-field
+---
+
+<ComponentPreview name="date-field-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-field.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add `<DateTimeField />` component to your project.
+
+</Step>
+
+The `<TimeField />` component uses the `<DateTimeField />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [DateTimeField](/docs/components/date-time-field#installation) component.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-field" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  DateField,
+  DateFieldDays,
+  DateFieldMonths,
+  DateFieldSeparator,
+  DateFieldYears,
+} from "@/components/ui/date-field";
+```
+
+```tsx
+<DateField>
+  <DateFieldDays />
+  <DateFieldSeparator />
+  <DateFieldMonths />
+  <DateFieldSeparator />
+  <DateFieldYears />
+</DateField>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="date-field-demo" />
+
+### Form
+
+<ComponentPreview name="date-field-form" />

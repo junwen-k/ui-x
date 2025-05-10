@@ -1,0 +1,83 @@
+---
+title: Input Base
+description: Base component to create custom inputs.
+---
+
+<ComponentPreview name="input-base-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/input-base.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/primitive @radix-ui/react-compose-refs @radix-ui/react-primitive @radix-ui/react-slot
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="input-base" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  InputBase,
+  InputBaseAdornment,
+  InputBaseControl,
+  InputBaseInput,
+} from "@/components/ui/input-base";
+```
+
+```tsx
+<InputBase>
+  <InputBaseAdornment>@</InputBaseAdornment>
+  <InputBaseControl>
+    <InputBaseInput />
+  </InputBaseControl>
+</InputBase>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="input-base-demo" />
+
+### With Action
+
+<ComponentPreview name="input-base-with-action" />
+
+### Disabled
+
+<ComponentPreview name="input-base-disabled" />
+
+### Form
+
+<ComponentPreview name="input-base-form" />

@@ -1,0 +1,85 @@
+---
+title: Native Select
+description: Native select element.
+---
+
+<ComponentPreview name="native-select-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/native-select.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add `<InputBase />` component to your project.
+
+</Step>
+
+The `<NativeSelect />` component uses `<InputBase />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [InputBase](/docs/components/input-base#installation) component.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="native-select" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  NativeSelect,
+  NativeSelectOption,
+  NativeSelectPlaceholder,
+} from "@/components/ui/native-select";
+```
+
+```tsx
+<NativeSelect>
+  <NativeSelectPlaceholder>Select a fruit</NativeSelectPlaceholder>
+  <NativeSelectOption value="apple">Apple</NativeSelectOption>
+  <NativeSelectOption value="banana">Banana</NativeSelectOption>
+  <NativeSelectOption value="blueberry">Blueberry</NativeSelectOption>
+  <NativeSelectOption value="grapes">Grapes</NativeSelectOption>
+  <NativeSelectOption value="pineapple">Pineapple</NativeSelectOption>
+</NativeSelect>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="native-select-demo" />
+
+### Form
+
+<ComponentPreview name="native-select-form" />
+
+### Responsive Select
+
+You can create a responsive select by using the `<Select />` on desktop and the `<NativeSelect />` on mobile.
+
+<ComponentPreview name="native-select-responsive" />

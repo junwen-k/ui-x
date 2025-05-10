@@ -1,0 +1,153 @@
+---
+title: Timeline
+description: Timeline displays a list of events in chronological order.
+---
+
+<ComponentPreview name="timeline-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/timeline.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="timeline" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDescription,
+  TimelineDot,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineTitle,
+} from "@/components/ui/timeline";
+```
+
+```tsx
+<Timeline>
+  <TimelineItem>
+    <TimelineSeparator>
+      <TimelineDot />
+      <TimelineConnector />
+    </TimelineSeparator>
+    <TimelineContent>
+      <TimelineTitle>Eat</TimelineTitle>
+      <TimelineDescription>Because you need strength</TimelineDescription>
+    </TimelineContent>
+  </TimelineItem>
+  <TimelineItem>
+    <TimelineSeparator>
+      <TimelineDot />
+      <TimelineConnector />
+    </TimelineSeparator>
+    <TimelineContent>
+      <TimelineTitle>Code</TimelineTitle>
+      <TimelineDescription>Because it's awesome!</TimelineDescription>
+    </TimelineContent>
+  </TimelineItem>
+  <TimelineItem>
+    <TimelineSeparator>
+      <TimelineDot />
+      <TimelineConnector />
+    </TimelineSeparator>
+    <TimelineContent>
+      <TimelineTitle>Sleep</TimelineTitle>
+      <TimelineDescription>Because you need rest</TimelineDescription>
+    </TimelineContent>
+  </TimelineItem>
+  <TimelineItem>
+    <TimelineSeparator>
+      <TimelineDot />
+    </TimelineSeparator>
+    <TimelineContent>
+      <TimelineTitle>Repeat</TimelineTitle>
+      <TimelineDescription>
+        Because this is the life you love!
+      </TimelineDescription>
+    </TimelineContent>
+  </TimelineItem>
+</Timeline>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="timeline-demo" />
+
+### Alternate
+
+<ComponentPreview name="timeline-alternate" />
+
+### With Icon
+
+<ComponentPreview name="timeline-with-icon" />
+
+### Horizontal
+
+<ComponentPreview name="timeline-horizontal" />
+
+## Changelog
+
+### 10 Febuary 2025 - a11y for title and description
+
+- Changed the `TimelineTitle` and `TimelineDescription` components to use `div` instead of `h3` and `p` to improve accessibility.
+
+```tsx showLineNumbers title="timeline.tsx"
+export const TimelineTitle = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>((props, ref) => {
+  const { orientation } = useTimeline();
+
+  return <div ref={ref} data-orientation={orientation} {...props} />;
+});
+TimelineTitle.displayName = "TimelineTitle";
+
+export const TimelineDescription = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ className, ...props }, ref) => {
+  const { orientation } = useTimeline();
+
+  return (
+    <div
+      ref={ref}
+      data-orientation={orientation}
+      className={cn("text-muted-foreground text-sm", className)}
+      {...props}
+    />
+  );
+});
+TimelineDescription.displayName = "TimelineDescription";
+```

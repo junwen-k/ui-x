@@ -1,0 +1,102 @@
+---
+title: Calendar
+description: A calendar component lets users select a date without any input or popper / modal.
+links:
+  doc: https://daypicker.dev
+  api: https://daypicker.dev/api
+---
+
+<ComponentPreview
+  name="calendar-demo"
+  title="Calendar"
+  description="A calendar showing the current date."
+/>
+
+## About
+
+The `<Calendar />` component is built on top of [React DayPicker](https://daypicker.dev).
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/calendar.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-day-picker date-fns
+```
+
+<Step>
+  Add the `<Button />` and `<Select />` component to your project.
+</Step>
+
+The `<Calendar />` component uses the `<Button />` and `<Select />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [Button](/docs/components/button#installation), and the [Select](/docs/components/select#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="calendar" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { Calendar } from "@/components/ui/calendar";
+```
+
+```tsx
+const [date, setDate] = React.useState<Date | undefined>(new Date());
+
+return (
+  <Calendar
+    mode="single"
+    selected={date}
+    onSelect={setDate}
+    className="rounded-md border"
+  />
+);
+```
+
+See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+
+## Date Picker
+
+For a complete Date Picker component with date input functionality, you can use the `<DatePicker>` component directly. See the [Date Picker](/docs/components/date-picker) page for more information.
+
+## Examples
+
+### Multiple
+
+<ComponentPreview name="calendar-multiple" />
+
+### Dropdown Layout
+
+<ComponentPreview name="calendar-dropdown-layout" />
+
+### Form
+
+<ComponentPreview name="calendar-form" />

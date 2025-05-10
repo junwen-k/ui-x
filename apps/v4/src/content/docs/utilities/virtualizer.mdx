@@ -1,0 +1,484 @@
+---
+title: Virtualizer
+description: A virtualizer component that allows you to efficiently render large lists and tabular data.
+component: true
+links:
+  doc: https://github.com/inokawa/virtua
+  api: https://github.com/inokawa/virtua/blob/main/docs/react/API.md
+---
+
+<ComponentPreview name="virtualizer-demo" />
+
+## Introduction
+
+Efficiently rendering large lists and tabular data is a common challenge in UI development. By leveraging [virtualization](https://www.patterns.dev/vanilla/virtual-lists/), we can significantly enhance performance.
+
+<figure className="flex flex-col gap-4">
+  <Image
+    src="/images/list-virtualization-light.png"
+    width="1135"
+    height="1135"
+    alt="List Virtualization"
+    className="mt-6 w-full overflow-hidden rounded-lg border shadow-sm dark:hidden"
+  />
+  <Image
+    src="/images/list-virtualization-dark.png"
+    width="1135"
+    height="1135"
+    alt="List Virtualization"
+    className="mt-6 hidden w-full overflow-hidden rounded-lg border shadow-sm dark:block"
+  />
+  <figcaption className="text-center text-sm text-gray-500">
+    Rendering only visible rows of content in a dynamic list instead of the
+    entire list using virtualization.
+  </figcaption>
+</figure>
+
+After exploring various libraries, I found [virtua](https://github.com/inokawa/virtua) to be one of the most intuitive and effective choices. Its straightforward API allows seamless integration with other tools like [@dnd-kit](https://dndkit.com) and [Radix UI](https://www.radix-ui.com/primitives), making it easy to virtualize different components effectively.
+
+This documentation serves as a guide to help you understand how to use the `<Virtualized />` component. Feel free to create your own abstraction of the virtualized components, e.g. `<VirtualizedScrollArea />`, `<VirtualizedSelect />`, etc.
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950">
+
+**Important**: Use virtualization judiciously. It's best suited for scenarios involving large lists or tables, rather than squeezing out every bit of "performance optimizations".
+
+</Callout>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/virtualizer.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-compose-refs @radix-ui/react-primitive virtua
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="virtualized" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Examples
+
+### Default
+
+<ComponentPreview name="virtualizer-demo" />
+
+### Horizontal
+
+<ComponentPreview name="virtualizer-horizontal" />
+
+### Grid
+
+<ComponentPreview name="virtualizer-grid" />
+
+### Table
+
+<ComponentPreview name="virtualizer-table" />
+
+<Callout className="mt-6">
+
+**Note:** Until virtua improves its support for [table virtualization](https://github.com/inokawa/virtua/issues/312), you will need to manually set the cell width because of the current use of absolute positioning.
+
+</Callout>
+
+### Combobox
+
+<ComponentPreview name="virtualizer-combobox" />
+
+### Select
+
+<ComponentPreview name="virtualizer-select" />
+
+### Scroll Area
+
+<ComponentPreview name="virtualizer-scroll-area" />
+
+### Sortable
+
+<ComponentPreview name="virtualizer-sortable" />
+
+## Combobox
+
+To virtualize a `<Combobox />` component, you'll need to use `<Virtualized />` component.
+
+<Steps>
+
+### Setup `scollRef`
+
+Attach the `scrollRef` to the `<ComboboxContent />` with `<Virtualized />`, as it serves as the scrollable container:
+
+```tsx showLineNumbers {5,8,11}
+export function VirtualizedComboboxDemo() {
+  return (
+    <Combobox>
+      {/* ... */}
+      <Virtualized asChild>
+        <ComboboxContent>
+          {/* ... */}
+          <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
+          {/* ... */}
+        </ComboboxContent>
+      </Virtualized>
+    </Combobox>
+  );
+}
+```
+
+### Handle filtering
+
+Control the `inputValue` and pass `shouldFilter={false}` to the `<Combobox />`, as the default filtering does not support virtualization. You will also need to filter items manually:
+
+```tsx showLineNumbers {3,5-13,18-20}
+export function VirtualizedComboboxDemo() {
+  // ...
+  const [inputValue, setInputValue] = React.useState("");
+
+  const filtered = React.useMemo(() => {
+    if (!inputValue) {
+      return items;
+    }
+
+    return items.filter((item) =>
+      item.label.toLowerCase().includes(inputValue.toLowerCase()),
+    );
+  }, [inputValue]);
+
+  return (
+    <Combobox
+      // ...
+      shouldFilter={false}
+      inputValue={inputValue}
+      onInputValueChange={setInputValue}
+      // ...
+    >
+      {/* ... */}
+    </Combobox>
+  );
+}
+```
+
+<Callout className="mt-4">
+
+**Tip**: You may also fetch your items with debounced `inputValue` from API calls.
+
+</Callout>
+
+</Steps>
+
+<ComponentPreview name="virtualizer-combobox" />
+
+<Callout className="mt-4">
+
+**Tip**: If you use `<ComboboxGroup />` with `heading`, you'll need to set the `startMargin` to match the heading's height. This ensures that the virtualized viewport is positioned correctly within the `<PopoverContent />`.
+
+</Callout>
+
+## Scroll Area
+
+To virtualize a `<ScrollArea />` component, you'll need to use the [primitive](https://www.radix-ui.com/primitives/docs/components/scroll-area) components directly. shadcn/ui's version includes its own abstraction, which does not support virtualization out of the box.
+
+<Steps>
+
+### Create reusable styles (Optional)
+
+You can create reusable styles for the `<ScrollArea />` component by exporting variants:
+
+```tsx showLineNumbers title="scroll-area.tsx" {3,5,13,16,29-30}
+// ...
+
+const scrollAreaVariants = cva("relative overflow-hidden");
+
+const scrollAreaViewportVariants = cva("size-full rounded-[inherit]");
+
+const ScrollArea = React.forwardRef<
+  React.ElementRef<typeof ScrollAreaPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
+>(({ className, children, ...props }, ref) => (
+  <ScrollAreaPrimitive.Root
+    ref={ref}
+    className={cn(scrollAreaVariants(), className)}
+    {...props}
+  >
+    <ScrollAreaPrimitive.Viewport className={scrollAreaViewportVariants()}>
+      {children}
+    </ScrollAreaPrimitive.Viewport>
+    <ScrollBar />
+    <ScrollAreaPrimitive.Corner />
+  </ScrollAreaPrimitive.Root>
+));
+ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
+
+// ...
+
+export {
+  // ...
+  scrollAreaVariants,
+  scrollAreaViewportVariants,
+};
+```
+
+### Setup `scollRef`
+
+Attach the `scrollRef` to the `<ScrollAreaViewport />` with `<Virtualized />`, as it serves as the scrollable container:
+
+```tsx showLineNumbers {7,10,13}
+export function VirtualizedScrollAreaDemo() {
+  return (
+    <ScrollArea
+      className={cn(scrollAreaVariants(), "h-72 w-48 rounded-md border")}
+    >
+      {/* ... */}
+      <Virtualized asChild>
+        <ScrollAreaViewport className={scrollAreaViewportVariants()}>
+          {/* ... */}
+          <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
+          {/* ... */}
+        </ScrollAreaViewport>
+      </Virtualized>
+      {/* ... */}
+    </ScrollArea>
+  );
+}
+```
+
+<Callout className="mt-4">
+
+**Tip:** If there is nothing between `<ScrollAreaViewport />` and `<VirtualizedVirtualizer />`, you can render `<VirtualizedVirtualizer />` directly as a child of `<ScrollAreaViewport />` without using `<Virtualized />`.
+
+</Callout>
+
+</Steps>
+
+<ComponentPreview name="virtualizer-scroll-area" />
+
+<Callout className="mt-4">
+
+**Tip:** As usual, double-check to see if you need to set the `startMargin`.
+
+</Callout>
+
+## Select
+
+To virtualize a `<Select />` component, you'll need to use the [primitive](https://www.radix-ui.com/primitives/docs/components/select) components directly. shadcn/ui's version includes its own abstraction, which does not support virtualization out of the box.
+
+<Steps>
+
+### Create reusable styles (Optional)
+
+You can create reusable styles for the `<Select />` component by exporting variants:
+
+```tsx showLineNumbers title="select.tsx" {3-17,19-30,39,45,59-60}
+// ...
+
+const selectContentVariants = cva(
+  "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+  {
+    variants: {
+      position: {
+        popper:
+          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+        "item-aligned": "",
+      },
+    },
+    defaultVariants: {
+      position: "item-aligned",
+    },
+  },
+);
+
+const selectViewportVariants = cva("p-1", {
+  variants: {
+    position: {
+      popper:
+        "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+      "item-aligned": "",
+    },
+  },
+  defaultVariants: {
+    position: "item-aligned",
+  },
+});
+
+const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({ className, children, position = "popper", ...props }, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      className={cn(selectContentVariants({ position }), className)}
+      position={position}
+      {...props}
+    >
+      <SelectScrollUpButton />
+      <SelectPrimitive.Viewport
+        className={cn(selectViewportVariants({ position }))}
+      >
+        {children}
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+));
+SelectContent.displayName = SelectPrimitive.Content.displayName;
+
+// ...
+
+export {
+  // ...
+  selectContentVariants,
+  selectViewportVariants,
+};
+```
+
+### Setup `scollRef`
+
+Attach the `scrollRef` to the `<SelectViewport />` with `<Virtualized />`, as it serves as the scrollable container:
+
+```tsx showLineNumbers {13}
+export function VirtualizedSelectDemo() {
+  return (
+    <Select>
+      {/* ... */}
+      <SelectPortal>
+        <SelectContent
+          className={selectContentVariants({ position: "popper" })}
+          position="popper"
+        >
+          <SelectViewport
+            className={selectViewportVariants({ position: "popper" })}
+          >
+            <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
+          </SelectViewport>
+        </SelectContent>
+      </SelectPortal>
+    </Select>
+  );
+}
+```
+
+<Callout className="mt-4">
+
+**Tip:** If there is nothing between `<SelectViewport />` and `<VirtualizedVirtualizer />`, you can render `<VirtualizedVirtualizer />` directly as a child of `<SelectViewport />` without using `<Virtualized />`.
+
+</Callout>
+
+### Handle scroll position and focus
+
+To replicate the scroll position and focus behavior of `<Select />`, manage the `open` and `value` states, and access the virtualizer instance using imperative methods with the `ref`:
+
+```tsx showLineNumbers {2-3,5-6,8-11,13-27,31-34,38,41}
+export function VirtualizedSelectDemo() {
+  const [value, setValue] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const virtualizerRef = React.useRef<VirtualizerHandle>(null);
+  const viewportRef = React.useRef<HTMLDivElement>(null);
+
+  const activeIndex = React.useMemo(
+    () => items.findIndex((item) => item.value === value),
+    [value],
+  );
+
+  React.useLayoutEffect(() => {
+    if (!open || !value || activeIndex === -1) return;
+
+    setTimeout(() => {
+      // Recover scroll position.
+      virtualizerRef.current?.scrollToIndex(activeIndex, { align: "end" });
+
+      const checkedElement = viewportRef.current?.querySelector(
+        "[data-state=checked]",
+      ) as HTMLElement;
+
+      // Recover focus.
+      checkedElement?.focus({ preventScroll: true });
+    });
+  }, [open, value, activeIndex]);
+
+  return (
+    <Select
+      open={open}
+      onOpenChange={setOpen}
+      value={value}
+      onValueChange={setValue}
+    >
+      {/* ... */}
+      <SelectViewport
+        ref={viewportRef}
+        // ...
+      >
+        <VirtualizedVirtualizer ref={virtualizerRef}>
+          {/* ... */}
+        </VirtualizedVirtualizer>
+      </SelectViewport>
+      {/* ... */}
+    </Select>
+  );
+}
+```
+
+### Ensure active item is always mounted
+
+To ensure the selected item is rendered within the `<SelectTrigger />`, use the `keepMounted` prop:
+
+```tsx showLineNumbers {11}
+export function VirtualizedSelectDemo() {
+  // ...
+
+  return (
+    <Select
+    // ...
+    >
+      {/* ... */}
+      <VirtualizedVirtualizer
+        // ...
+        keepMounted={activeIndex !== -1 ? [activeIndex] : undefined}
+      >
+        {/* ... */}
+      </VirtualizedVirtualizer>
+      {/* ... */}
+    </Select>
+  );
+}
+```
+
+</Steps>
+
+<ComponentPreview name="virtualizer-select" />
+
+## Reusable Components
+
+### Virtualized Select
+
+<Callout className="mt-4">
+
+This section is empty for now.
+
+</Callout>

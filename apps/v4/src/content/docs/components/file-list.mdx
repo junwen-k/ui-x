@@ -1,0 +1,106 @@
+---
+title: File List
+description: A File List component displays a list of files with details such as name, size, and progress.
+---
+
+<ComponentPreview name="file-list-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/file-list.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install pretty-bytes
+```
+
+<Step>
+  Add the `<Button />` and `<Progress />` component to your project.
+</Step>
+
+The `<FileList />` component uses the `<Button />` and `<Progress />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [Button](/docs/components/button#installation) and [Progress](/docs/components/progress#installation) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="file-list" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  FileList,
+  FileListAction,
+  FileListActions,
+  FileListContent,
+  FileListDescription,
+  FileListDescriptionSeparator,
+  FileListDescriptionText,
+  FileListHeader,
+  FileListIcon,
+  FileListInfo,
+  FileListItem,
+  FileListName,
+  FileListProgress,
+  FileListSize,
+} from "@/components/ui/file-list";
+```
+
+```tsx
+<FileList>
+  <FileListItem>
+    <FileListHeader>
+      <FileListIcon />
+      <FileListInfo>
+        <FileListName>avatar.png</FileListName>
+        <FileListDescription>
+          <FileListSize>{1000000}</FileListSize>
+          <FileListDescriptionSeparator />
+          <FileListDescriptionText>45%</FileListDescriptionText>
+        </FileListDescription>
+      </FileListInfo>
+      <FileListActions>
+        <FileListAction>
+          <Trash2 />
+          <span className="sr-only">Remove</span>
+        </FileListAction>
+      </FileListActions>
+    </FileListHeader>
+    <FileListContent>
+      <FileListProgress value={40} />
+    </FileListContent>
+  </FileListItem>
+</FileList>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="file-list-demo" />
