@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build:next": {
+      "dependsOn": ["build:registry", "build:docs"]
+    },
+    "build:docs": {
+      "dependsOn": ["build:registry"]
+    },
+    "build:registry": {},
+    "dev:next": {
+      "cache": false,
+      "persistent": true
+    },
+    "dev:docs": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

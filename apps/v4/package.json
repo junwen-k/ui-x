@@ -4,11 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "dev:velite": "velite dev",
-    "build": "next build",
+    "dev": "turbo run dev:next dev:docs",
+    "dev:next": "next dev",
+    "dev:docs": "velite dev",
+    "build": "turbo run build:next build:velite build:registry",
+    "build:next": "next build",
     "build:registry": "shadcn build",
-    "build:velite": "velite build",
+    "build:docs": "velite build",
     "start": "next start",
     "lint": "next lint"
   },
