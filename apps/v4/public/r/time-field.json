@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time-field",
+  "type": "registry:ui",
+  "title": "Time Field",
+  "description": "Time Field allows user to enter time value.",
+  "registryDependencies": [
+    "https://ui-x.junwen-k.dev/r/date-time-field.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/time-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport {\n  DateTimeField,\n  DateTimeFieldAmPm,\n  DateTimeFieldHours,\n  DateTimeFieldMinutes,\n  DateTimeFieldSeconds,\n  DateTimeFieldSeparator,\n} from \"@/registry/new-york/ui/date-time-field\";\n\nfunction TimeField(props: React.ComponentProps<typeof DateTimeField>) {\n  return <DateTimeField data-slot=\"time-field\" {...props} />;\n}\n\nfunction TimeFieldSeparator({\n  children = \":\",\n  ...props\n}: React.ComponentProps<typeof DateTimeFieldSeparator>) {\n  return (\n    <DateTimeFieldSeparator data-slot=\"time-field-separator\" {...props}>\n      {children}\n    </DateTimeFieldSeparator>\n  );\n}\n\nfunction TimeFieldHours(\n  props: React.ComponentProps<typeof DateTimeFieldHours>,\n) {\n  return <DateTimeFieldHours data-slot=\"time-field-hours\" {...props} />;\n}\n\nfunction TimeFieldMinutes(\n  props: React.ComponentProps<typeof DateTimeFieldMinutes>,\n) {\n  return <DateTimeFieldMinutes data-slot=\"time-field-minutes\" {...props} />;\n}\n\nfunction TimeFieldSeconds(\n  props: React.ComponentProps<typeof DateTimeFieldSeconds>,\n) {\n  return <DateTimeFieldSeconds data-slot=\"time-field-seconds\" {...props} />;\n}\n\nfunction TimeFieldAmPm(props: React.ComponentProps<typeof DateTimeFieldAmPm>) {\n  return <DateTimeFieldAmPm data-slot=\"time-field-am-pm\" {...props} />;\n}\n\nexport {\n  TimeField,\n  TimeFieldSeparator,\n  TimeFieldHours,\n  TimeFieldMinutes,\n  TimeFieldSeconds,\n  TimeFieldAmPm,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

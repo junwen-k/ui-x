@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "Displays which key or combination of keys performs a given action.",
+  "dependencies": [
+    "@radix-ui/react-slot"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/kbd.tsx",
+      "content": "import { Slot } from \"@radix-ui/react-slot\";\nimport { type VariantProps, cva } from \"class-variance-authority\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst kbdVariants = cva(\n  \"pointer-events-none inline-flex select-none items-center gap-1 rounded px-1.5 py-0.5 font-mono text-[10px] font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground shadow-[inset_0_-2px_0_0_var(--shadow-color)] shadow-primary-foreground/60\",\n        secondary:\n          \"bg-secondary text-secondary-foreground shadow-[inset_0_-2px_0_0_var(--shadow-color)] shadow-secondary-foreground/60\",\n        outline: \"border text-foreground\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  },\n);\n\nfunction Kbd({\n  className,\n  variant,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"kbd\"> &\n  VariantProps<typeof kbdVariants> & { asChild?: boolean }) {\n  const Comp = asChild ? Slot : \"kbd\";\n\n  return (\n    <Comp\n      data-slot=\"kbd\"\n      className={cn(kbdVariants({ variant }), className)}\n      {...props}\n    />\n  );\n}\n\nexport { Kbd, kbdVariants };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

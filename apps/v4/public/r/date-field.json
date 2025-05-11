@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "date-field",
+  "type": "registry:ui",
+  "title": "Date Field",
+  "description": "Date Field allows user to enter date value.",
+  "registryDependencies": [
+    "https://ui-x.junwen-k.dev/r/date-time-field.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/date-field.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport {\n  DateTimeField,\n  DateTimeFieldDays,\n  DateTimeFieldMonths,\n  DateTimeFieldSeparator,\n  DateTimeFieldYears,\n} from \"@/registry/new-york/ui/date-time-field\";\n\nfunction DateField(props: React.ComponentProps<typeof DateTimeField>) {\n  return <DateTimeField data-slot=\"date-field\" {...props} />;\n}\n\nfunction DateFieldSeparator({\n  children = \"/\",\n  ...props\n}: React.ComponentProps<typeof DateTimeFieldSeparator>) {\n  return (\n    <DateTimeFieldSeparator data-slot=\"date-field-separator\" {...props}>\n      {children}\n    </DateTimeFieldSeparator>\n  );\n}\n\nfunction DateFieldYears(\n  props: React.ComponentProps<typeof DateTimeFieldYears>,\n) {\n  return <DateTimeFieldYears data-slot=\"date-field-years\" {...props} />;\n}\n\nfunction DateFieldMonths(\n  props: React.ComponentProps<typeof DateTimeFieldMonths>,\n) {\n  return <DateTimeFieldMonths data-slot=\"date-field-months\" {...props} />;\n}\n\nfunction DateFieldDays(props: React.ComponentProps<typeof DateTimeFieldDays>) {\n  return <DateTimeFieldDays data-slot=\"date-field-days\" {...props} />;\n}\n\nexport {\n  DateField,\n  DateFieldSeparator,\n  DateFieldYears,\n  DateFieldMonths,\n  DateFieldDays,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

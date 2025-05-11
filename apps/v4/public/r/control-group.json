@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "control-group",
+  "type": "registry:ui",
+  "title": "Control Group",
+  "description": "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
+  "dependencies": [
+    "@radix-ui/react-primitive",
+    "@radix-ui/react-slot"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/control-group.tsx",
+      "content": "\"use client\";\n\nimport { Primitive } from \"@radix-ui/react-primitive\";\nimport { Slot } from \"@radix-ui/react-slot\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nconst ControlGroupContext = React.createContext<\n  Pick<ControlGroupProps, \"orientation\">\n>({\n  orientation: \"horizontal\",\n});\n\nfunction useControlGroup() {\n  const context = React.useContext(ControlGroupContext);\n  if (!context) {\n    throw new Error(\"useControlGroup must be used within a <ControlGroup />.\");\n  }\n\n  return context;\n}\n\nexport interface ControlGroupProps\n  extends React.ComponentProps<typeof Primitive.div> {\n  orientation?: \"horizontal\" | \"vertical\";\n}\n\nfunction ControlGroup({\n  className,\n  orientation = \"horizontal\",\n  ...props\n}: ControlGroupProps) {\n  return (\n    <ControlGroupContext.Provider value={{ orientation }}>\n      <Primitive.div\n        data-slot=\"control-group\"\n        data-orientation={orientation}\n        className={cn(\n          \"flex\",\n          orientation === \"vertical\" && \"flex-col\",\n          className,\n        )}\n        {...props}\n      />\n    </ControlGroupContext.Provider>\n  );\n}\n\nfunction ControlGroupItem({\n  className,\n  ...props\n}: React.ComponentProps<typeof Slot>) {\n  const { orientation } = useControlGroup();\n\n  return (\n    <Slot\n      data-slot=\"control-group-item\"\n      className={cn(\n        \"rounded-none focus-within:z-10\",\n        orientation === \"horizontal\" &&\n          \"-me-px h-auto first:rounded-s-md last:-me-0 last:rounded-e-md\",\n        orientation === \"vertical\" &&\n          \"w-auto [margin-block-end:-1px] first:rounded-ss-md first:rounded-se-md last:rounded-ee-md last:rounded-es-md last:[margin-block-end:0]\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { ControlGroup, ControlGroupItem };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

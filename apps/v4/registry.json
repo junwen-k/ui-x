@@ -4,8 +4,437 @@
   "homepage": "https://ui-x.junwen-k.dev/",
   "items": [
     {
+      "name": "combobox-primitive",
+      "type": "registry:ui",
+      "title": "Combobox Primitive",
+      "description": "An unstyled combobox component. Input field with autocomplete & autosuggest functionalities.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-primitive",
+        "@radix-ui/react-roving-focus",
+        "@radix-ui/react-use-controllable-state",
+        "cmdk"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/combobox-primitive.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-time-field-primitive",
+      "type": "registry:ui",
+      "title": "Date Time Field Primitive",
+      "description": "Date Time Field Primitive allows user to enter date and time value.",
+      "dependencies": [
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-primitive",
+        "timescape"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-time-field-primitive.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/registry/new-york/hooks/use-timescape.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "date-time-range-field-primitive",
+      "type": "registry:ui",
+      "title": "Date Time Range Field Primitive",
+      "description": "Date Time Range Field Primitive allows user to enter date and time value for a range of dates.",
+      "dependencies": [
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-primitive",
+        "timescape"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-time-range-field-primitive.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/registry/new-york/hooks/use-timescape.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "date-picker-primitive",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "An unstyled date picker component.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-primitive",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-use-controllable-state",
+        "date-fns",
+        "react-day-picker"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-picker-primitive.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropzone-primitive",
+      "type": "registry:ui",
+      "title": "Dropzone Primitive",
+      "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-primitive",
+        "react-dropzone"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/dropzone-primitive.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "password-input-primitive",
+      "type": "registry:ui",
+      "title": "Password Input Primitive",
+      "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-primitive",
+        "@radix-ui/react-use-controllable-state"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/password-input-primitive.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sortable",
+      "type": "registry:ui",
+      "title": "Sortable",
+      "description": "Sortable provides a way to sort items in a list or grid.",
+      "dependencies": [
+        "@dnd-kit/core",
+        "@dnd-kit/sortable",
+        "@dnd-kit/utilities",
+        "@radix-ui/primitive",
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-portal",
+        "@radix-ui/react-primitive"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/sortable.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "virtualized",
+      "type": "registry:ui",
+      "title": "Virtualized",
+      "description": "A virtualized component that allows you to efficiently render large lists and tabular data.",
+      "dependencies": [
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-primitive",
+        "virtua"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/virtualized.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge-group",
+      "type": "registry:ui",
+      "title": "Badge Group",
+      "description": "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-toggle-group",
+        "@radix-ui/react-use-controllable-state"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/badge-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A calendar component lets users select a date without any input or popper / modal.",
+      "dependencies": ["react-day-picker", "date-fns"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Input field with autocomplete & autosuggest functionalities.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "registryDependencies": [
+        "badge",
+        "https://ui-x.junwen-k.dev/r/combobox-primitive.json",
+        "https://ui-x.junwen-k.dev/r/input-base.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "confirmer",
+      "type": "registry:ui",
+      "title": "Confirmer",
+      "description": "Imperative confirm dialog implementation.",
+      "dependencies": ["react-call"],
+      "registryDependencies": ["alert-dialog", "button"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/confirmer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "control-group",
+      "type": "registry:ui",
+      "title": "Control Group",
+      "description": "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
+      "dependencies": ["@radix-ui/react-primitive", "@radix-ui/react-slot"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/control-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-field",
+      "type": "registry:ui",
+      "title": "Date Field",
+      "description": "Date Field allows user to enter date value.",
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/date-time-field.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-time-field",
+      "type": "registry:ui",
+      "title": "Date Time Field",
+      "description": "Date Time Field allows user to enter date and time value.",
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/date-time-field-primitive.json",
+        "https://ui-x.junwen-k.dev/r/input-base.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-time-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-time-range-field",
+      "type": "registry:ui",
+      "title": "Date Time Range Field",
+      "description": "Date Time Range Field allows user to enter date and time value for a range of dates.",
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/date-time-field.json",
+        "https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json",
+        "https://ui-x.junwen-k.dev/r/input-base.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-time-range-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "A date picker component lets users select a date.",
+      "registryDependencies": [
+        "button",
+        "https://ui-x.junwen-k.dev/r/calendar.json",
+        "https://ui-x.junwen-k.dev/r/date-field.json",
+        "https://ui-x.junwen-k.dev/r/date-picker-primitive.json",
+        "https://ui-x.junwen-k.dev/r/input-base.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/date-picker.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "description-list",
+      "type": "registry:ui",
+      "title": "Description List",
+      "description": "A description list, with terms and descriptions.",
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/description-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropzone",
+      "type": "registry:ui",
+      "title": "Dropzone",
+      "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
+      "dependencies": ["@radix-ui/react-primitive"],
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/dropzone-primitive.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/dropzone.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "file-list",
+      "type": "registry:ui",
+      "title": "File List",
+      "description": "A File List component displays a list of files with details such as name, size, and progress.",
+      "dependencies": ["pretty-bytes"],
+      "registryDependencies": ["button", "progress"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/file-list.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-base",
+      "type": "registry:ui",
+      "title": "Input Base",
+      "description": "Base component to create custom inputs.",
+      "dependencies": [
+        "@radix-ui/primitive",
+        "@radix-ui/react-compose-refs",
+        "@radix-ui/react-primitive",
+        "@radix-ui/react-slot"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/input-base.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Displays which key or combination of keys performs a given action.",
+      "dependencies": ["@radix-ui/react-slot"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "Native Select",
+      "description": "Native select element.",
+      "registryDependencies": ["https://ui-x.junwen-k.dev/r/input-base.json"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "password-input",
+      "type": "registry:ui",
+      "title": "Password Input",
+      "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/input-base.json",
+        "https://ui-x.junwen-k.dev/r/password-input-primitive.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/password-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "time-field",
+      "type": "registry:ui",
+      "title": "Time Field",
+      "description": "Time Field allows user to enter time value.",
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/date-time-field.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/time-field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "time",
+      "type": "registry:ui",
+      "title": "Time",
+      "description": "Displays a specific time (or datetime).",
+      "dependencies": ["date-fns"],
+      "files": [
+        {
+          "path": "src/registry/new-york/ui/time.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "timeline",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Timeline",
       "description": "Timeline displays a list of events in chronological order.",
       "files": [

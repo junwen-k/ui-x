@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "confirmer",
+  "type": "registry:ui",
+  "title": "Confirmer",
+  "description": "Imperative confirm dialog implementation.",
+  "dependencies": [
+    "react-call"
+  ],
+  "registryDependencies": [
+    "alert-dialog",
+    "button"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/confirmer.tsx",
+      "content": "\"use client\";\n\nimport { createCallable } from \"react-call\";\n\nimport {\n  AlertDialog,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogTitle,\n} from \"@/components/ui/alert-dialog\";\nimport { Button } from \"@/components/ui/button\";\n\ninterface ConfirmOptions {\n  title?: React.ReactNode;\n  description?: React.ReactNode;\n  cancelText?: React.ReactNode;\n  actionText?: React.ReactNode;\n  CancelProps?: React.ComponentProps<typeof AlertDialogCancel>;\n  ActionProps?: React.ComponentProps<typeof Button>;\n}\n\nconst defaultOptions = {\n  title: \"Are you sure?\",\n  cancelText: \"Cancel\",\n  actionText: \"Continue\",\n} as const satisfies ConfirmOptions;\n\nexport type ConfirmResponse = boolean;\n\nconst UNMOUNTING_DELAY = 200;\n\nconst CallableConfirm = createCallable<ConfirmOptions, ConfirmResponse>(\n  ({ call, ...payload }) => {\n    const options = { ...defaultOptions, ...payload };\n\n    return (\n      <AlertDialog\n        open={!call.ended}\n        onOpenChange={(open) => !open && call.end(false)}\n      >\n        <AlertDialogContent>\n          <AlertDialogHeader>\n            <AlertDialogTitle>{options.title}</AlertDialogTitle>\n          </AlertDialogHeader>\n          <AlertDialogDescription>{options.description}</AlertDialogDescription>\n          <AlertDialogFooter>\n            <AlertDialogCancel {...options.CancelProps}>\n              {options.cancelText}\n            </AlertDialogCancel>\n            <Button {...options.ActionProps} onClick={() => call.end(true)}>\n              {options.actionText}\n            </Button>\n          </AlertDialogFooter>\n        </AlertDialogContent>\n      </AlertDialog>\n    );\n  },\n  UNMOUNTING_DELAY,\n);\n\nexport const Confirmer = CallableConfirm.Root;\n\nexport const confirm = CallableConfirm.call;\n",
+      "type": "registry:ui"
+    }
+  ]
+}

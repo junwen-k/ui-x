@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "native-select",
+  "type": "registry:ui",
+  "title": "Native Select",
+  "description": "Native select element.",
+  "registryDependencies": [
+    "https://ui-x.junwen-k.dev/r/input-base.json"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/native-select.tsx",
+      "content": "\"use client\";\n\nimport { ChevronDown } from \"lucide-react\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\nimport {\n  InputBase,\n  InputBaseAdornment,\n  InputBaseControl,\n} from \"@/registry/new-york/ui/input-base\";\n\nfunction NativeSelect({ className, ...props }: React.ComponentProps<\"select\">) {\n  return (\n    <InputBase\n      data-slot=\"native-select\"\n      className={cn(\n        \"relative min-h-fit p-0 [&>select]:min-h-9 [&>select]:min-w-40 [&>select]:px-3 [&>select]:py-1\",\n        className,\n      )}\n    >\n      <InputBaseControl>\n        <select\n          className=\"size-full flex-1 appearance-none bg-transparent text-sm focus:outline-none\"\n          {...props}\n        />\n      </InputBaseControl>\n      <InputBaseAdornment className=\"absolute top-1/2 right-0 -translate-y-1/2 pr-3\">\n        <ChevronDown />\n      </InputBaseAdornment>\n    </InputBase>\n  );\n}\n\nfunction NativeSelectGroup({\n  className,\n  ...props\n}: React.ComponentProps<\"optgroup\">) {\n  return (\n    <optgroup\n      data-slot=\"native-select-group\"\n      className={cn(\"bg-popover text-popover-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction NativeSelectOption({\n  className,\n  ...props\n}: React.ComponentProps<\"option\">) {\n  return (\n    <option\n      data-slot=\"native-select-option\"\n      className={cn(\"bg-popover text-popover-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction NativeSelectPlaceholder({\n  value = \"\",\n  hidden = true,\n  disabled = true,\n  ...props\n}: React.ComponentProps<\"option\">) {\n  return (\n    <NativeSelectOption\n      data-slot=\"native-select-placeholder\"\n      hidden={hidden}\n      value={value}\n      disabled={disabled}\n      {...props}\n    />\n  );\n}\n\nexport {\n  NativeSelect,\n  NativeSelectGroup,\n  NativeSelectOption,\n  NativeSelectPlaceholder,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

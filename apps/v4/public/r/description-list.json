@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "description-list",
+  "type": "registry:ui",
+  "title": "Description List",
+  "description": "A description list, with terms and descriptions.",
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/description-list.tsx",
+      "content": "import React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction DescriptionList({ className, ...props }: React.ComponentProps<\"dl\">) {\n  return (\n    <dl\n      data-slot=\"description-list\"\n      className={cn(\"grid gap-6\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction DescriptionTerm({ className, ...props }: React.ComponentProps<\"dt\">) {\n  return (\n    <dt\n      data-slot=\"description-term\"\n      className={cn(\n        \"text-sm leading-none font-medium tracking-tight\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction DescriptionDetail({\n  className,\n  ...props\n}: React.ComponentProps<\"dd\">) {\n  return (\n    <dd\n      data-slot=\"description-detail\"\n      className={cn(\"text-muted-foreground text-sm\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction DescriptionGroup({\n  className,\n  ...props\n}: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"description-group\"\n      className={cn(\"grid gap-1.5\", className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  DescriptionList,\n  DescriptionTerm,\n  DescriptionDetail,\n  DescriptionGroup,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}

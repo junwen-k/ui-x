@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "time",
+  "type": "registry:ui",
+  "title": "Time",
+  "description": "Displays a specific time (or datetime).",
+  "dependencies": [
+    "date-fns"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/time.tsx",
+      "content": "import { format } from \"date-fns\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nexport interface TimeProps\n  extends Omit<React.ComponentPropsWithoutRef<\"time\">, \"children\"> {\n  children: Parameters<typeof format>[0];\n  dateTimeFormatStr?: Parameters<typeof format>[1];\n  formatStr?: Parameters<typeof format>[1];\n}\n\nfunction Time({\n  children,\n  dateTimeFormatStr = \"yyyy-MM-dd\",\n  formatStr = \"PPP\",\n  className,\n  ...props\n}: TimeProps) {\n  return (\n    <time\n      data-slot=\"time\"\n      dateTime={format(children, dateTimeFormatStr)}\n      className={cn(\"whitespace-nowrap\", className)}\n      {...props}\n    >\n      {format(children, formatStr)}\n    </time>\n  );\n}\n\nexport { Time };\n",
+      "type": "registry:ui"
+    }
+  ]
+}

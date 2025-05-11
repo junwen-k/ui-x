@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "virtualized",
+  "type": "registry:ui",
+  "title": "Virtualized",
+  "description": "A virtualized component that allows you to efficiently render large lists and tabular data.",
+  "dependencies": [
+    "@radix-ui/react-compose-refs",
+    "@radix-ui/react-primitive",
+    "virtua"
+  ],
+  "files": [
+    {
+      "path": "src/registry/new-york/ui/virtualized.tsx",
+      "content": "\"use client\";\n\nimport { useComposedRefs } from \"@radix-ui/react-compose-refs\";\nimport { Primitive } from \"@radix-ui/react-primitive\";\nimport * as React from \"react\";\nimport { experimental_VGrid as VGrid, VList, Virtualizer } from \"virtua\";\n\nconst VirtualizedContext = React.createContext<{\n  scrollRef: React.RefObject<React.ComponentRef<typeof Primitive.div> | null>;\n  withScrollRef: boolean;\n}>({\n  scrollRef: { current: null },\n  withScrollRef: false,\n});\n\nfunction useVirtualized() {\n  const context = React.useContext(VirtualizedContext);\n  if (!context) {\n    throw new Error(\"useVirtualized must be used within a <Virtualized />.\");\n  }\n  return context;\n}\n\nfunction Virtualized({\n  ref,\n  ...props\n}: React.ComponentProps<typeof Primitive.div>) {\n  const scrollRef =\n    React.useRef<React.ComponentRef<typeof Primitive.div>>(null);\n\n  const composedRefs = useComposedRefs(scrollRef, ref);\n\n  return (\n    <VirtualizedContext.Provider value={{ scrollRef, withScrollRef: true }}>\n      <Primitive.div data-slot=\"virtualized\" ref={composedRefs} {...props} />\n    </VirtualizedContext.Provider>\n  );\n}\n\nexport interface VirtualizedListProps\n  extends Omit<React.ComponentProps<typeof VList>, \"horizontal\"> {\n  orientation?: \"vertical\" | \"horizontal\";\n}\n\nfunction VirtualizedList({\n  orientation = \"vertical\",\n  ...props\n}: VirtualizedListProps) {\n  const { withScrollRef } = useVirtualized();\n\n  if (withScrollRef) {\n    throw new Error(\n      \"<VirtualizedList /> must not be used within a <Virtualized />.\",\n    );\n  }\n\n  return (\n    <VList\n      data-slot=\"virtualized-list\"\n      horizontal={orientation === \"horizontal\"}\n      {...props}\n    />\n  );\n}\n\nfunction VirtualizedGrid(props: React.ComponentProps<typeof VGrid>) {\n  return <VGrid data-slot=\"virtualized-grid\" {...props} />;\n}\n\nfunction VirtualizedVirtualizer({\n  ...props\n}: Omit<React.ComponentProps<typeof Virtualizer>, \"scrollRef\">) {\n  const { scrollRef, withScrollRef } = useVirtualized();\n\n  return (\n    <Virtualizer\n      data-slot=\"virtualized-virtualizer\"\n      scrollRef={withScrollRef ? scrollRef : undefined}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Virtualized,\n  VirtualizedList,\n  VirtualizedGrid,\n  VirtualizedVirtualizer,\n};\n",
+      "type": "registry:ui"
+    }
+  ]
+}
