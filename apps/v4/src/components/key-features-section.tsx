@@ -13,7 +13,7 @@ import {
 
 export function KeyFeaturesSection() {
   return (
-    <section className="bg-card border-y py-40 inset-shadow-sm">
+    <section className="bg-card border-t px-8 py-40 inset-shadow-sm">
       <div className="container mx-auto grid items-center gap-24 md:grid-cols-2">
         <div className="grid gap-12">
           <div className="flex flex-col gap-2">
@@ -26,7 +26,7 @@ export function KeyFeaturesSection() {
               composable and customizable.
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             {[
               {
                 icon: SparklesIcon,
@@ -67,7 +67,7 @@ export function KeyFeaturesSection() {
             ))}
           </div>
         </div>
-        <div className="relative">
+        <div className="relative order-first md:order-last">
           <HorizontalLineDecorator
             lineOffset={100}
             className="absolute top-0"

@@ -14,7 +14,7 @@ import {
 
 export function ComponentDemoCarouselSection() {
   return (
-    <section className="py-24">
+    <section className="px-8 py-24">
       <div className="container mx-auto flex flex-col gap-8">
         <h2 className="from-foreground to-muted-foreground bg-gradient-to-b bg-clip-text text-center text-4xl font-bold tracking-tighter text-balance text-transparent">
           Supercharged components that elevate shadcn/ui
@@ -62,7 +62,7 @@ export function ComponentDemoCarouselSection() {
             ].map((item, index) => (
               <CarouselItem key={index} className="basis-96">
                 <div className="flex flex-col gap-4">
-                  <ComponentCanvas className="flex aspect-square items-center justify-center">
+                  <ComponentCanvas className="flex aspect-square items-center justify-center p-4">
                     <ComponentCanvasExample name={item.name} />
                   </ComponentCanvas>
                   <div>
@@ -75,7 +75,7 @@ export function ComponentDemoCarouselSection() {
               </CarouselItem>
             ))}
             <CarouselItem className="basis-96">
-              <div className="bg-card flex aspect-square flex-col items-center justify-center gap-6 rounded-md border p-8 text-center">
+              <div className="bg-card flex aspect-square flex-col items-center justify-center gap-2 rounded-md border p-8 text-center">
                 <p className="text-muted-foreground text-sm">
                   Explore more components
                 </p>
