@@ -30,7 +30,7 @@ npx shadcn@latest add https://ui-x.junwen-k.dev/r/confirmer.json
 </Step>
 
 ```tsx title="app/layout.tsx" {1,9}
-import { Confirmer } from "@/components/ui/confirmer";
+import { Confirmer } from "@/components/ui/confirmer"; // [!code highlight]
 
 export default function RootLayout({ children }) {
   return (
@@ -38,7 +38,7 @@ export default function RootLayout({ children }) {
       <head />
       <body>
         <main>{children}</main>
-        <Confirmer />
+        <Confirmer /> {/* [!code highlight] */}
       </body>
     </html>
   );
@@ -56,7 +56,7 @@ export default function RootLayout({ children }) {
 <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install use-ask
+npm install react-call
 ```
 
 <Step>
@@ -88,7 +88,7 @@ export default function RootLayout({ children }) {
       <head />
       <body>
         <main>{children}</main>
-        <Confirmer /> // [!code highlight]
+        <Confirmer /> {/* [!code highlight] */}
       </body>
     </html>
   );
