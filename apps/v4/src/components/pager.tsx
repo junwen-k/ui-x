@@ -29,7 +29,7 @@ export function DocsPager({ doc }: DocsPagerProps) {
   }
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
       {pager?.prev?.href && (
         <Link
           href={pager.prev.href}
@@ -52,7 +52,7 @@ export function DocsPager({ doc }: DocsPagerProps) {
           href={pager.next.href}
           className={cn(
             buttonVariants({ variant: "outline" }),
-            "col-start-2 flex h-auto flex-col items-end gap-1.5 p-4 whitespace-normal",
+            "flex h-auto flex-col items-end gap-1.5 p-4 whitespace-normal md:col-start-2",
           )}
         >
           <div className="flex items-center gap-2 font-medium">

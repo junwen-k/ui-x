@@ -1,4 +1,21 @@
-export const docsConfig = {
+export interface NavItem {
+  title: string;
+  href: string;
+  label?: string;
+  items?: NavItem[];
+}
+
+export interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
+export interface DocsConfig {
+  mainNav: NavItem[];
+  sidebarNav: NavGroup[];
+}
+
+export const docsConfig: DocsConfig = {
   mainNav: [
     {
       title: "Documentation",
@@ -185,4 +202,4 @@ export const docsConfig = {
       ],
     },
   ],
-} as const;
+} as const satisfies DocsConfig;

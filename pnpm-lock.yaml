@@ -184,7 +184,7 @@ importers:
         version: 1.0.0(@types/react-dom@18.3.1)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       contentlayer2:
         specifier: ^0.4.6
-        version: 0.4.6(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+        version: 0.4.6(esbuild@0.17.19)(markdown-wasm@1.2.0)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -220,7 +220,7 @@ importers:
         version: 15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-contentlayer2:
         specifier: ^0.4.6
-        version: 0.4.6(acorn@8.14.1)(contentlayer2@0.4.6(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0))(esbuild@0.17.19)(markdown-wasm@1.2.0)(next@15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 0.4.6(contentlayer2@0.4.6(esbuild@0.17.19)(markdown-wasm@1.2.0))(esbuild@0.17.19)(markdown-wasm@1.2.0)(next@15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -456,6 +456,9 @@ importers:
       '@radix-ui/react-progress':
         specifier: ^1.0.3
         version: 1.1.0(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-radio-group':
+        specifier: ^1.1.3
+        version: 1.2.1(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@radix-ui/react-roving-focus':
         specifier: ^1.1.0
         version: 1.1.0(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -8059,9 +8062,9 @@ snapshots:
       '@types/conventional-commits-parser': 5.0.1
       chalk: 5.4.1
 
-  '@contentlayer2/cli@0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)':
+  '@contentlayer2/cli@0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)':
     dependencies:
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
       '@contentlayer2/utils': 0.4.3
       clipanion: 3.2.1(typanion@3.14.0)
       typanion: 3.14.0
@@ -8072,9 +8075,9 @@ snapshots:
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/client@0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)':
+  '@contentlayer2/client@0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)':
     dependencies:
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
       - acorn
@@ -8082,13 +8085,13 @@ snapshots:
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/core@0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)':
+  '@contentlayer2/core@0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)':
     dependencies:
       '@contentlayer2/utils': 0.4.3
       camel-case: 4.1.2
       comment-json: 4.2.5
       gray-matter: 4.0.3
-      mdx-bundler: 10.0.3(acorn@8.14.1)(esbuild@0.17.19)
+      mdx-bundler: 10.0.3(esbuild@0.17.19)
       rehype-stringify: 10.0.1
       remark-frontmatter: 5.0.0
       remark-parse: 11.0.0
@@ -8104,9 +8107,9 @@ snapshots:
       - acorn
       - supports-color
 
-  '@contentlayer2/source-files@0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)':
+  '@contentlayer2/source-files@0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)':
     dependencies:
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
       '@contentlayer2/utils': 0.4.3
       chokidar: 3.6.0
       fast-glob: 3.3.3
@@ -8124,10 +8127,10 @@ snapshots:
       - markdown-wasm
       - supports-color
 
-  '@contentlayer2/source-remote-files@0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)':
+  '@contentlayer2/source-remote-files@0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)':
     dependencies:
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
-      '@contentlayer2/source-files': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/source-files': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
       '@contentlayer2/utils': 0.4.3
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
@@ -8764,7 +8767,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mdx-js/esbuild@3.0.1(acorn@8.14.1)(esbuild@0.17.19)':
+  '@mdx-js/esbuild@3.0.1(esbuild@0.17.19)':
     dependencies:
       '@mdx-js/mdx': 3.1.0(acorn@8.14.1)
       '@types/unist': 3.0.3
@@ -9987,6 +9990,24 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.11
       '@types/react-dom': 18.3.1
+
+  '@radix-ui/react-radio-group@1.2.1(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@radix-ui/primitive': 1.1.0
+      '@radix-ui/react-compose-refs': 1.1.0(@types/react@19.0.11)(react@19.0.0)
+      '@radix-ui/react-context': 1.1.1(@types/react@19.0.11)(react@19.0.0)
+      '@radix-ui/react-direction': 1.1.0(@types/react@19.0.11)(react@19.0.0)
+      '@radix-ui/react-presence': 1.1.1(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-roving-focus': 1.1.0(@types/react-dom@19.0.4(@types/react@19.0.11))(@types/react@19.0.11)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@19.0.11)(react@19.0.0)
+      '@radix-ui/react-use-previous': 1.1.0(@types/react@19.0.11)(react@19.0.0)
+      '@radix-ui/react-use-size': 1.1.0(@types/react@19.0.11)(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    optionalDependencies:
+      '@types/react': 19.0.11
+      '@types/react-dom': 19.0.4(@types/react@19.0.11)
 
   '@radix-ui/react-roving-focus@1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -11423,13 +11444,13 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  contentlayer2@0.4.6(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0):
+  contentlayer2@0.4.6(esbuild@0.17.19)(markdown-wasm@1.2.0):
     dependencies:
-      '@contentlayer2/cli': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
-      '@contentlayer2/client': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
-      '@contentlayer2/source-files': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
-      '@contentlayer2/source-remote-files': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/cli': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/client': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/source-files': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/source-remote-files': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
       '@contentlayer2/utils': 0.4.3
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
@@ -11969,7 +11990,7 @@ snapshots:
       eslint: 9.22.0(jiti@2.4.2)
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.3(@typescript-eslint/parser@8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.22.0(jiti@2.4.2))
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint@9.22.0(jiti@2.4.2))
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.22.0(jiti@2.4.2))
       eslint-plugin-jsx-a11y: 6.10.0(eslint@9.22.0(jiti@2.4.2))
       eslint-plugin-react: 7.37.4(eslint@9.22.0(jiti@2.4.2))
       eslint-plugin-react-hooks: 5.2.0(eslint@9.22.0(jiti@2.4.2))
@@ -12004,7 +12025,7 @@ snapshots:
       is-bun-module: 1.2.1
       is-glob: 4.0.3
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint@9.22.0(jiti@2.4.2))
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.22.0(jiti@2.4.2))
     transitivePeerDependencies:
       - '@typescript-eslint/parser'
       - eslint-import-resolver-node
@@ -12022,7 +12043,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.10.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint@9.22.0(jiti@2.4.2)):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3))(eslint-import-resolver-typescript@3.6.3)(eslint@9.22.0(jiti@2.4.2)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
@@ -12045,7 +12066,7 @@ snapshots:
       string.prototype.trimend: 1.0.9
       tsconfig-paths: 3.15.0
     optionalDependencies:
-      '@typescript-eslint/parser': 8.10.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3)
+      '@typescript-eslint/parser': 8.26.1(eslint@9.22.0(jiti@2.4.2))(typescript@5.6.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -13482,12 +13503,12 @@ snapshots:
       unist-util-is: 5.2.1
       unist-util-visit: 4.1.2
 
-  mdx-bundler@10.0.3(acorn@8.14.1)(esbuild@0.17.19):
+  mdx-bundler@10.0.3(esbuild@0.17.19):
     dependencies:
       '@babel/runtime': 7.25.7
       '@esbuild-plugins/node-resolve': 0.2.2(esbuild@0.17.19)
       '@fal-works/esbuild-plugin-global-externals': 2.1.2
-      '@mdx-js/esbuild': 3.0.1(acorn@8.14.1)(esbuild@0.17.19)
+      '@mdx-js/esbuild': 3.0.1(esbuild@0.17.19)
       esbuild: 0.17.19
       gray-matter: 4.0.3
       remark-frontmatter: 5.0.0
@@ -14005,11 +14026,11 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  next-contentlayer2@0.4.6(acorn@8.14.1)(contentlayer2@0.4.6(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0))(esbuild@0.17.19)(markdown-wasm@1.2.0)(next@15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next-contentlayer2@0.4.6(contentlayer2@0.4.6(esbuild@0.17.19)(markdown-wasm@1.2.0))(esbuild@0.17.19)(markdown-wasm@1.2.0)(next@15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@contentlayer2/core': 0.4.3(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      '@contentlayer2/core': 0.4.3(esbuild@0.17.19)(markdown-wasm@1.2.0)
       '@contentlayer2/utils': 0.4.3
-      contentlayer2: 0.4.6(acorn@8.14.1)(esbuild@0.17.19)(markdown-wasm@1.2.0)
+      contentlayer2: 0.4.6(esbuild@0.17.19)(markdown-wasm@1.2.0)
       next: 15.2.3(@babel/core@7.25.8)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

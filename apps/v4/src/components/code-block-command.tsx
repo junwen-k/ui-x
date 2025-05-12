@@ -2,7 +2,6 @@
 
 import * as React from "react";
 
-import { CopyButton } from "@/components/copy-button";
 import {
   UnderlinedTabs,
   UnderlinedTabsContent,
@@ -68,7 +67,7 @@ export function CodeBlockCommand({
           <UnderlinedTabsContent
             key={packageManager}
             value={packageManager}
-            className="[&_[data-slot='code-block-pre']]:my-0 [&_[data-slot='code-block-pre']]:shadow-none"
+            className="[&_[data-slot=code-block-pre]]:my-0 [&_[data-slot=code-block-pre]]:shadow-none"
           >
             {children[index]}
           </UnderlinedTabsContent>

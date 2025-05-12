@@ -14,7 +14,7 @@ import {
 export function KeyFeaturesSection() {
   return (
     <section className="bg-card border-t px-8 py-40 inset-shadow-sm">
-      <div className="container mx-auto grid items-center gap-24 md:grid-cols-2">
+      <div className="mx-auto grid max-w-screen-2xl items-center gap-24 md:grid-cols-2">
         <div className="grid gap-12">
           <div className="flex flex-col gap-2">
             <h4 className="from-foreground to-muted-foreground bg-gradient-to-b bg-clip-text text-3xl font-bold tracking-tighter text-balance text-transparent">

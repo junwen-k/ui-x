@@ -34,7 +34,7 @@ export default async function Page({ params }: DocPageProps) {
   }
 
   return (
-    <div className="mx-auto grid max-w-6xl items-start gap-12 p-12 lg:grid-cols-7">
+    <div className="mx-auto grid items-start gap-12 p-4 md:p-8 lg:grid-cols-7 lg:p-12">
       <div className="lg:col-span-5">
         <div className="grid gap-2.5">
           <h1 className="text-3xl font-bold tracking-tight">{doc.title}</h1>

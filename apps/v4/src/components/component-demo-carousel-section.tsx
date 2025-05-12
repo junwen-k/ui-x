@@ -15,7 +15,7 @@ import {
 export function ComponentDemoCarouselSection() {
   return (
     <section className="px-8 py-24">
-      <div className="container mx-auto flex flex-col gap-8">
+      <div className="mx-auto flex max-w-screen-2xl flex-col gap-8">
         <h2 className="from-foreground to-muted-foreground bg-gradient-to-b bg-clip-text text-center text-4xl font-bold tracking-tighter text-balance text-transparent">
           Supercharged components that elevate shadcn/ui
         </h2>
@@ -25,33 +25,36 @@ export function ComponentDemoCarouselSection() {
               {
                 name: "badge-group-demo",
                 title: "Badge Group",
-                description: "A badge group is a group of badges.",
+                description:
+                  "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
               },
               {
                 name: "calendar-dropdown-layout",
                 title: "Calendar",
                 description:
-                  "A calendar component that allows users to select dates.",
+                  "A calendar component lets users select a date without any input or popper / modal.",
               },
               {
                 name: "combobox-demo",
                 title: "Combobox",
-                description: "A combobox combines a text input with a listbox.",
+                description:
+                  "Input field with autocomplete & autosuggest functionalities.",
               },
               {
                 name: "confirmer-demo",
                 title: "Confirmer",
-                description: "A component to confirm user actions.",
+                description: "Imperative confirm dialog implementation.",
               },
               {
                 name: "control-group-demo",
                 title: "Control Group",
-                description: "A group of related form controls.",
+                description:
+                  "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
               },
               {
                 name: "date-field-demo",
                 title: "Date Field",
-                description: "A field for entering and editing dates.",
+                description: "Date Field allows user to enter date value.",
               },
               {
                 name: "dropzone-demo",

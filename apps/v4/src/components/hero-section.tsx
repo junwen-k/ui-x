@@ -11,8 +11,8 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="px-8 py-24">
-      <div className="container mx-auto">
+    <section className="overflow-hidden px-8 py-24">
+      <div className="mx-auto max-w-screen-2xl">
         <div className="py-6 lg:py-8">
           <div className="flex items-center justify-center py-6 md:hidden">
             <Announcement />

@@ -1,16 +1,14 @@
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 
-interface HomeLayoutProps {
+export default function HomeLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-export default function HomeLayout({ children }: HomeLayoutProps) {
+}) {
   return (
     <div>
-      <SiteHeader />
-      <main>{children}</main>
-      <SiteFooter />
+      <AppSidebar className="data-[slot=sidebar-container]:hidden" />
+      {children}
     </div>
   );
 }
