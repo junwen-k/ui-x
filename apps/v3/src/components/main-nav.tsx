@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
+import { VersionDropdownMenu } from "@/components/version-dropdown-menu"
 
 export function MainNav() {
   const pathname = usePathname()
@@ -18,6 +19,9 @@ export function MainNav() {
           {siteConfig.name}
         </span>
       </Link>
+      <div className="mr-4">
+        <VersionDropdownMenu />
+      </div>
       <nav className="flex items-center gap-4 text-sm lg:gap-6">
         <Link
           href="/docs"

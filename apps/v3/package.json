@@ -29,6 +29,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@faker-js/faker": "^8.2.0",
     "@hookform/resolvers": "^3.1.0",
+    "@icons-pack/react-simple-icons": "^12.5.0",
     "@octokit/core": "^6.1.2",
     "@radix-ui/primitive": "^1.1.0",
     "@radix-ui/react-accessible-icon": "^1.0.3",

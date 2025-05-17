@@ -10,7 +10,7 @@ import Balancer from "react-wrap-balancer"
 
 import { siteConfig } from "@/config/site"
 import { getTableOfContents } from "@/lib/toc"
-import { absoluteUrl, cn } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { Mdx } from "@/components/mdx-components"
 import { DocsPager } from "@/components/pager"
 import { DashboardTableOfContents } from "@/components/toc"
@@ -49,7 +49,7 @@ export async function generateMetadata({
       title: doc.title,
       description: doc.description,
       type: "article",
-      url: absoluteUrl(doc.slug),
+      url: doc.slug,
       images: [
         {
           url: siteConfig.ogImage,

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 
 import { siteConfig } from "@/config/site"
 import { getAllBlockIds, getBlock } from "@/lib/blocks"
-import { absoluteUrl, cn } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { BlockChunk } from "@/components/block-chunk"
 import { BlockWrapper } from "@/components/block-wrapper"
 // import { ThemesStyle } from "@/components/themes-styles"
@@ -33,7 +33,7 @@ export async function generateMetadata({
       title: block.name,
       description: block.description,
       type: "article",
-      url: absoluteUrl(`/blocks/${block.name}`),
+      url: `/blocks/${block.name}`,
       images: [
         {
           url: siteConfig.ogImage,
