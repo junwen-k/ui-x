@@ -20,7 +20,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@faker-js/faker": "^8.2.0",
-    "@hookform/resolvers": "^3.1.0",
+    "@hookform/resolvers": "^5.0.1",
     "@icons-pack/react-simple-icons": "^12.5.0",
     "@octokit/core": "^6.1.2",
     "@radix-ui/primitive": "^1.1.0",
@@ -80,7 +80,6 @@
     "@eslint/eslintrc": "^3",
     "@shikijs/transformers": "^3.2.1",
     "@tailwindcss/postcss": "^4.1.3",
-    "@tailwindcss/typography": "^0.5.16",
     "@types/hast": "^3.0.4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -93,7 +92,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.1.3",
     "tw-animate-css": "^1.2.4",
-    "typescript": "^5",
+    "typescript": "^5.5.4",
     "unist-util-visit": "^5.0.0",
     "velite": "^0.2.2"
   }

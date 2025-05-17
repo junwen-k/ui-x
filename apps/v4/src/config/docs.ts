@@ -1,21 +1,4 @@
-export interface NavItem {
-  title: string;
-  href: string;
-  label?: string;
-  items?: NavItem[];
-}
-
-export interface NavGroup {
-  title: string;
-  items: NavItem[];
-}
-
-export interface DocsConfig {
-  mainNav: NavItem[];
-  sidebarNav: NavGroup[];
-}
-
-export const docsConfig: DocsConfig = {
+export const docsConfig = {
   mainNav: [
     {
       title: "Documentation",
@@ -24,6 +7,10 @@ export const docsConfig: DocsConfig = {
     {
       title: "Primitives",
       href: "/docs/primitives",
+    },
+    {
+      title: "Utilities",
+      href: "/docs/utilities",
     },
     {
       title: "Components",
@@ -42,6 +29,12 @@ export const docsConfig: DocsConfig = {
         {
           title: "Installation",
           href: "/docs/installation",
+          items: [],
+        },
+        {
+          title: "Tailwind v4",
+          href: "/docs/tailwind-v4",
+          label: "New",
           items: [],
         },
         {
@@ -202,4 +195,4 @@ export const docsConfig: DocsConfig = {
       ],
     },
   ],
-} as const satisfies DocsConfig;
+} as const;

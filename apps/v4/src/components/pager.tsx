@@ -8,14 +8,10 @@ import { docsConfig } from "@/config/docs";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
-  title: string;
-  href: string;
-  description?: string;
-  disabled?: boolean;
-}
-
-interface NavItemWithChildren extends NavItem {
-  items?: NavItemWithChildren[];
+  readonly title: string;
+  readonly href?: string;
+  readonly disabled?: boolean;
+  readonly items?: readonly NavItem[];
 }
 
 interface DocsPagerProps {
@@ -105,10 +101,10 @@ export function getPagerForDoc(doc: Doc) {
   };
 }
 
-export function flatten(links: NavItemWithChildren[]): NavItem[] {
+export function flatten(links: readonly NavItem[]): readonly NavItem[] {
   return links
     .reduce<
-      NavItem[]
+      readonly NavItem[]
     >((flat, link) => flat.concat(link.items?.length ? flatten(link.items) : link), [])
     .filter((link) => !link?.disabled);
 }

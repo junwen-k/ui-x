@@ -115,7 +115,7 @@ export default function SortableTrigger() {
               title={item.title}
               description={item.description}
               tabIndex={undefined}
-              className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
+              className="min-w-64 aria-pressed:opacity-50 aria-pressed:shadow-sm"
             />
           </SortableItem>
         ))}

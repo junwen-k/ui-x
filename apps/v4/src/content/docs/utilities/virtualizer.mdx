@@ -38,7 +38,7 @@ After exploring various libraries, I found [virtua](https://github.com/inokawa/v
 
 This documentation serves as a guide to help you understand how to use the `<Virtualized />` component. Feel free to create your own abstraction of the virtualized components, e.g. `<VirtualizedScrollArea />`, `<VirtualizedSelect />`, etc.
 
-<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950">
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
 
 **Important**: Use virtualization judiciously. It's best suited for scenarios involving large lists or tables, rather than squeezing out every bit of "performance optimizations".
 

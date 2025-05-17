@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function Announcement() {
   return (
     <Link
-      href="/docs"
+      href="/docs/tailwind-v4"
       className={cn(badgeVariants({ variant: "outline" }), "group")}
     >
       <SiTailwindcss className="mr-1 fill-sky-400 text-sky-400" />

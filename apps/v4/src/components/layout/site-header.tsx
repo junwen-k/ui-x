@@ -8,11 +8,16 @@ import { GithubButton } from "@/components/github-button";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { UiXLogo } from "@/components/ui-x-logo";
+import { VersionDropdownMenu } from "@/components/version-dropdown-menu";
 import { docsConfig } from "@/config/docs";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
   const pathname = usePathname();
+
+  const activeItem = docsConfig.mainNav.findLast((item) =>
+    pathname.startsWith(item.href),
+  );
 
   return (
     <header className="bg-background/80 sticky top-0 isolate z-10 border-b border-dashed backdrop-blur md:px-8">
@@ -25,6 +30,7 @@ export function SiteHeader() {
             </span>
           </Link>
           <SidebarTrigger className="md:hidden" />
+          <VersionDropdownMenu />
           <nav className="hidden items-center gap-6 text-sm md:flex">
             {docsConfig.mainNav.map((item) => (
               <Link
@@ -32,7 +38,7 @@ export function SiteHeader() {
                 href={item.href}
                 className={cn(
                   "hover:text-foreground/80 transition-colors",
-                  pathname === item.href
+                  activeItem?.href === item.href
                     ? "text-foreground"
                     : "text-foreground/60",
                 )}
@@ -43,7 +49,7 @@ export function SiteHeader() {
           </nav>
         </div>
         <div className="flex items-center gap-4">
-          <ModeSwitcher />
+          <ModeSwitcher className="hidden lg:inline-flex" />
           <CommandMenu />
           <div className="flex items-center gap-0.5">
             <GithubButton />

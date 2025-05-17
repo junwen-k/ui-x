@@ -18,12 +18,19 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { docsConfig } from "@/config/docs";
+import { cn } from "@/lib/utils";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  className,
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname();
 
   return (
-    <Sidebar className="sticky top-14 z-0 border-x border-dashed" {...props}>
+    <Sidebar
+      className={cn("sticky top-14 z-0 border-x border-dashed", className)}
+      {...props}
+    >
       <SidebarContent className="mask-t-from-98% [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {docsConfig.sidebarNav.map((item) => (
           <SidebarGroup key={item.title}>

@@ -6,9 +6,11 @@ export default function DocsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto flex max-w-screen-2xl md:px-8 md:py-0">
-      <AppSidebar />
-      <div className="flex-1">{children}</div>
+    <div className="md:px-8">
+      <div className="mx-auto flex max-w-screen-2xl">
+        <AppSidebar />
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   );
 }

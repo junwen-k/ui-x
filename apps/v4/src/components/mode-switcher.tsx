@@ -42,7 +42,7 @@ export function ModeSwitcher({
       value={theme}
       onValueChange={setTheme}
       className={cn(
-        "bg-muted inline-flex items-center rounded-full border p-1",
+        "bg-muted inline-flex items-center rounded-full border",
         className,
       )}
       {...props}
