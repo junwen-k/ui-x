@@ -428,14 +428,13 @@ function ComboboxClear({
 }
 
 function ComboboxContent({
-  children,
   onOpenAutoFocus,
   onInteractOutside,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
   return (
     <PopoverPrimitive.Content
-      asChild
+      data-slot="combobox-content"
       onOpenAutoFocus={composeEventHandlers(onOpenAutoFocus, (event) =>
         event.preventDefault(),
       )}
@@ -451,12 +450,14 @@ function ComboboxContent({
         }
       })}
       {...props}
-    >
-      <CommandPrimitive.List data-slot="combobox-content">
-        {children}
-      </CommandPrimitive.List>
-    </PopoverPrimitive.Content>
+    />
   );
+}
+
+function ComboboxList(
+  props: React.ComponentProps<typeof CommandPrimitive.List>,
+) {
+  return <CommandPrimitive.List data-slot="combobox-list" {...props} />;
 }
 
 const ComboboxItemContext = React.createContext({ isSelected: false });
@@ -572,45 +573,45 @@ function ComboboxItemText(props: ComboboxItemTextProps) {
   return <React.Fragment {...props} />;
 }
 
-function ComboboxTrigger({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
+function ComboboxTrigger(
+  props: React.ComponentProps<typeof PopoverPrimitive.Trigger>,
+) {
   return <PopoverPrimitive.Trigger data-slot="combobox-trigger" {...props} />;
 }
 
-function ComboboxAnchor({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) {
+function ComboboxAnchor(
+  props: React.ComponentProps<typeof PopoverPrimitive.Anchor>,
+) {
   return <PopoverPrimitive.Anchor data-slot="combobox-anchor" {...props} />;
 }
 
-function ComboboxPortal({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Portal>) {
+function ComboboxPortal(
+  props: React.ComponentProps<typeof PopoverPrimitive.Portal>,
+) {
   return <PopoverPrimitive.Portal data-slot="combobox-portal" {...props} />;
 }
 
-function ComboboxEmpty({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) {
+function ComboboxEmpty(
+  props: React.ComponentProps<typeof CommandPrimitive.Empty>,
+) {
   return <CommandPrimitive.Empty data-slot="combobox-empty" {...props} />;
 }
 
-function ComboboxLoading({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Loading>) {
+function ComboboxLoading(
+  props: React.ComponentProps<typeof CommandPrimitive.Loading>,
+) {
   return <CommandPrimitive.Loading data-slot="combobox-loading" {...props} />;
 }
 
-function ComboboxGroup({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Group>) {
+function ComboboxGroup(
+  props: React.ComponentProps<typeof CommandPrimitive.Group>,
+) {
   return <CommandPrimitive.Group data-slot="combobox-group" {...props} />;
 }
 
-function ComboboxSeparator({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Separator>) {
+function ComboboxSeparator(
+  props: React.ComponentProps<typeof CommandPrimitive.Separator>,
+) {
   return (
     <CommandPrimitive.Separator data-slot="combobox-separator" {...props} />
   );
@@ -627,6 +628,7 @@ export {
   ComboboxAnchor as Anchor,
   ComboboxPortal as Portal,
   ComboboxContent as Content,
+  ComboboxList as List,
   ComboboxEmpty as Empty,
   ComboboxLoading as Loading,
   ComboboxItem as Item,

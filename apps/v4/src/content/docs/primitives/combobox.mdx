@@ -71,20 +71,22 @@ export default () => (
 
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Content>
-        <ComboboxPrimitive.Empty />
-        <ComboboxPrimitive.Loading />
+        <ComboboxPrimitive.List>
+          <ComboboxPrimitive.Empty />
+          <ComboboxPrimitive.Loading />
 
-        <ComboboxPrimitive.Item>
-          <ComboboxPrimitive.ItemIndicator />
-        </ComboboxPrimitive.Item>
-
-        <ComboboxPrimitive.Group>
           <ComboboxPrimitive.Item>
             <ComboboxPrimitive.ItemIndicator />
           </ComboboxPrimitive.Item>
-        </ComboboxPrimitive.Group>
 
-        <ComboboxPrimitive.Separator />
+          <ComboboxPrimitive.Group>
+            <ComboboxPrimitive.Item>
+              <ComboboxPrimitive.ItemIndicator />
+            </ComboboxPrimitive.Item>
+          </ComboboxPrimitive.Group>
+
+          <ComboboxPrimitive.Separator />
+        </ComboboxPrimitive.List>
       </ComboboxPrimitive.Content>
     </ComboboxPrimitive.Portal>
   </ComboboxPrimitive.Root>
