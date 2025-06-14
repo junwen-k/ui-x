@@ -22,7 +22,6 @@ const items = Array.from({ length: 10000 }, (_, index) => ({
 
 export default function VirtualizerCombobox() {
   const [inputValue, setInputValue] = React.useState("");
-  const [open, setOpen] = React.useState(false);
 
   const filtered = React.useMemo(() => {
     if (!inputValue) {
@@ -37,8 +36,6 @@ export default function VirtualizerCombobox() {
   return (
     <Combobox
       type="single"
-      open={open}
-      onOpenChange={setOpen}
       inputValue={inputValue}
       onInputValueChange={setInputValue}
       shouldFilter={false}

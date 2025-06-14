@@ -34,24 +34,26 @@ export default function ComboboxPrimitiveDemo() {
         <ComboboxPrimitive.Trigger>&#8595;</ComboboxPrimitive.Trigger>
       </ComboboxPrimitive.Anchor>
       <ComboboxPrimitive.Portal>
-        <ComboboxPrimitive.Content>
-          <ComboboxPrimitive.Empty>No fruit found.</ComboboxPrimitive.Empty>
-          <ComboboxPrimitive.Group heading="Fruits">
-            {fruits.map((fruit) => (
-              <ComboboxPrimitive.Item
-                key={fruit.value}
-                value={fruit.value}
-                className="data-[selected=true]:ring"
-              >
-                <ComboboxPrimitive.ItemText>
-                  {fruit.label}
-                </ComboboxPrimitive.ItemText>
-                <ComboboxPrimitive.ItemIndicator>
-                  &#x2714;
-                </ComboboxPrimitive.ItemIndicator>
-              </ComboboxPrimitive.Item>
-            ))}
-          </ComboboxPrimitive.Group>
+        <ComboboxPrimitive.Content asChild>
+          <ComboboxPrimitive.List>
+            <ComboboxPrimitive.Empty>No fruit found.</ComboboxPrimitive.Empty>
+            <ComboboxPrimitive.Group heading="Fruits">
+              {fruits.map((fruit) => (
+                <ComboboxPrimitive.Item
+                  key={fruit.value}
+                  value={fruit.value}
+                  className="data-[selected=true]:ring"
+                >
+                  <ComboboxPrimitive.ItemText>
+                    {fruit.label}
+                  </ComboboxPrimitive.ItemText>
+                  <ComboboxPrimitive.ItemIndicator>
+                    &#x2714;
+                  </ComboboxPrimitive.ItemIndicator>
+                </ComboboxPrimitive.Item>
+              ))}
+            </ComboboxPrimitive.Group>
+          </ComboboxPrimitive.List>
         </ComboboxPrimitive.Content>
       </ComboboxPrimitive.Portal>
     </ComboboxPrimitive.Root>

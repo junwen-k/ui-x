@@ -96,6 +96,24 @@ import {
   className="[&_div[cmdk-root]]:max-w-xs"
 />
 
+### Command
+
+`<Combobox />` and `<ComboboxPrimitive />` components can be composed to build a component similar to shadcn/ui's official [Combobox](https://ui.shadcn.com/docs/components/combobox) component.
+
+<ComponentPreview
+  name="combobox-command"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
+### Custom Item
+
+`<Combobox />` is an abstraction over `<ComboboxPrimitive />`. To build your own custom item, you can use the `<ComboboxPrimitive />` components directly. Similar to Radix UI's Select, the `<ComboboxItemText />` component defines the text content that will be used for filtering - when users type in the search input, the combobox will filter items based on the text content of their `<ComboboxItemText />` components.
+
+<ComponentPreview
+  name="combobox-custom-item"
+  className="[&_div[cmdk-root]]:max-w-xs"
+/>
+
 ### Loading
 
 <ComponentPreview

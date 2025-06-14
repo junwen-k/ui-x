@@ -103,6 +103,7 @@ function ComboboxTag({
 }
 
 function ComboboxContent({
+  children,
   className,
   align = "center",
   alignOffset = 4,
@@ -112,6 +113,7 @@ function ComboboxContent({
     <ComboboxPrimitive.Portal>
       <ComboboxPrimitive.Content
         data-slot="combobox-content"
+        asChild
         align={align}
         alignOffset={alignOffset}
         className={cn(
@@ -119,7 +121,9 @@ function ComboboxContent({
           className,
         )}
         {...props}
-      />
+      >
+        <ComboboxPrimitive.List>{children}</ComboboxPrimitive.List>
+      </ComboboxPrimitive.Content>
     </ComboboxPrimitive.Portal>
   );
 }

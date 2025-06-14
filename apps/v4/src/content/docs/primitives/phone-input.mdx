@@ -1,0 +1,148 @@
+---
+title: Phone Input Primitive
+description: Phone Input allows user to enter phone number in E.164 format.
+links:
+  doc: https://catamphetamine.gitlab.io/react-phone-number-input/
+---
+
+<ComponentPreview name="phone-input-primitive-demo" />
+
+## About
+
+The `<PhoneInput />` component is built on top of [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/), wrapping the library to deliver a more consistent API that aligns with Radix UI conventions.
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
+
+**Important**: This component implements a non-standard controlled behavior that differs from typical React patterns. The underlying library maintains its own internal state alongside any external state management, making it a "semi-controlled" component. While it works somewhat reliably, it may not behave as expected if you're used to idiomatic controlled components. See the [related issue](https://gitlab.com/catamphetamine/react-phone-number-input/-/issues/249) for technical details.
+
+</Callout>
+
+## Understanding Phone Formats
+
+Phone number formatting is a complex topic with various standards and representations. Before diving into the component usage, it's important to understand the core concepts of phone number formats.
+
+### National Format
+
+National format represents phone numbers in their local, country-specific format. This format is most familiar to users within a specific country. For example:
+
+- Japan: `0123-45-6789`
+- Malaysia: `012-345 6789`
+- United Kingdom: `01234 567890`
+- United States: `(234) 567-8900`
+
+### International Format
+
+International format follows the [E.164 standard](https://en.wikipedia.org/wiki/E.164), which provides a consistent way to represent phone numbers globally. This format can be displayed in two variants:
+
+1. **Without Country Code**
+
+   Shows only the subscriber number without the country calling code prefix, useful when the country is already known through the country select or other context. For example:
+
+   - Japan: `123 45 6789`
+   - Malaysia: `12 345 6789`
+   - United Kingdom: `1234 567890`
+   - United States: `234 567 8900`
+
+2. **With Country Code**
+
+   Includes the country calling code prefix, a universal representation that works across all countries. For example:
+
+   - Japan: `+81 123 45 6789`
+   - Malaysia: `+60 12 345 6789`
+   - United Kingdom: `+44 1234 567890`
+   - United States: `+1 234 567 8900`
+
+### Format Behavior Matrix
+
+The following table summarizes how phone numbers are formatted based on the availability of country information:
+
+| Country Information    | Format Type                          | Example (US Number) | Notes                                                                        |
+| ---------------------- | ------------------------------------ | ------------------- | ---------------------------------------------------------------------------- |
+| No country info        | International (with country code)    | `+1 234 567 8900`   | Always includes country code as it's required for unambiguous interpretation |
+| Country info available | National                             | `(234) 567-8900`    | Default format when country is known                                         |
+| Country info available | International (without country code) | `234 567 8900`      | Country code omitted as it's known from context                              |
+| Country info available | International (with country code)    | `+1 234 567 8900`   | Explicitly includes country code despite country being known                 |
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/phone-input-primitive.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @radix-ui/react-use-controllable-state react-phone-number-input use-debounce
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="phone-input-primitive" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+```tsx
+import * as PhoneInputPrimitive from "@/components/ui/phone-input-primitive";
+
+export default () => (
+  <PhoneInputPrimitive.Root>
+    <PhoneInputPrimitive.Input />
+  </PhoneInputPrimitive.Root>
+);
+```
+
+## Examples
+
+### Default
+
+Basic example with country select and input.
+
+<ComponentPreview name="phone-input-primitive-demo" />
+
+### Disabled
+
+<ComponentPreview name="phone-input-primitive-disabled" />
+
+### Preferred Country
+
+When you know the likely country of your users (such as for a local business signup), you can set a default country while still allowing international numbers. This lets users enter phone numbers in their national format for the default country, while maintaining the flexibility to use international formats for any other country.
+
+In this example, the default country is set to Malaysia, with the initial value forced to display in international format rather than the default national format.
+
+<ComponentPreview name="phone-input-primitive-preferred-country" />
+
+<Callout className="[&_[data-slot=alert-description]]:text-foreground mt-4 border-amber-200 bg-amber-50 dark:border-amber-950 dark:bg-amber-950/50">
+
+**Important**: Since `react-phone-number-input` uses a function-based approach
+for its `inputComponent` prop, this differs from Radix UI's `asChild` composition which expects a
+JSX element directly.
+
+To ensure stable behavior and prevent focus issues, it's
+recommended to either use a custom component that returns a native input
+element, or wrap the native input element with `useMemo` to maintain a stable
+reference. Avoid using raw input elements directly as children, as this will
+cause focus issues on each change.
+
+</Callout>
