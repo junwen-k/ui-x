@@ -30,7 +30,7 @@ function Timeline({
   ...props
 }: TimelineProps) {
   return (
-    <TimelineContext value={{ orientation }}>
+    <TimelineContext.Provider value={{ orientation }}>
       <ol
         data-slot="timeline"
         role="list"
@@ -42,7 +42,7 @@ function Timeline({
         )}
         {...props}
       />
-    </TimelineContext>
+    </TimelineContext.Provider>
   );
 }
 
