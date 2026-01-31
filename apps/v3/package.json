@@ -84,7 +84,7 @@
     "lodash.template": "^4.5.0",
     "lucide-react": "0.453.0",
     "markdown-wasm": "^1.2.0",
-    "next": "15.2.3",
+    "next": "15.2.8",
     "next-contentlayer2": "^0.4.6",
     "next-themes": "^0.2.1",
     "pretty-bytes": "^6.1.1",
