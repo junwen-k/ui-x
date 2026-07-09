@@ -79,7 +79,6 @@ export const docsConfig = {
         {
           title: "Phone Input",
           href: "/docs/primitives/phone-input",
-          label: "New",
           items: [],
         },
       ],
@@ -155,7 +154,6 @@ export const docsConfig = {
         {
           title: "Emoji Picker",
           href: "/docs/components/emoji-picker",
-          label: "New",
           items: [],
         },
         {
@@ -196,7 +194,6 @@ export const docsConfig = {
         {
           title: "Phone Input",
           href: "/docs/components/phone-input",
-          label: "New",
           items: [],
         },
         {
@@ -217,7 +214,6 @@ export const docsConfig = {
         {
           title: "Wheel Picker",
           href: "/docs/components/wheel-picker",
-          label: "New",
           items: [],
         },
       ],
