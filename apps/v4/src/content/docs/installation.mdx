@@ -3,4 +3,23 @@ title: Installation
 description: How to install dependencies and structure your app.
 ---
 
-For installation instructions and setting up dependencies, please refer to the official Shadcn [installation guide](https://ui.shadcn.com/docs/installation). This guide provides the most up-to-date information for structuring your app and ensuring compatibility.
+junwen-k/ui-x is an extension of [shadcn/ui](https://ui.shadcn.com) and is distributed through the same registry system. Set up shadcn/ui in your project first by following the official [installation guide](https://ui.shadcn.com/docs/installation) for your framework.
+
+## Requirements
+
+- A project set up with [shadcn/ui](https://ui.shadcn.com/docs/installation) (Tailwind CSS v4 and React 19 for the latest components — see the [Tailwind v3 docs](https://v3-ui-x.junwen-k.dev) if you are still on v3).
+- Components are currently built on [Radix UI](https://www.radix-ui.com) primitives, matching shadcn/ui's Radix-based components.
+
+## Installing components
+
+Every component can be installed with the shadcn CLI by pointing at this registry:
+
+```bash
+npx shadcn@latest add https://ui-x.junwen-k.dev/r/date-field.json
+```
+
+Each component's documentation page includes its exact install command, along with a manual installation option if you prefer to copy the source directly.
+
+## Utilities
+
+Utility docs such as [Sortable](/docs/utilities/sortable) and [Virtualizer](/docs/utilities/virtualizer) are guides built around third-party libraries — their pages describe which packages to install.
