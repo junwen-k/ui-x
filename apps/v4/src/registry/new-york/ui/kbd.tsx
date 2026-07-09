@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const kbdVariants = cva(
-  "pointer-events-none inline-flex select-none items-center gap-1 rounded px-1.5 py-0.5 font-mono text-[10px] font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+  "pointer-events-none inline-flex w-fit items-center gap-1 rounded px-1.5 py-0.5 font-mono text-[10px] font-medium select-none [&_svg:not([class*='size-'])]:size-3",
   {
     variants: {
       variant: {
