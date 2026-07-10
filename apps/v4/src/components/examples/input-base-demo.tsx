@@ -7,7 +7,7 @@ import {
 
 export default function InputBaseDemo() {
   return (
-    <InputBase>
+    <InputBase className="max-w-xs">
       <InputBaseAdornment>@</InputBaseAdornment>
       <InputBaseControl>
         <InputBaseInput placeholder="junwen-k" />

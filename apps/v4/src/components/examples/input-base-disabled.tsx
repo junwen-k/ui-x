@@ -10,7 +10,7 @@ import {
 
 export default function InputBaseDisabled() {
   return (
-    <InputBase disabled>
+    <InputBase disabled className="max-w-xs">
       <InputBaseAdornment>
         <Mail />
       </InputBaseAdornment>

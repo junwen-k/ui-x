@@ -152,15 +152,16 @@ function DatePickerDateField({
   );
 }
 
-function DatePickerInput(
-  props: React.ComponentProps<
-    typeof DatePickerDateField | typeof DatePickerDateRangeField
-  >,
-) {
+function DatePickerInput({
+  className,
+  ...props
+}: React.ComponentProps<
+  typeof DatePickerDateField | typeof DatePickerDateRangeField
+>) {
   const { mode } = DatePickerPrimitive.useDatePicker();
 
   return (
-    <DatePickerInputBase>
+    <DatePickerInputBase className={className}>
       {mode === "range" ? (
         <DatePickerDateRangeField
           {...(props as React.ComponentProps<typeof DatePickerDateRangeField>)}

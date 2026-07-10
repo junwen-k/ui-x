@@ -16,7 +16,7 @@ import {
 
 export default function InputBaseWithAction() {
   return (
-    <InputBase>
+    <InputBase className="max-w-xs">
       <InputBaseAdornment>
         <Mail />
       </InputBaseAdornment>

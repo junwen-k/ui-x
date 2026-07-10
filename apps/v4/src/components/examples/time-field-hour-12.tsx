@@ -9,7 +9,7 @@ import {
 
 export default function TimeFieldHour12() {
   return (
-    <TimeField hour12>
+    <TimeField hour12 className="max-w-xs">
       <TimeFieldHours />
       <TimeFieldSeparator />
       <TimeFieldMinutes />

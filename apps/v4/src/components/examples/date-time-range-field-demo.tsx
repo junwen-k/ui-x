@@ -14,7 +14,7 @@ import {
 
 export default function DateTimeRangeFieldDemo() {
   return (
-    <DateTimeRangeField>
+    <DateTimeRangeField className="max-w-sm">
       <DateTimeRangeFieldFrom>
         <DateTimeRangeFieldDays />
         <DateTimeRangeFieldSeparator>/</DateTimeRangeFieldSeparator>
