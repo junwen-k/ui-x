@@ -70,7 +70,8 @@ function InputBase({
           }
         })}
         className={cn(
-          "border-input selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex min-h-9 cursor-text items-center gap-2 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm",
+          "border-input selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex min-h-9 w-full min-w-0 cursor-text items-center gap-2 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm",
+          "has-[[data-slot][aria-invalid=true]]:ring-destructive/20 dark:has-[[data-slot][aria-invalid=true]]:ring-destructive/40 has-[[data-slot][aria-invalid=true]]:border-destructive",
           disabled && "pointer-events-none cursor-not-allowed opacity-50",
           focused && "border-ring ring-ring/50 ring-[3px]",
           error &&
@@ -135,7 +136,7 @@ function InputBaseAdornment({
     <Comp
       data-slot="input-base-adornment"
       className={cn(
-        "text-muted-foreground flex items-center [&_svg:not([class*='size-'])]:size-4",
+        "text-muted-foreground flex items-center gap-2 text-sm font-medium select-none [&_svg:not([class*='size-'])]:size-4",
         "[&:not(:has(button))]:pointer-events-none",
         className,
       )}
@@ -177,7 +178,7 @@ function InputBaseInput({
     <Primitive.input
       data-slot="input-base-input"
       className={cn(
-        "placeholder:text-muted-foreground file:text-foreground w-full flex-1 bg-transparent file:border-0 file:bg-transparent file:text-sm file:font-medium focus:outline-none disabled:pointer-events-none",
+        "placeholder:text-muted-foreground file:text-foreground w-full min-w-0 flex-1 bg-transparent outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none",
         className,
       )}
       {...props}
@@ -193,7 +194,7 @@ function InputBaseTextarea({
     <textarea
       data-slot="input-base-textarea"
       className={cn(
-        "placeholder:text-muted-foreground min-h-16 flex-1 bg-transparent focus:outline-none disabled:pointer-events-none",
+        "placeholder:text-muted-foreground field-sizing-content min-h-16 w-full flex-1 bg-transparent outline-none disabled:pointer-events-none",
         className,
       )}
       {...props}

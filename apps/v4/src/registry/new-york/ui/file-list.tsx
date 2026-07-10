@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText } from "lucide-react";
+import { FileTextIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import * as React from "react";
 
@@ -55,7 +55,7 @@ function FileListIcon({
       )}
       {...props}
     >
-      {children ?? <FileText />}
+      {children ?? <FileTextIcon />}
     </div>
   );
 }

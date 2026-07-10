@@ -2,7 +2,12 @@
 
 import { Slottable } from "@radix-ui/react-slot";
 import { cva } from "class-variance-authority";
-import { CheckIcon, ChevronsUpDownIcon, LoaderIcon, XIcon } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronsUpDownIcon,
+  Loader2Icon,
+  XIcon,
+} from "lucide-react";
 import * as React from "react";
 
 import { badgeVariants } from "@/components/ui/badge";
@@ -117,7 +122,7 @@ function ComboboxContent({
         align={align}
         alignOffset={alignOffset}
         className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 w-(--radix-popover-trigger-width) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 w-(--radix-popover-trigger-width) origin-(--radix-popover-content-transform-origin) scroll-py-1 overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md outline-hidden",
           className,
         )}
         {...props}
@@ -151,7 +156,11 @@ function ComboboxLoading({
       className={cn("flex items-center justify-center px-1.5 py-2", className)}
       {...props}
     >
-      <LoaderIcon className="mask-conic-gradient-to-tr from-45deg size-4 animate-spin to-white" />
+      <Loader2Icon
+        role="status"
+        aria-label="Loading"
+        className="size-4 animate-spin"
+      />
     </ComboboxPrimitive.Loading>
   );
 }
@@ -164,7 +173,7 @@ function ComboboxGroup({
     <ComboboxPrimitive.Group
       data-slot="combobox-group"
       className={cn(
-        "[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-sm [&_[cmdk-group-heading]]:font-semibold",
+        "text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium",
         className,
       )}
       {...props}
@@ -186,7 +195,7 @@ function ComboboxSeparator({
 }
 
 export const comboboxItemStyle = cva(
-  "relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50",
+  "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground relative flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground",
 );
 
 type ComboboxItemProps = Omit<

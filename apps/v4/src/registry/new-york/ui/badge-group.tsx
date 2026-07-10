@@ -4,7 +4,7 @@ import { composeEventHandlers } from "@radix-ui/primitive";
 import { Slottable } from "@radix-ui/react-slot";
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { X } from "lucide-react";
+import { XIcon } from "lucide-react";
 import * as React from "react";
 
 import { badgeVariants } from "@/components/ui/badge";
@@ -182,7 +182,7 @@ function BadgeGroupItemImpl({
           }}
           className="cursor-pointer rounded-sm opacity-70 transition-opacity group-data-[disabled]:pointer-events-none hover:opacity-100"
         >
-          <X className="size-4" />
+          <XIcon className="size-4" />
           <span className="sr-only">Remove</span>
         </div>
       )}

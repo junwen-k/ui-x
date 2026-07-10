@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -21,12 +21,12 @@ function NativeSelect({ className, ...props }: React.ComponentProps<"select">) {
     >
       <InputBaseControl>
         <select
-          className="size-full flex-1 appearance-none bg-transparent text-sm focus:outline-none"
+          className="size-full flex-1 appearance-none bg-transparent outline-none"
           {...props}
         />
       </InputBaseControl>
       <InputBaseAdornment className="absolute top-1/2 right-0 -translate-y-1/2 pr-3">
-        <ChevronDown />
+        <ChevronDownIcon className="opacity-50" />
       </InputBaseAdornment>
     </InputBase>
   );

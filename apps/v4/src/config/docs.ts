@@ -1,4 +1,16 @@
-export const docsConfig = {
+interface NavItem {
+  title: string;
+  href: string;
+  label?: string;
+  items?: NavItem[];
+}
+
+interface DocsConfig {
+  mainNav: NavItem[];
+  sidebarNav: { title: string; items: NavItem[] }[];
+}
+
+export const docsConfig: DocsConfig = {
   mainNav: [
     {
       title: "Documentation",

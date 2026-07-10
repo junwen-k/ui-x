@@ -8,7 +8,9 @@
       "type": "registry:component",
       "title": "BProgress Provider Next App",
       "description": "A smooth progress bar for page transitions in Next.js apps, using the App Router.",
-      "dependencies": ["@bprogress/next"],
+      "dependencies": [
+        "@bprogress/next"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/components/bprogress-provider-next-app.tsx",
@@ -22,7 +24,9 @@
       "type": "registry:component",
       "title": "BProgress Provider Next Pages",
       "description": "A smooth progress bar for page transitions in Next.js pages, using the Pages Router.",
-      "dependencies": ["@bprogress/next"],
+      "dependencies": [
+        "@bprogress/next"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/components/bprogress-provider-next-pages.tsx",
@@ -77,8 +81,14 @@
       "type": "registry:ui",
       "title": "Emoji Picker",
       "description": "A emoji picker is a component that allows users to select an emoji from a list of emojis.",
-      "dependencies": ["@radix-ui/react-toggle-group", "frimousse"],
-      "registryDependencies": ["button", "popover"],
+      "dependencies": [
+        "@radix-ui/react-toggle-group",
+        "frimousse"
+      ],
+      "registryDependencies": [
+        "button",
+        "popover"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/emoji-picker.tsx",
@@ -247,7 +257,9 @@
         "@radix-ui/react-toggle-group",
         "@radix-ui/react-use-controllable-state@1.2.2"
       ],
-      "registryDependencies": ["badge"],
+      "registryDependencies": [
+        "badge"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/badge-group.tsx",
@@ -260,8 +272,13 @@
       "type": "registry:ui",
       "title": "Calendar",
       "description": "A calendar component lets users select a date without any input or popper / modal.",
-      "dependencies": ["react-day-picker", "date-fns"],
-      "registryDependencies": ["button", "select"],
+      "dependencies": [
+        "react-day-picker",
+        "date-fns"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/calendar.tsx",
@@ -274,7 +291,9 @@
       "type": "registry:ui",
       "title": "Combobox",
       "description": "Input field with autocomplete & autosuggest functionalities.",
-      "dependencies": ["@radix-ui/react-slot"],
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
       "registryDependencies": [
         "badge",
         "https://ui-x.junwen-k.dev/r/combobox-primitive.json",
@@ -292,8 +311,13 @@
       "type": "registry:ui",
       "title": "Confirmer",
       "description": "Imperative confirm dialog implementation.",
-      "dependencies": ["react-call"],
-      "registryDependencies": ["alert-dialog", "button"],
+      "dependencies": [
+        "react-call"
+      ],
+      "registryDependencies": [
+        "alert-dialog",
+        "button"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/confirmer.tsx",
@@ -401,7 +425,9 @@
       "type": "registry:ui",
       "title": "Dropzone",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
-      "dependencies": ["@radix-ui/react-primitive@2.1.2"],
+      "dependencies": [
+        "@radix-ui/react-primitive@2.1.2"
+      ],
       "registryDependencies": [
         "https://ui-x.junwen-k.dev/r/dropzone-primitive.json"
       ],
@@ -417,8 +443,13 @@
       "type": "registry:ui",
       "title": "File List",
       "description": "A File List component displays a list of files with details such as name, size, and progress.",
-      "dependencies": ["pretty-bytes"],
-      "registryDependencies": ["button", "progress"],
+      "dependencies": [
+        "pretty-bytes"
+      ],
+      "registryDependencies": [
+        "button",
+        "progress"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/file-list.tsx",
@@ -437,7 +468,9 @@
         "@radix-ui/react-primitive@2.1.2",
         "@radix-ui/react-slot"
       ],
-      "registryDependencies": ["button"],
+      "registryDependencies": [
+        "button"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/input-base.tsx",
@@ -450,7 +483,9 @@
       "type": "registry:ui",
       "title": "Kbd",
       "description": "Displays which key or combination of keys performs a given action.",
-      "dependencies": ["@radix-ui/react-slot"],
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/kbd.tsx",
@@ -463,7 +498,9 @@
       "type": "registry:ui",
       "title": "Native Select",
       "description": "Native select element.",
-      "registryDependencies": ["https://ui-x.junwen-k.dev/r/input-base.json"],
+      "registryDependencies": [
+        "https://ui-x.junwen-k.dev/r/input-base.json"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/native-select.tsx",
@@ -524,7 +561,9 @@
       "type": "registry:ui",
       "title": "Time",
       "description": "Displays a specific time (or datetime).",
-      "dependencies": ["date-fns"],
+      "dependencies": [
+        "date-fns"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/time.tsx",
@@ -537,7 +576,9 @@
       "type": "registry:ui",
       "title": "Timeline",
       "description": "Timeline displays a list of events in chronological order.",
-      "dependencies": ["@radix-ui/react-slot"],
+      "dependencies": [
+        "@radix-ui/react-slot"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/timeline.tsx",
@@ -550,7 +591,9 @@
       "type": "registry:ui",
       "title": "Wheel Picker",
       "description": "iOS-like wheel picker for React with smooth inertia scrolling and infinite loop support.",
-      "dependencies": ["@ncdai/react-wheel-picker"],
+      "dependencies": [
+        "@ncdai/react-wheel-picker"
+      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/wheel-picker.tsx",
