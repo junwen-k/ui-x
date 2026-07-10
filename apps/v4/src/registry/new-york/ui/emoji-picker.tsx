@@ -188,14 +188,14 @@ function EmojiPickerSkinToneSelector() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="size-7">
-          {
-            skinToneVariations.find(
-              (variation) => variation.skinTone === skinTone,
-            )?.emoji
-          }
-        </Button>
+      <PopoverTrigger
+        render={<Button variant="outline" size="icon" className="size-7" />}
+      >
+        {
+          skinToneVariations.find(
+            (variation) => variation.skinTone === skinTone,
+          )?.emoji
+        }
       </PopoverTrigger>
       <PopoverContent
         side="left"

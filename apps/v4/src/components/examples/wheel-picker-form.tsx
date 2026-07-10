@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import {
   Popover,
-  PopoverAnchor,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
@@ -105,27 +104,26 @@ export default function WheelPickerForm() {
               <FormItem>
                 <FormLabel>Event time</FormLabel>
                 <Popover>
-                  <PopoverAnchor>
-                    <TimeField
-                      hour12
-                      value={field.value}
-                      onValueChange={field.onChange}
+                  <TimeField
+                    hour12
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl>
+                      <TimeFieldHours />
+                    </FormControl>
+                    <TimeFieldSeparator />
+                    <TimeFieldMinutes />
+                    <TimeFieldSeparator />
+                    <TimeFieldSeconds />
+                    <TimeFieldAmPm />
+                    <PopoverTrigger
+                      className="ml-auto"
+                      render={<InputBaseAdornmentButton />}
                     >
-                      <FormControl>
-                        <TimeFieldHours />
-                      </FormControl>
-                      <TimeFieldSeparator />
-                      <TimeFieldMinutes />
-                      <TimeFieldSeparator />
-                      <TimeFieldSeconds />
-                      <TimeFieldAmPm />
-                      <PopoverTrigger asChild className="ml-auto">
-                        <InputBaseAdornmentButton>
-                          <ClockIcon />
-                        </InputBaseAdornmentButton>
-                      </PopoverTrigger>
-                    </TimeField>
-                  </PopoverAnchor>
+                      <ClockIcon />
+                    </PopoverTrigger>
+                  </TimeField>
                   <PopoverContent
                     align="end"
                     sideOffset={8}

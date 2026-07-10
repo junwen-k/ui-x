@@ -82,11 +82,13 @@ export function ComponentDemoCarouselSection() {
                 <p className="text-muted-foreground text-sm">
                   Explore more components
                 </p>
-                <Button asChild variant="outline">
-                  <Link href="/docs/components">
-                    Browse components
-                    <ArrowRightIcon className="size-4" />
-                  </Link>
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link href="/docs/components" />}
+                >
+                  Browse components
+                  <ArrowRightIcon className="size-4" />
                 </Button>
               </div>
             </CarouselItem>

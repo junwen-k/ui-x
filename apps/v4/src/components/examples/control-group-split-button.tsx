@@ -25,10 +25,10 @@ export default function ControlGroupSplitButton() {
       </ControlGroupItem>
       <DropdownMenu>
         <ControlGroupItem>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="outline">
-              <ChevronDown />
-            </Button>
+          <DropdownMenuTrigger
+            render={<Button size="icon" variant="outline" />}
+          >
+            <ChevronDown />
           </DropdownMenuTrigger>
         </ControlGroupItem>
         <DropdownMenuContent align="end">

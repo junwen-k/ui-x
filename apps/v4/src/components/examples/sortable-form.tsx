@@ -85,11 +85,11 @@ function Item({
             onSubmit={onEdit}
             values={{ title, description }}
           >
-            <EditItemFormDialogTrigger asChild>
-              <Button type="button" variant="outline" size="icon">
-                <Pencil className="size-4" />
-                <span className="sr-only">Edit</span>
-              </Button>
+            <EditItemFormDialogTrigger
+              render={<Button type="button" variant="outline" size="icon" />}
+            >
+              <Pencil className="size-4" />
+              <span className="sr-only">Edit</span>
             </EditItemFormDialogTrigger>
           </EditItemFormDialog>
           <Button
@@ -192,10 +192,8 @@ const EditItemFormDialog = ({
               />
             </div>
             <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
+              <DialogClose render={<Button type="button" variant="outline" />}>
+                Cancel
               </DialogClose>
               <Button type="submit">{actionText}</Button>
             </DialogFooter>
@@ -370,11 +368,11 @@ export default function SortableForm() {
             actionText="Add item"
             onSubmit={(data) => append(data)}
           >
-            <EditItemFormDialogTrigger asChild>
-              <Button type="button" variant="outline">
-                <PlusCircle />
-                Add Item
-              </Button>
+            <EditItemFormDialogTrigger
+              render={<Button type="button" variant="outline" />}
+            >
+              <PlusCircle />
+              Add Item
             </EditItemFormDialogTrigger>
           </EditItemFormDialog>
           <Button type="submit">Submit</Button>

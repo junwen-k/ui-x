@@ -100,11 +100,9 @@ export default function EmojiPickerForm() {
                       className="before:flex-1"
                       error={Boolean(fieldState.error)}
                     >
-                      <PopoverTrigger asChild>
-                        <InputBaseAdornmentButton>
-                          <SmilePlusIcon />
-                          <span className="sr-only">Pick emoji</span>
-                        </InputBaseAdornmentButton>
+                      <PopoverTrigger render={<InputBaseAdornmentButton />}>
+                        <SmilePlusIcon />
+                        <span className="sr-only">Pick emoji</span>
                       </PopoverTrigger>
                     </InputBase>
                   </ControlGroupItem>

@@ -1,6 +1,6 @@
 "use client";
 
-import * as SelectPrimitive from "@radix-ui/react-select";
+import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { CheckIcon, GlobeIcon } from "lucide-react";
 import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";

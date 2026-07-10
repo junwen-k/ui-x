@@ -44,8 +44,11 @@ export function VersionDropdownMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         {VERSION_OPTIONS.map((option) => (
-          <DropdownMenuItem key={option.value} asChild>
-            <Link href={option.value}>{option.label}</Link>
+          <DropdownMenuItem
+            key={option.value}
+            render={<Link href={option.value} />}
+          >
+            {option.label}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

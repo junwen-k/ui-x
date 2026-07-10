@@ -49,16 +49,14 @@ export function AppSidebar({
                         <SidebarMenuSubItem key={item.title}>
                           <SidebarMenuSubButton
                             isActive={activeItem?.href === item.href}
-                            asChild
+                            render={<Link href={item.href} />}
                           >
-                            <Link href={item.href}>
-                              {item.title}
-                              {"label" in item && (
-                                <SidebarMenuBadge className="bg-[oklch(0.9_0.2334_128.99)] px-1.5 text-[0.625rem] text-[oklch(0.2_0.2334_128.99)]">
-                                  {item.label}
-                                </SidebarMenuBadge>
-                              )}
-                            </Link>
+                            {item.title}
+                            {"label" in item && (
+                              <SidebarMenuBadge className="bg-[oklch(0.9_0.2334_128.99)] px-1.5 text-[0.625rem] text-[oklch(0.2_0.2334_128.99)]">
+                                {item.label}
+                              </SidebarMenuBadge>
+                            )}
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}

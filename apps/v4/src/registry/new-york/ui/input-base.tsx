@@ -6,7 +6,7 @@ import { Primitive } from "@radix-ui/react-primitive";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export type InputBaseContextProps = Pick<
@@ -151,11 +151,26 @@ function InputBaseAdornmentButton({
   type = "button",
   variant = "ghost",
   size = "icon",
+  asChild = false,
   disabled: disabledProp,
   className,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: Omit<React.ComponentProps<typeof Button>, "style"> & {
+  asChild?: boolean;
+  style?: React.CSSProperties;
+}) {
   const { disabled } = useInputBase();
+
+  if (asChild) {
+    return (
+      <Slot
+        data-slot="input-base-adornment-button"
+        className={cn(buttonVariants({ variant, size }), "size-6", className)}
+        {...{ disabled: disabled || disabledProp }}
+        {...props}
+      />
+    );
+  }
 
   return (
     <Button
