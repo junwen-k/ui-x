@@ -16,11 +16,23 @@ only once the overhaul is finalized.
 - **v3 is frozen.** `apps/v3` (Tailwind v3) receives no new content. It gets a
   banner — "You are viewing docs for Tailwind v3. Switch to latest →" — and the
   Tailwind v4 site becomes canonical at `ui-x.junwen-k.dev`.
-- **Mirror shadcn's library support**: offer both Radix UI and Base UI variants,
-  matching `npx shadcn create` (Base UI is shadcn's default since July 2026).
+- **Base UI only — Radix is dropped** *(2026-07-10, supersedes the earlier
+  dual-library plan)*. shadcn's default for new projects is the `base-nova`
+  preset (`shadcn init --defaults`); maintaining a Radix twin of every
+  component doubles the surface for a single maintainer with no matching
+  demand. The pre-migration state of `next` (PR #55) is the final Radix-era
+  snapshot.
+- **One published style: nova.** ui-x targets shadcn's default preset
+  (nova: h-8 controls, rounded-lg, ring-3, Lucide, Geist) rather than the
+  legacy `new-york-v4` or the full 8-style family (nova/vega/lyra/luma/maia/
+  mira/sera/rhea). Users on other styles adapt classes themselves, as with any
+  third-party registry.
+- **Docs move to fumadocs.** The velite setup was a learning exercise; the v4
+  site is rebuilt following shadcn's own stack (`fumadocs-core`/`-mdx`/`-ui` +
+  `fumadocs-docgen`, Next 16).
 - **Own the niche, acknowledge the overlap.** Components that shadcn has since
-  added (Kbd, Button Group, Input Group, Combobox, …) get an honest callout and
-  a recommendation, rather than silently competing.
+  added (Kbd, Button Group, Input Group, Combobox, Attachment, …) get an honest
+  callout and a recommendation, rather than silently competing.
 
 ---
 
@@ -31,8 +43,11 @@ only once the overhaul is finalized.
 - [ ] Upgrade `shadcn` CLI from `2.4.0-canary.13` to v3.x; verify
       `pnpm build:registry` still produces a valid registry.
 - [ ] Dependency pass on `apps/v4`: zod (pinned at 3.21.4), lucide-react,
-      react-day-picker, radix packages, tailwindcss.
-- [ ] Confirm both sites still build and deploy (`turbo build`).
+      react-day-picker, tailwindcss. (Radix packages get removed in Phase 4
+      rather than upgraded.)
+- [x] Confirm both sites still build and deploy (`turbo build`) — verified via
+      PR #55 Vercel deploys (2026-07-10); also fixed the `app-sidebar` type
+      error and calendar import order that blocked the v4 build.
 
 ## Phase 1 — Documentation up to date (user-visible, low risk)
 
@@ -45,55 +60,72 @@ only once the overhaul is finalized.
 - [ ] Refresh `changelog.mdx` — deferred: write a single entry once the
       overhaul actually ships, not piecemeal.
 - [x] Clear stale "New" labels in `src/config/docs.ts`.
-- [x] **Overlap callouts** added to kbd, control-group, input-base, combobox —
-      placed above the preview, recommending the official shadcn/ui version;
-      ui-x's is "provided as-is" (calendar and native-select still need a diff
-      vs shadcn's versions — tracked in the audit table below).
+- [x] **Overlap callouts** added to kbd, control-group, input-base, combobox,
+      file-list (→ Attachment) — placed above the preview, recommending the
+      official shadcn/ui version; ui-x's is "provided as-is".
 
-### Component overlap audit
-
-| ui-x component | shadcn equivalent (date added) | Action |
-| --- | --- | --- |
-| `kbd` | Kbd (Oct 2025) | ✅ Callout: recommend official, ours as-is |
-| `control-group` | Button Group (Oct 2025) | ✅ Callout: recommend official, ours as-is |
-| `input-base` | Input Group (Oct 2025) | ✅ Callout: recommend official, ours as-is |
-| `combobox` / `combobox-primitive` | Combobox (built on Base UI's primitive, even in the Radix flavor) | ✅ Callouts on both pages: recommend official, ours as-is |
-| `calendar` | Calendar upgrade (Jun 2025) | Diff ours vs theirs; possibly rebase on theirs |
-| `native-select` | Field/Select ecosystem | Verify overlap; callout if needed |
-| date/time fields, phone-input, dropzone, file-list, confirmer, timeline, description-list, wheel-picker, badge-group, emoji-picker, sortable, virtualizer, time | none | Still differentiated — highlight these |
-
-## Phase 2 — Registry modernization (decides architecture for Phases 3–4)
+## Phase 2 — Registry modernization (decides architecture for Phase 4)
 
 - [ ] Evaluate distribution options and pick one:
       - [ ] Namespaced registry (`npx shadcn add @ui-x/date-field`)
       - [ ] GitHub-repo-as-registry (https://ui.shadcn.com/docs/registry/github)
       - [ ] Keep current self-hosted registry.json, upgraded to CLI v3 schema
-- [ ] Decide registry layout for dual-library support (how shadcn structures
-      Radix vs Base UI items — mirror it) and for style variants (new-york,
-      Luma, Rhea?).
+- [x] Registry layout for library/style variants — **decided (2026-07-10)**:
+      single library (Base UI), single style (nova). No variant matrix.
 - [ ] Universal registry items where applicable (hooks, utilities).
 - [ ] Consider exposing the registry via MCP server.
-- [ ] Evaluate migrating the v4 docs site from velite to fumadocs (shadcn's
-      current setup) — decide before writing large amounts of new MDX content
-      so it only gets authored once.
+- [x] Docs platform — **decided (2026-07-10)**: migrate v4 site from velite to
+      fumadocs, mirroring shadcn's `apps/v4` setup. Executed as part of
+      Phase 4 so new MDX content is only authored once.
 
-## Phase 3 — Component styling refresh
+## Phase 3 — Component styling refresh ✅
 
-- [ ] Update all ui-x components to match latest shadcn conventions:
-      `data-slot` attributes, current sizing/spacing, tw-animate-css idioms,
-      current `new-york` output of the v3 CLI.
-- [ ] Re-sync the vendored shadcn `ui/` components in `apps/v4` used by the
-      docs site itself.
-- [ ] Verify every demo/example still renders correctly after restyle.
+Completed 2026-07-10 (PR #55, `feat/style-refresh`). All 31 registry
+components updated to the latest `new-york-v4` conventions: `data-slot`
+attributes, current focus/aria-invalid ring model, sizing/spacing, Icon-suffixed
+lucide imports, calendar rebuilt on react-day-picker v9. Registry payloads
+rebuilt; demos verified. This is the final Radix-era, `new-york-v4`-parity
+snapshot before the Phase 4 migration.
 
-## Phase 4 — Base UI + Radix dual support
+## Phase 4 — Base UI + nova migration (the big one)
 
-- [ ] Port each ui-x component to Base UI primitives alongside the Radix
-      version (start with the differentiated set: date/time fields,
-      phone-input, dropzone, confirmer, …).
-- [ ] Docs: per-component library switcher or install-command tabs
-      (Radix / Base UI), mirroring shadcn's docs UX.
-- [ ] Update demos/examples for both variants.
+One migration, done together, because shadcn's nova sources are written against
+Base UI DOM — porting styles onto Radix first would mean doing the class work
+twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`.
+
+### 4a. Docs platform (fumadocs)
+
+- [ ] Rebuild the v4 docs site on fumadocs (`fumadocs-core`/`-mdx`/`-ui` +
+      `fumadocs-docgen`), following shadcn's `apps/v4` structure; remove velite.
+- [ ] Upgrade Next 15.5 → 16.x / React 19.2 to match shadcn's stack.
+- [ ] Migrate existing MDX content and demo/preview tooling.
+
+### 4b. Site foundation (nova)
+
+- [ ] Re-vendor the docs site's `components/ui/` from the `base-nova` preset;
+      adopt the nova theme (neutral base color, Geist, tw-animate-css).
+- [ ] Remove Radix dependencies from `apps/v4` once no vendored or registry
+      component imports them.
+
+### 4c. Components — keep/drop audit, then port
+
+For each ui-x component, decide **before** porting (Base UI and shadcn's
+catalog now cover several of them natively):
+
+| ui-x component | Likely call | Notes |
+| --- | --- | --- |
+| `combobox` / `combobox-primitive` | drop | Base UI Combobox does tags/async natively; shadcn ships it |
+| `file-list` | drop | superseded by shadcn `attachment` |
+| `input-base` | drop/absorb | shadcn `input-group` covers it; ui-x components compose that instead |
+| `kbd`, `control-group`, `badge-group` | drop or keep | official `kbd`, `button-group` exist; audit gaps first |
+| `native-select` | audit | shadcn now ships `native-select` in the new styles |
+| `calendar`, `date-picker` | audit | vs shadcn's rebuilt calendar + Base UI date pieces |
+| date/time fields, phone-input, dropzone, confirmer, timeline, description-list, wheel-picker, emoji-picker, sortable, virtualizer, time | keep | still differentiated — these are the port targets |
+
+- [ ] Port each kept component to Base UI primitives with classes from the
+      `base-nova` sources; delete custom primitives Base UI now provides.
+- [ ] Rewrite demos/examples against the nova metrics; verify every page.
+- [ ] Rebuild registry payloads (single style), update install docs.
 
 ## Phase 5 — New components & catch-up (stretch)
 
@@ -107,10 +139,9 @@ only once the overhaul is finalized.
 
 - Deprecation policy — **partially decided (2026-07-09)**: overlapped
   components stay published but are "provided as-is" with a prominent callout
-  recommending the official shadcn/ui version. Still open: whether they are
-  ever removed from the registry, and whether they get styling refreshes in
-  Phase 3.
-- Do we adopt shadcn's newer styles (Luma/Rhea) or stay `new-york`-only?
+  recommending the official shadcn/ui version. Still open: whether dropped
+  components are removed from the registry entirely or left frozen at the
+  Radix-era snapshot.
 - Monorepo: `packages/` is empty — flatten, or reserve for shared registry
   tooling in Phase 2?
 
@@ -119,3 +150,7 @@ only once the overhaul is finalized.
 - **2026-07-09** — Roadmap created. Current state: v4 site has 34 registry
   items; last feature work Jun 2025; shadcn has since shipped CLI v3, MCP,
   Base UI default, GitHub registries, and 7+ overlapping components.
+- **2026-07-10** — Phase 3 shipped (PR #55). Direction reset: shadcn's new
+  8-style system discovered (`base-nova` is the default preset); decided to
+  drop Radix entirely and do Base UI + nova + fumadocs as one Phase 4
+  migration on `feat/base-nova`.
