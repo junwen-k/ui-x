@@ -1,6 +1,10 @@
+import fs from "node:fs/promises";
+import path from "node:path";
+
 import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
+import { ComponentCode } from "@/components/code-block";
 import { CopyButton } from "@/components/copy-button";
 import { OpenInV0Button } from "@/components/open-in-v0-button";
 import {
@@ -9,26 +13,30 @@ import {
   UnderlinedTabsList,
   UnderlinedTabsTrigger,
 } from "@/components/underlined-tabs";
+import { highlightCode } from "@/lib/highlight-code";
 import { cn } from "@/lib/utils";
 
 interface ComponentPreviewProps {
   // TODO: potentially improve name typing
   name: string;
-  /**
-   * The following props are added by rehype-component plugin during build time.
-   * See rehype-component.ts for implementation details.
-   */
-  /** The raw source code of the component. */
-  __rawString__: string;
-  /** The code block element for syntax highlighting. */
-  children: React.ReactNode;
 }
 
-export async function ComponentPreview({
-  name,
-  __rawString__,
-  children,
-}: ComponentPreviewProps) {
+export async function ComponentPreview({ name }: ComponentPreviewProps) {
+  const filePath = path.join(
+    process.cwd(),
+    `src/components/examples/${name}.tsx`,
+  );
+
+  let code = await fs.readFile(filePath, "utf8");
+
+  // Replace imports.
+  // TODO: Use @swc/core and a visitor to replace this.
+  // For now a simple regex should do.
+  code = code.replaceAll(`@/registry/new-york/`, "@/components/");
+  code = code.replaceAll("export default", "export");
+
+  const highlightedCode = await highlightCode(code, "tsx");
+
   return (
     <UnderlinedTabs defaultValue="preview" className="mt-6 flex flex-col gap-4">
       <UnderlinedTabsList>
@@ -39,7 +47,7 @@ export async function ComponentPreview({
         <ComponentCanvas>
           <ComponentCanvasHeader>
             <OpenInV0Button url={`https://ui-x.junwen-k.dev/r/${name}.json`} />
-            <CopyButton value={__rawString__} />
+            <CopyButton value={code} />
           </ComponentCanvasHeader>
           <ComponentCanvasExample
             className="flex min-h-[350px] w-full items-center justify-center p-10"
@@ -51,7 +59,7 @@ export async function ComponentPreview({
         value="code"
         className="[&_[data-slot='code-block-pre']]:my-0"
       >
-        {children}
+        <ComponentCode code={code} highlightedCode={highlightedCode} />
       </UnderlinedTabsContent>
     </UnderlinedTabs>
   );

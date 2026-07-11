@@ -7,7 +7,9 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { getNavGroups } from "@/config/nav";
 import { siteConfig } from "@/config/site";
+import { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
 import { BProgressProvider } from "@/registry/new-york/components/bprogress-provider-next-app";
 import { Confirmer } from "@/registry/new-york/ui/confirmer";
@@ -95,7 +97,7 @@ export default function RootLayout({
         >
           <BProgressProvider>
             <SidebarProvider className="flex flex-col">
-              <SiteHeader />
+              <SiteHeader groups={getNavGroups(source.pageTree)} />
               {children}
               <SiteFooter />
             </SidebarProvider>

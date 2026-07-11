@@ -3,35 +3,33 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { docs } from "@/.velite";
-import { MDXContent } from "@/components/mdx-content";
 import { DocsPager } from "@/components/pager";
 import { DashboardTableOfContents } from "@/components/toc";
 import { badgeVariants } from "@/components/ui/badge";
 import { siteConfig } from "@/config/site";
+import { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
+import { mdxComponents } from "@/mdx-components";
+
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 interface DocPageProps {
   params: Promise<{
-    slug: string[];
+    slug?: string[];
   }>;
 }
 
-async function getDocFromParams({ params }: DocPageProps) {
-  const slug = (await params).slug?.join("/") || "";
-  const doc = docs.find((doc) => doc.slugAsParams === slug);
-  if (!doc) {
-    return null;
-  }
-
-  return doc;
-}
-
 export default async function Page({ params }: DocPageProps) {
-  const doc = await getDocFromParams({ params });
-  if (!doc) {
+  const { slug } = await params;
+  const page = source.getPage(slug);
+  if (!page) {
     notFound();
   }
+
+  const doc = page.data;
+  const MDX = doc.body;
 
   return (
     <div className="mx-auto grid items-start gap-12 p-4 md:p-8 lg:grid-cols-7 lg:p-12">
@@ -73,9 +71,9 @@ export default async function Page({ params }: DocPageProps) {
           )}
         </div>
         <div className="pt-8 pb-12">
-          <MDXContent code={doc.body} />
+          <MDX components={mdxComponents} />
         </div>
-        <DocsPager doc={doc} />
+        <DocsPager url={page.url} />
       </div>
       <div className="sticky top-28 hidden lg:col-span-2 lg:block">
         <DashboardTableOfContents toc={doc.toc} />
@@ -87,10 +85,13 @@ export default async function Page({ params }: DocPageProps) {
 export async function generateMetadata({
   params,
 }: DocPageProps): Promise<Metadata> {
-  const doc = await getDocFromParams({ params });
-  if (!doc) {
+  const { slug } = await params;
+  const page = source.getPage(slug);
+  if (!page) {
     return {};
   }
+
+  const doc = page.data;
 
   return {
     metadataBase: new URL(siteConfig.url),
@@ -100,7 +101,7 @@ export async function generateMetadata({
       title: doc.title,
       description: doc.description,
       type: "article",
-      url: doc.slug,
+      url: page.url,
       images: [
         {
           url: siteConfig.ogImage,
@@ -121,7 +122,5 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return docs.map((doc) => ({
-    slug: doc.slugAsParams.split("/"),
-  }));
+  return source.generateParams();
 }

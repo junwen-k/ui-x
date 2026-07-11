@@ -11,24 +11,23 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-import { docsConfig } from "@/config/docs";
+import { NavGroup } from "@/config/nav";
 import { cn } from "@/lib/utils";
 
-export function AppSidebar({
-  className,
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  groups: NavGroup[];
+}
+
+export function AppSidebar({ groups, className, ...props }: AppSidebarProps) {
   const pathname = usePathname();
 
-  const activeItem = docsConfig.sidebarNav
-    .map((item) => item.items)
-    .flat()
+  const activeItem = groups
+    .flatMap((group) => group.items)
     .findLast((item) => pathname.startsWith(item.href));
 
   return (
@@ -37,26 +36,21 @@ export function AppSidebar({
       {...props}
     >
       <SidebarContent className="mask-t-from-98% [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {docsConfig.sidebarNav.map((item) => (
-          <SidebarGroup key={item.title}>
-            <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
+        {groups.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem key={item.title}>
-                  {item.items?.length && (
+                <SidebarMenuItem key={group.title}>
+                  {group.items?.length && (
                     <SidebarMenuSub className="border-none pl-0">
-                      {item.items.map((item) => (
+                      {group.items.map((item) => (
                         <SidebarMenuSubItem key={item.title}>
                           <SidebarMenuSubButton
                             isActive={activeItem?.href === item.href}
                             render={<Link href={item.href} />}
                           >
                             {item.title}
-                            {"label" in item && (
-                              <SidebarMenuBadge className="bg-[oklch(0.9_0.2334_128.99)] px-1.5 text-[0.625rem] text-[oklch(0.2_0.2334_128.99)]">
-                                {item.label}
-                              </SidebarMenuBadge>
-                            )}
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}

@@ -3,10 +3,13 @@
 import { AlignLeft } from "lucide-react";
 import * as React from "react";
 
-import type { Doc } from "@/.velite";
 import { cn } from "@/lib/utils";
 
-type TocEntry = Doc["toc"][number];
+interface TocEntry {
+  title?: React.ReactNode;
+  url: string;
+  depth: number;
+}
 
 interface TocProps {
   toc: TocEntry[];
@@ -20,7 +23,7 @@ export function DashboardTableOfContents({ toc }: TocProps) {
   const itemIds = React.useMemo(
     () =>
       toc
-        .flatMap((item) => [item.url, ...(item.items?.map((i) => i.url) || [])])
+        .map((item) => item.url)
         .filter(Boolean)
         .map(getIdFromUrl),
     [toc],
@@ -38,7 +41,33 @@ export function DashboardTableOfContents({ toc }: TocProps) {
         <AlignLeft className="mr-2 size-4" />
         On This Page
       </div>
-      <TreeList items={toc} activeItems={activeHeadings} />
+      <ul className="m-0 list-none">
+        {toc.map((item) => {
+          const isActive = activeHeadings.includes(getIdFromUrl(item.url));
+
+          return (
+            <li
+              key={item.url}
+              className={cn(
+                "mt-0 pt-1.5",
+                item.depth === 3 && "pl-4",
+                item.depth >= 4 && "pl-8",
+              )}
+            >
+              <a
+                href={item.url}
+                className={cn(
+                  "hover:text-foreground inline-block text-sm no-underline transition-colors",
+                  isActive && "text-foreground font-medium",
+                  !isActive && "text-muted-foreground",
+                )}
+              >
+                {item.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
@@ -100,50 +129,4 @@ function useActiveItem(itemIds: string[]) {
   }, [itemIds]);
 
   return activeIds;
-}
-
-interface TreeProps {
-  items: TocEntry[];
-  level?: number;
-  activeItems: string[];
-}
-
-function TreeList({ items, level = 1, activeItems }: TreeProps) {
-  if (!items?.length) {
-    return null;
-  }
-
-  return (
-    <ul
-      className={cn("m-0 list-none", {
-        "pl-4": level !== 1,
-      })}
-    >
-      {items.map((item, index) => {
-        const isActive = activeItems.includes(getIdFromUrl(item.url));
-
-        return (
-          <li key={index} className="mt-0 pt-1.5">
-            <a
-              href={item.url}
-              className={cn(
-                "hover:text-foreground inline-block text-sm no-underline transition-colors",
-                isActive && "text-foreground font-medium",
-                !isActive && "text-muted-foreground",
-              )}
-            >
-              {item.title}
-            </a>
-            {Boolean(item.items?.length) && (
-              <TreeList
-                items={item.items}
-                level={level + 1}
-                activeItems={activeItems}
-              />
-            )}
-          </li>
-        );
-      })}
-    </ul>
-  );
 }

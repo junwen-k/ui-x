@@ -1,15 +1,46 @@
+import * as React from "react";
+
+import { CodeBlockCommand } from "@/components/code-block-command";
 import { CopyButton } from "@/components/copy-button";
 import { cn } from "@/lib/utils";
 
-export interface CodeBlockProps extends React.ComponentProps<"pre"> {
-  __rawString__?: string;
+interface CodeProps extends React.ComponentProps<"code"> {
+  /**
+   * The following props are added by the shiki transformers during build time.
+   * See highlight-code.ts for implementation details.
+   */
+  __raw__?: string;
+  __npm__?: string;
+  __yarn__?: string;
+  __pnpm__?: string;
+  __bun__?: string;
 }
 
 export function CodeBlock({
-  __rawString__,
   className,
+  children,
   ...props
-}: CodeBlockProps) {
+}: React.ComponentProps<"pre">) {
+  const codeProps = React.isValidElement(children)
+    ? (children.props as CodeProps)
+    : undefined;
+
+  if (
+    codeProps?.__npm__ &&
+    codeProps?.__yarn__ &&
+    codeProps?.__pnpm__ &&
+    codeProps?.__bun__
+  ) {
+    return (
+      <CodeBlockCommand
+        __npm__={codeProps.__npm__}
+        __yarn__={codeProps.__yarn__}
+        __pnpm__={codeProps.__pnpm__}
+        __bun__={codeProps.__bun__}
+      />
+    );
+  }
+
   return (
     <div data-slot="code-block" className="group relative">
       <pre
@@ -19,14 +50,46 @@ export function CodeBlock({
           className,
         )}
         {...props}
-      />
-      {__rawString__ && (
+      >
+        {children}
+      </pre>
+      {codeProps?.__raw__ && (
         <CopyButton
           data-slot="code-block-copy-button"
           className="group/button absolute top-3.5 right-4 overflow-hidden opacity-0 transition group-focus-within:opacity-100 group-hover:opacity-100"
-          value={__rawString__}
+          value={codeProps.__raw__}
         />
       )}
+    </div>
+  );
+}
+
+interface ComponentCodeProps extends React.ComponentProps<"div"> {
+  code: string;
+  highlightedCode: string;
+}
+
+export function ComponentCode({
+  code,
+  highlightedCode,
+  className,
+  ...props
+}: ComponentCodeProps) {
+  return (
+    <div
+      data-slot="code-block"
+      className={cn("group relative", className)}
+      {...props}
+    >
+      <figure
+        data-rehype-pretty-code-figure=""
+        dangerouslySetInnerHTML={{ __html: highlightedCode }}
+      />
+      <CopyButton
+        data-slot="code-block-copy-button"
+        className="group/button absolute top-3.5 right-4 overflow-hidden opacity-0 transition group-focus-within:opacity-100 group-hover:opacity-100"
+        value={code}
+      />
     </div>
   );
 }

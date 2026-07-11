@@ -14,6 +14,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -22,10 +23,14 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { docsConfig } from "@/config/docs";
+import { NavGroup, mainNav } from "@/config/nav";
 import { Kbd } from "@/registry/new-york/ui/kbd";
 
-export function CommandMenu(props: DialogProps) {
+interface CommandMenuProps extends DialogProps {
+  groups: NavGroup[];
+}
+
+export function CommandMenu({ groups, ...props }: CommandMenuProps) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const { setTheme } = useTheme();
@@ -74,26 +79,12 @@ export function CommandMenu(props: DialogProps) {
         </Kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Links">
-            {docsConfig.mainNav.map((navItem) => (
-              <CommandItem
-                key={navItem.href}
-                value={navItem.title}
-                onSelect={() => {
-                  runCommand(() => router.push(navItem.href as string));
-                }}
-              >
-                <FileIcon className="mr-2 size-4" />
-                {navItem.title}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          {docsConfig.sidebarNav.map((group) => (
-            <CommandGroup key={group.title} heading={group.title}>
-              {group.items.map((navItem) => (
+        <Command>
+          <CommandInput placeholder="Type a command or search..." />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup heading="Links">
+              {mainNav.map((navItem) => (
                 <CommandItem
                   key={navItem.href}
                   value={navItem.title}
@@ -101,30 +92,48 @@ export function CommandMenu(props: DialogProps) {
                     runCommand(() => router.push(navItem.href as string));
                   }}
                 >
-                  <div className="mr-2 flex size-4 items-center justify-center">
-                    <CircleIcon className="size-3" />
-                  </div>
+                  <FileIcon className="mr-2 size-4" />
                   {navItem.title}
                 </CommandItem>
               ))}
             </CommandGroup>
-          ))}
-          <CommandSeparator />
-          <CommandGroup heading="Theme">
-            <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
-              <SunIcon className="mr-2 size-4" />
-              Light
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
-              <MoonIcon className="mr-2 size-4" />
-              Dark
-            </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
-              <LaptopIcon className="mr-2 size-4" />
-              System
-            </CommandItem>
-          </CommandGroup>
-        </CommandList>
+            {groups.map((group) => (
+              <CommandGroup key={group.title} heading={group.title}>
+                {group.items.map((navItem) => (
+                  <CommandItem
+                    key={navItem.href}
+                    value={navItem.title}
+                    onSelect={() => {
+                      runCommand(() => router.push(navItem.href as string));
+                    }}
+                  >
+                    <div className="mr-2 flex size-4 items-center justify-center">
+                      <CircleIcon className="size-3" />
+                    </div>
+                    {navItem.title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            ))}
+            <CommandSeparator />
+            <CommandGroup heading="Theme">
+              <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
+                <SunIcon className="mr-2 size-4" />
+                Light
+              </CommandItem>
+              <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
+                <MoonIcon className="mr-2 size-4" />
+                Dark
+              </CommandItem>
+              <CommandItem
+                onSelect={() => runCommand(() => setTheme("system"))}
+              >
+                <LaptopIcon className="mr-2 size-4" />
+                System
+              </CommandItem>
+            </CommandGroup>
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   );

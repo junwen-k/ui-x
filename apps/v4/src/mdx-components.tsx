@@ -1,9 +1,8 @@
+import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
-import * as runtime from "react/jsx-runtime";
 
 import { Callout } from "@/components/callout";
 import { CodeBlock } from "@/components/code-block";
-import { CodeBlockCommand } from "@/components/code-block-command";
 import { ComponentPreview } from "@/components/component-preview";
 import { ComponentSource } from "@/components/component-source";
 import * as LinkedCards from "@/components/linked-card";
@@ -21,7 +20,7 @@ import {
 } from "@/components/underlined-tabs";
 import { cn } from "@/lib/utils";
 
-const components = {
+export const mdxComponents: MDXComponents = {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -178,9 +177,24 @@ const components = {
       {...props}
     />
   ),
-  CodeBlockCommand,
   pre: CodeBlock,
-  code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
+  code: ({
+    className,
+    // The shiki transformers attach these to the code node for the pre
+    // handler to consume; strip them so they never reach the DOM.
+    __raw__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    __npm__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    __yarn__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    __pnpm__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    __bun__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...props
+  }: React.HTMLAttributes<HTMLElement> & {
+    __raw__?: string;
+    __npm__?: string;
+    __yarn__?: string;
+    __pnpm__?: string;
+    __bun__?: string;
+  }) => (
     <code
       className={cn(
         "bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
@@ -190,20 +204,4 @@ const components = {
     />
   ),
   ...LinkedCards,
-};
-
-// parse the Velite generated MDX code into a React component function
-const useMDXComponent = (code: string) => {
-  const fn = new Function(code);
-  return fn({ ...runtime }).default;
-};
-
-interface MDXProps {
-  code: string;
-}
-
-// MDXContent component
-export const MDXContent = ({ code }: MDXProps) => {
-  const Component = useMDXComponent(code);
-  return <Component components={components} />;
 };

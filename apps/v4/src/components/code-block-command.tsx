@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { CopyButton } from "@/components/copy-button";
 import {
   UnderlinedTabs,
   UnderlinedTabsContent,
@@ -10,50 +11,43 @@ import {
 } from "@/components/underlined-tabs";
 import { PackageManager, usePackageManager } from "@/hooks/use-package-manager";
 
-export interface CodeBlockCommandCommand {
-  packageManager: PackageManager;
-  command: string;
-}
-
 export interface CodeBlockCommandProps extends React.ComponentProps<"pre"> {
   /**
-   * The following props are added by rehype-npm-command plugin during build time.
-   * See rehype-npm-command.ts for implementation details.
+   * The following props are added by the shiki transformers during build time.
+   * See highlight-code.ts for implementation details.
    */
-
-  /** Command JSON string. */
-  commands: string;
-  /** The code block element for syntax highlighting. */
-  children: React.ReactNode[];
+  __npm__?: string;
+  __yarn__?: string;
+  __pnpm__?: string;
+  __bun__?: string;
 }
 
 export function CodeBlockCommand({
-  commands,
-  children,
+  __npm__,
+  __yarn__,
+  __pnpm__,
+  __bun__,
 }: CodeBlockCommandProps) {
   const [packageManager, setPackageManager] = usePackageManager();
 
-  const [hasCopied, setHasCopied] = React.useState(false);
-
-  React.useEffect(() => {
-    if (hasCopied) {
-      const timer = setTimeout(() => setHasCopied(false), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [hasCopied]);
-
-  const cmds = JSON.parse(commands) as CodeBlockCommandCommand[];
+  const tabs = React.useMemo(
+    () => ({
+      npm: __npm__,
+      yarn: __yarn__,
+      pnpm: __pnpm__,
+      bun: __bun__,
+    }),
+    [__npm__, __yarn__, __pnpm__, __bun__],
+  );
 
   return (
     <div className="relative mt-6 max-h-[650px] overflow-x-auto rounded-xl bg-zinc-950 dark:bg-zinc-900">
       <UnderlinedTabs
-        defaultValue={packageManager}
-        onValueChange={(value) =>
-          setPackageManager(value as "pnpm" | "npm" | "yarn" | "bun")
-        }
+        value={packageManager}
+        onValueChange={(value) => setPackageManager(value as PackageManager)}
       >
         <UnderlinedTabsList className="border-b border-zinc-800 bg-zinc-900 px-3 pt-2.5">
-          {cmds.map(({ packageManager }) => (
+          {Object.entries(tabs).map(([packageManager]) => (
             <UnderlinedTabsTrigger
               key={packageManager}
               value={packageManager}
@@ -63,13 +57,27 @@ export function CodeBlockCommand({
             </UnderlinedTabsTrigger>
           ))}
         </UnderlinedTabsList>
-        {cmds.map(({ packageManager }, index) => (
+        {Object.entries(tabs).map(([packageManager, command]) => (
           <UnderlinedTabsContent
             key={packageManager}
             value={packageManager}
-            className="[&_[data-slot=code-block-pre]]:my-0 [&_[data-slot=code-block-pre]]:shadow-none"
+            className="group relative"
           >
-            {children[index]}
+            <pre className="overflow-x-auto px-4 py-4">
+              <code
+                className="relative font-mono text-sm leading-none text-zinc-50"
+                data-language="bash"
+              >
+                {command}
+              </code>
+            </pre>
+            {command && (
+              <CopyButton
+                data-slot="code-block-copy-button"
+                className="group/button absolute top-2 right-4 overflow-hidden opacity-0 transition group-focus-within:opacity-100 group-hover:opacity-100"
+                value={command}
+              />
+            )}
           </UnderlinedTabsContent>
         ))}
       </UnderlinedTabs>

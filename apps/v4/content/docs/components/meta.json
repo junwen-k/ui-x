@@ -1,0 +1,28 @@
+{
+  "title": "Components",
+  "pages": [
+    "badge-group",
+    "bprogress",
+    "calendar",
+    "combobox",
+    "confirmer",
+    "control-group",
+    "date-field",
+    "date-time-field",
+    "date-time-range-field",
+    "date-picker",
+    "emoji-picker",
+    "description-list",
+    "dropzone",
+    "file-list",
+    "input-base",
+    "kbd",
+    "native-select",
+    "password-input",
+    "phone-input",
+    "time-field",
+    "time",
+    "timeline",
+    "wheel-picker"
+  ]
+}

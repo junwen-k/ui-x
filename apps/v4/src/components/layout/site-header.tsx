@@ -9,15 +9,17 @@ import { ModeSwitcher } from "@/components/mode-switcher";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { UiXLogo } from "@/components/ui-x-logo";
 import { VersionDropdownMenu } from "@/components/version-dropdown-menu";
-import { docsConfig } from "@/config/docs";
+import { NavGroup, mainNav } from "@/config/nav";
 import { cn } from "@/lib/utils";
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  groups: NavGroup[];
+}
+
+export function SiteHeader({ groups }: SiteHeaderProps) {
   const pathname = usePathname();
 
-  const activeItem = docsConfig.mainNav.findLast((item) =>
-    pathname.startsWith(item.href),
-  );
+  const activeItem = mainNav.findLast((item) => pathname.startsWith(item.href));
 
   return (
     <header className="bg-background/80 sticky top-0 isolate z-10 border-b border-dashed backdrop-blur md:px-8">
@@ -32,7 +34,7 @@ export function SiteHeader() {
           <SidebarTrigger className="md:hidden" />
           <VersionDropdownMenu className="hidden sm:inline-flex" />
           <nav className="hidden items-center gap-6 text-sm md:flex">
-            {docsConfig.mainNav.map((item) => (
+            {mainNav.map((item) => (
               <Link
                 key={item.title}
                 href={item.href}
@@ -50,7 +52,7 @@ export function SiteHeader() {
         </div>
         <div className="flex flex-1 items-center gap-4 sm:flex-none">
           <ModeSwitcher className="hidden lg:inline-flex" />
-          <CommandMenu />
+          <CommandMenu groups={groups} />
           <div className="flex items-center gap-0.5">
             <GithubButton />
           </div>

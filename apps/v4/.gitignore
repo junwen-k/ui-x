@@ -10,9 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-# production
-.source
-
 # testing
 /coverage
 
@@ -22,7 +19,7 @@
 
 # production
 /build
-.velite
+.source
 
 # misc
 .DS_Store
