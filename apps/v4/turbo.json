@@ -3,12 +3,16 @@
   "extends": ["//"],
   "tasks": {
     "build:next": {
-      "dependsOn": ["build:registry", "build:docs"]
+      "dependsOn": ["build:registry", "build:docs"],
+      "outputs": [".next/**", "!.next/cache/**"]
     },
     "build:docs": {
-      "dependsOn": ["build:registry"]
+      "dependsOn": ["build:registry"],
+      "outputs": [".velite/**"]
     },
-    "build:registry": {},
+    "build:registry": {
+      "outputs": ["public/r/**"]
+    },
     "dev:next": {
       "cache": false,
       "persistent": true
