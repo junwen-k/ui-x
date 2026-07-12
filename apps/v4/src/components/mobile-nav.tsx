@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PAGES_NEW } from "@/lib/docs";
-import { getPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
+import { getOwnPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
 import { cn } from "@/lib/utils";
 
 export function MobileNav({
@@ -114,7 +114,7 @@ export function MobileNav({
                   {group.name}
                 </div>
                 <div className="flex flex-col gap-3">
-                  {getPagesFromFolder(group).map((page) => (
+                  {getOwnPagesFromFolder(group).map((page) => (
                     <MobileLink
                       key={page.url}
                       href={page.url}

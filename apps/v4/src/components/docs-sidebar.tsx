@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { PAGES_NEW } from "@/lib/docs";
-import { getPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
+import { getOwnPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
 
 export function DocsSidebar({
   tree,
@@ -75,7 +75,7 @@ export function DocsSidebar({
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu className="gap-0.5">
-                  {getPagesFromFolder(item).map((page) => (
+                  {getOwnPagesFromFolder(item).map((page) => (
                     <SidebarMenuItem key={page.url}>
                       <SidebarMenuButton
                         isActive={page.url === pathname}
