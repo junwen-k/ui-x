@@ -25,7 +25,7 @@ export default function NativeSelectResponsive() {
 
   if (isDesktop) {
     return (
-      <Select value={value} onValueChange={setValue}>
+      <Select value={value} onValueChange={(value) => setValue(value ?? "")}>
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Select a timezone" />
         </SelectTrigger>

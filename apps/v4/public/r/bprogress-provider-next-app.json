@@ -1,7 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "bprogress-provider-next-app",
-  "type": "registry:component",
   "title": "BProgress Provider Next App",
   "description": "A smooth progress bar for page transitions in Next.js apps, using the App Router.",
   "dependencies": [
@@ -14,5 +13,6 @@
       "type": "registry:component",
       "target": "~/src/components/bprogress-provider.tsx"
     }
-  ]
+  ],
+  "type": "registry:component"
 }

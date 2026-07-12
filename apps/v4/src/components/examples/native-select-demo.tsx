@@ -6,7 +6,7 @@ import {
 
 export default function NativeSelectDemo() {
   return (
-    <NativeSelect defaultValue="">
+    <NativeSelect defaultValue="" className="max-w-xs">
       <NativeSelectPlaceholder>Select a fruit</NativeSelectPlaceholder>
       <NativeSelectOption value="apple">Apple</NativeSelectOption>
       <NativeSelectOption value="banana">Banana</NativeSelectOption>

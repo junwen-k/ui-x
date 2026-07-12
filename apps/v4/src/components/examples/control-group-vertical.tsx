@@ -1,15 +1,15 @@
-import { BadgeCheck, CreditCard } from "lucide-react"
+import { BadgeCheck, CreditCard } from "lucide-react";
 
 import {
   ControlGroup,
   ControlGroupItem,
-} from "@/registry/new-york/ui/control-group"
+} from "@/registry/new-york/ui/control-group";
 import {
   InputBase,
   InputBaseAdornment,
   InputBaseControl,
   InputBaseInput,
-} from "@/registry/new-york/ui/input-base"
+} from "@/registry/new-york/ui/input-base";
 
 export default function ControlGroupVertical() {
   return (
@@ -61,5 +61,5 @@ export default function ControlGroupVertical() {
         </ControlGroup>
       </ControlGroupItem>
     </ControlGroup>
-  )
+  );
 }

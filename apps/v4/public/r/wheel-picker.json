@@ -1,7 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "wheel-picker",
-  "type": "registry:ui",
   "title": "Wheel Picker",
   "description": "iOS-like wheel picker for React with smooth inertia scrolling and infinite loop support.",
   "dependencies": [
@@ -13,5 +12,6 @@
       "content": "\"use client\";\n\nimport \"@ncdai/react-wheel-picker/style.css\";\n\nimport * as WheelPickerPrimitive from \"@ncdai/react-wheel-picker\";\nimport { WheelPickerOption } from \"@ncdai/react-wheel-picker\";\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\n\nfunction WheelPickerWrapper({\n  className,\n  ...props\n}: React.ComponentProps<typeof WheelPickerPrimitive.WheelPickerWrapper>) {\n  return (\n    <WheelPickerPrimitive.WheelPickerWrapper\n      data-slot=\"wheel-picker-wrapper\"\n      className={cn(\n        \"border-input ring-ring/50 rounded-lg border px-1\",\n        \"[&>[data-rwp]]:first:[&>[data-rwp-highlight-wrapper]]:rounded-s-md\",\n        \"[&>[data-rwp]]:last:[&>[data-rwp-highlight-wrapper]]:rounded-e-md\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction WheelPicker({\n  classNames,\n  ...props\n}: React.ComponentProps<typeof WheelPickerPrimitive.WheelPicker>) {\n  return (\n    <WheelPickerPrimitive.WheelPicker\n      data-slot=\"wheel-picker\"\n      classNames={{\n        optionItem: cn(\"text-muted-foreground\", classNames?.optionItem),\n        highlightWrapper: cn(\n          \"bg-secondary text-secondary-foreground\",\n          classNames?.highlightWrapper,\n        ),\n        ...classNames,\n      }}\n      {...props}\n    />\n  );\n}\n\nexport { WheelPicker, WheelPickerWrapper, type WheelPickerOption };\n",
       "type": "registry:ui"
     }
-  ]
+  ],
+  "type": "registry:ui"
 }

@@ -8,7 +8,7 @@ import {
 
 export default function PasswordInputDemo() {
   return (
-    <PasswordInput>
+    <PasswordInput className="max-w-xs">
       <PasswordInputInput placeholder="Password" />
       <PasswordInputAdornmentToggle />
     </PasswordInput>

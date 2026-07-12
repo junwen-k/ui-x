@@ -22,11 +22,9 @@ export default function EmojiPickerDemo() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button>
-          <SmilePlusIcon />
-          Try it
-        </Button>
+      <PopoverTrigger render={<Button />}>
+        <SmilePlusIcon />
+        Try it
       </PopoverTrigger>
       <PopoverContent align="end" className="w-fit p-0">
         <EmojiPicker

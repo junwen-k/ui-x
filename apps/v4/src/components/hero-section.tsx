@@ -66,8 +66,13 @@ export function HeroSection() {
                   lineOffset={150}
                   className="absolute left-0 hidden delay-300 [animation-duration:0.5s] md:block"
                 />
-                <Button asChild size="lg" className="w-full sm:w-auto">
-                  <Link href="/docs">Get Started</Link>
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  nativeButton={false}
+                  render={<Link href="/docs" />}
+                >
+                  Get Started
                 </Button>
                 <StarGitHubButton className="w-full sm:w-auto" />
                 <VerticalLineDecorator
