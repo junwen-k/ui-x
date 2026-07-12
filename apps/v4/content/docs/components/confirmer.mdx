@@ -34,7 +34,7 @@ npx shadcn@latest add https://ui-x.junwen-k.dev/r/confirmer.json
 </Step>
 
 ```tsx title="app/layout.tsx" {1,9}
-import { Confirmer } from "@/components/ui/confirmer"; // [!code highlight]
+import { Confirmer } from "@/components/ui/confirmer";
 
 export default function RootLayout({ children }) {
   return (
@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
       <head />
       <body>
         <main>{children}</main>
-        <Confirmer /> {/* [!code highlight] */}
+        <Confirmer />
       </body>
     </html>
   );
@@ -83,8 +83,8 @@ See installation instructions for the [AlertDialog](/docs/components/alert-dialo
   Add the `<Confirmer />` component.
 </Step>
 
-```tsx title="app/layout.tsx"
-import { Confirmer } from "@/components/ui/confirmer"; // [!code highlight]
+```tsx title="app/layout.tsx" {1,9}
+import { Confirmer } from "@/components/ui/confirmer";
 
 export default function RootLayout({ children }) {
   return (
@@ -92,7 +92,7 @@ export default function RootLayout({ children }) {
       <head />
       <body>
         <main>{children}</main>
-        <Confirmer /> {/* [!code highlight] */}
+        <Confirmer />
       </body>
     </html>
   );

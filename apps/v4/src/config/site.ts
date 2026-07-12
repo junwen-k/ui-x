@@ -9,6 +9,24 @@ export const siteConfig = {
     githubProfile: "https://github.com/junwen-k",
     githubShadcnUi: "https://github.com/shadcn-ui/ui",
   },
+  navItems: [
+    {
+      href: "/docs",
+      label: "Docs",
+    },
+    {
+      href: "/docs/primitives",
+      label: "Primitives",
+    },
+    {
+      href: "/docs/utilities",
+      label: "Utilities",
+    },
+    {
+      href: "/docs/components",
+      label: "Components",
+    },
+  ],
 } as const;
 
 export const META_THEME_COLORS = {

@@ -1,68 +1,56 @@
 "use client";
 
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import { MonitorIcon, MoonStarIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import * as React from "react";
 
+import { Button } from "@/components/ui/button";
+import { useMetaColor } from "@/hooks/use-meta-color";
 import { cn } from "@/lib/utils";
-
-const THEME_OPTIONS = [
-  {
-    icon: <MoonStarIcon />,
-    value: "dark",
-  },
-  {
-    icon: <SunIcon />,
-    value: "light",
-  },
-  {
-    icon: <MonitorIcon />,
-    value: "system",
-  },
-] as const;
 
 export function ModeSwitcher({
   className,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
-  const { theme, setTheme } = useTheme();
-  const [isMounted, setIsMounted] = React.useState(false);
+}: React.ComponentProps<typeof Button>) {
+  const { setTheme, resolvedTheme } = useTheme();
+  const { metaColor, setMetaColor } = useMetaColor();
 
   React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setMetaColor(metaColor);
+  }, [metaColor, setMetaColor]);
 
-  if (!isMounted) {
-    return <div className="flex h-8 w-24" />;
-  }
+  const toggleTheme = React.useCallback(() => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
 
   return (
-    <RadioGroupPrimitive.Root
-      value={theme}
-      onValueChange={setTheme}
-      orientation="horizontal"
-      className={cn(
-        "bg-muted inline-flex items-center rounded-full border",
-        className,
-      )}
+    <Button
+      variant="ghost"
+      className={cn("group/toggle extend-touch-target size-8", className)}
+      size="icon"
+      title="Toggle theme"
+      onClick={toggleTheme}
       {...props}
     >
-      {THEME_OPTIONS.map((option) => (
-        <RadioGroupPrimitive.Item
-          key={option.value}
-          value={option.value}
-          className={cn(
-            "inline-flex items-center justify-center rounded-full p-1 transition-colors outline-none [&_svg:not([class*='size-'])]:size-3.5",
-            "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-            "data-[state=checked]:bg-accent data-[state=checked]:text-accent-foreground data-[state=checked]:border-border border border-transparent",
-            "focus-visible:ring-ring focus-visible:ring-1",
-          )}
-        >
-          {option.icon}
-          <span className="sr-only">{`Switch to ${option.value} theme`}</span>
-        </RadioGroupPrimitive.Item>
-      ))}
-    </RadioGroupPrimitive.Root>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-4.5"
+      >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+        <path d="M12 3l0 18" />
+        <path d="M12 9l4.65 -4.65" />
+        <path d="M12 14.3l7.37 -7.37" />
+        <path d="M12 19.6l8.85 -8.85" />
+      </svg>
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }

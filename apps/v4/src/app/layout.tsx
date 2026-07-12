@@ -1,28 +1,17 @@
-import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from "next";
 
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
-import { getNavGroups } from "@/config/nav";
-import { siteConfig } from "@/config/site";
-import { source } from "@/lib/source";
+import { META_THEME_COLORS, siteConfig } from "@/config/site";
+import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { BProgressProvider } from "@/registry/new-york/components/bprogress-provider-next-app";
 import { Confirmer } from "@/registry/new-york/ui/confirmer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "./globals.css";
+import "./typeset.css";
 
 export const metadata: Metadata = {
   title: {
@@ -31,13 +20,7 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
-  keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "Radix UI",
-  ],
+  keywords: ["Next.js", "React", "Tailwind CSS", "Components", "shadcn"],
   authors: [
     {
       name: "junwen-k",
@@ -68,42 +51,48 @@ export const metadata: Metadata = {
   manifest: `${siteConfig.url}/site.webmanifest`,
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          geistSans.variable,
-          geistMono.variable,
-          "font-sans antialiased",
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        fontVariables,
+        "[--header-height:calc(var(--spacing)*14)] lg:[--header-height:calc(var(--spacing)*16)]",
+      )}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.theme === 'dark' || ((!('theme' in localStorage) || localStorage.theme === 'system') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.querySelector('meta[name="theme-color"]').setAttribute('content', '${META_THEME_COLORS.dark}')
+                }
+              } catch (_) {}
+            `,
+          }}
+        />
+        <meta name="theme-color" content={META_THEME_COLORS.light} />
+      </head>
+      <body className="group/body overscroll-none antialiased [--footer-height:calc(var(--spacing)*14)]">
+        <ThemeProvider>
           <BProgressProvider>
-            <SidebarProvider className="flex flex-col">
-              <SiteHeader groups={getNavGroups(source.pageTree)} />
-              {children}
+            <div
+              data-slot="layout"
+              className="group/layout relative z-10 flex min-h-svh flex-col bg-background"
+            >
+              <SiteHeader />
+              <main className="flex min-h-0 flex-1 flex-col">{children}</main>
               <SiteFooter />
-            </SidebarProvider>
+            </div>
+            <Toaster position="top-center" />
           </BProgressProvider>
           <Confirmer />
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

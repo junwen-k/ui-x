@@ -1,10 +1,16 @@
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
+import Link from "next/link";
+import * as React from "react";
 
 import { Callout } from "@/components/callout";
-import { CodeBlock } from "@/components/code-block";
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CodeTabs } from "@/components/code-tabs";
 import { ComponentPreview } from "@/components/component-preview";
 import { ComponentSource } from "@/components/component-source";
+import { CopyButton } from "@/components/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
 import * as LinkedCards from "@/components/linked-card";
 import {
   Accordion,
@@ -12,196 +18,290 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import {
-  UnderlinedTabs,
-  UnderlinedTabsContent,
-  UnderlinedTabsList,
-  UnderlinedTabsTrigger,
-} from "@/components/underlined-tabs";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { Kbd } from "@/registry/new-york/ui/kbd";
+
+function getNodeText(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") {
+    return String(node);
+  }
+
+  if (Array.isArray(node)) {
+    return node.map((child) => getNodeText(child)).join("");
+  }
+
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+    return getNodeText(node.props.children);
+  }
+
+  return "";
+}
+
+function getHeadingId(children: React.ReactNode) {
+  const id = getNodeText(children)
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/'/g, "")
+    .replace(/\?/g, "")
+    .toLowerCase();
+
+  return id || undefined;
+}
+
+function HeadingAnchor({
+  id,
+  children,
+}: {
+  id?: string;
+  children: React.ReactNode;
+}) {
+  if (!id) {
+    return children;
+  }
+
+  return (
+    <a className="group no-underline" href={`#${id}`}>
+      <span className="underline-offset-4 group-hover:underline">
+        {children}
+      </span>
+      <span
+        aria-hidden="true"
+        className="ml-2 text-muted-foreground opacity-0 group-hover:opacity-100"
+      >
+        #
+      </span>
+    </a>
+  );
+}
 
 export const mdxComponents: MDXComponents = {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  ComponentPreview,
-  ComponentSource,
-  Callout,
-  Image,
-  Tabs: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof UnderlinedTabs>) => (
-    <UnderlinedTabs className={cn("mt-6", className)} {...props} />
+  h1: ({ children, id, ...props }: React.ComponentProps<"h1">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h1 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h1>
+    );
+  },
+  h2: ({ children, id, ...props }: React.ComponentProps<"h2">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h2 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h2>
+    );
+  },
+  h3: ({ children, id, ...props }: React.ComponentProps<"h3">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h3 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h3>
+    );
+  },
+  h4: ({ children, id, ...props }: React.ComponentProps<"h4">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h4 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h4>
+    );
+  },
+  h5: ({ children, id, ...props }: React.ComponentProps<"h5">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h5 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h5>
+    );
+  },
+  h6: ({ children, id, ...props }: React.ComponentProps<"h6">) => {
+    const headingId = id ?? getHeadingId(children);
+
+    return (
+      <h6 id={headingId} {...props}>
+        <HeadingAnchor id={headingId}>{children}</HeadingAnchor>
+      </h6>
+    );
+  },
+  // Typeset tables stay real tables and wrap to fit; wrap them to scroll
+  // wide ones horizontally instead.
+  table: (props: React.ComponentProps<"table">) => (
+    <div className="typeset-scroll scroll-fade-x scrollbar-none">
+      <table {...props} />
+    </div>
   ),
-  TabsList: UnderlinedTabsList,
-  TabsTrigger: UnderlinedTabsTrigger,
-  TabsContent: UnderlinedTabsContent,
-  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-    <h3
-      className={cn(
-        "before:bg-foreground before:text-background mt-8 scroll-m-20 text-lg font-semibold tracking-tight [counter-increment:step] before:absolute before:mt-[-4px] before:ml-[-45px] before:flex before:size-8 before:items-center before:justify-center before:rounded-full before:border-4 before:-indent-px before:font-mono before:text-xs before:font-medium before:content-[counter(step)]",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
-    <div
-      className={cn(
-        "mb-12 ml-4 border-l pl-7 [counter-reset:step] [&>h3]:mb-4 [&>h3]:text-base [&>h3]:font-semibold",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn("mt-2 scroll-m-20 text-4xl font-bold", className)}
-      {...props}
-    />
-  ),
-  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        "mt-12 scroll-m-20 border-b pb-2 text-2xl font-semibold tracking-tight first:mt-0",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h4: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4
-      className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h5
-      className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h6
-      className={cn(
-        "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
-    <a
-      className={cn("font-medium underline underline-offset-4", className)}
-      {...props}
-    />
-  ),
-  p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p
-      className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
-      {...props}
-    />
-  ),
-  ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
-  ),
-  ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
-  ),
-  li: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <li className={cn("mt-2", className)} {...props} />
-  ),
-  blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <blockquote
-      className={cn("mt-6 border-l-2 pl-6 italic", className)}
-      {...props}
-    />
-  ),
-  img: ({
-    className,
-    alt,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img className={cn("rounded-md", className)} alt={alt} {...props} />
-  ),
-  hr: ({ className, ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr className={cn("my-4 md:my-8", className)} {...props} />
-  ),
-  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-y-auto">
-      <table
+  pre: ({ className, children, ...props }: React.ComponentProps<"pre">) => {
+    return (
+      <pre
+        data-not-typeset
         className={cn(
-          "relative w-full overflow-hidden border-none text-sm",
+          "no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-data-highlighted-line:px-0 has-data-line-numbers:px-0 has-data-[slot=tabs]:p-0",
           className,
         )}
         {...props}
-      />
-    </div>
-  ),
-  tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr className={cn("m-0 border-b last:border-b-0", className)} {...props} />
-  ),
-  th: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <th
-      className={cn(
-        "px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
-    <td
-      className={cn(
-        "px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  pre: CodeBlock,
+      >
+        {children}
+      </pre>
+    );
+  },
+  figcaption: ({
+    className,
+    children,
+    ...props
+  }: React.ComponentProps<"figcaption">) => {
+    const iconExtension =
+      "data-language" in props && typeof props["data-language"] === "string"
+        ? getIconForLanguageExtension(props["data-language"])
+        : null;
+
+    return (
+      <figcaption
+        className={cn(
+          "flex items-center gap-2 text-code-foreground [&_svg]:size-4 [&_svg]:text-code-foreground [&_svg]:opacity-70",
+          className,
+        )}
+        {...props}
+      >
+        {iconExtension}
+        {children}
+      </figcaption>
+    );
+  },
   code: ({
     className,
-    // The shiki transformers attach these to the code node for the pre
-    // handler to consume; strip them so they never reach the DOM.
-    __raw__, // eslint-disable-line @typescript-eslint/no-unused-vars
-    __npm__, // eslint-disable-line @typescript-eslint/no-unused-vars
-    __yarn__, // eslint-disable-line @typescript-eslint/no-unused-vars
-    __pnpm__, // eslint-disable-line @typescript-eslint/no-unused-vars
-    __bun__, // eslint-disable-line @typescript-eslint/no-unused-vars
+    __raw__,
+    __npm__,
+    __yarn__,
+    __pnpm__,
+    __bun__,
     ...props
-  }: React.HTMLAttributes<HTMLElement> & {
+  }: React.ComponentProps<"code"> & {
     __raw__?: string;
     __npm__?: string;
     __yarn__?: string;
     __pnpm__?: string;
     __bun__?: string;
-  }) => (
-    <code
+  }) => {
+    // Inline Code.
+    if (typeof props.children === "string") {
+      return <code className={className} {...props} />;
+    }
+
+    // npm command.
+    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
+    if (isNpmCommand) {
+      return (
+        <CodeBlockCommand
+          __npm__={__npm__}
+          __yarn__={__yarn__}
+          __pnpm__={__pnpm__}
+          __bun__={__bun__}
+        />
+      );
+    }
+
+    // Default codeblock.
+    return (
+      <>
+        {__raw__ && <CopyButton value={__raw__} />}
+        <code {...props} />
+      </>
+    );
+  },
+  Step: (props: React.ComponentProps<"h3">) => <h3 {...props} />,
+  Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
+    <div
       className={cn(
-        "bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm",
+        "steps mb-12 [counter-reset:step] md:ml-4 md:border-l md:pl-8 [&>h3]:step",
         className,
       )}
       {...props}
     />
   ),
+  Image: ({
+    src,
+    className,
+    width,
+    height,
+    alt,
+    ...props
+  }: React.ComponentProps<"img">) => (
+    <Image
+      className={cn("mt-6 rounded-md border", className)}
+      src={(src as string) || ""}
+      width={Number(width)}
+      height={Number(height)}
+      alt={alt || ""}
+      {...props}
+    />
+  ),
+  Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => {
+    return (
+      <Tabs className={cn("relative mt-6 w-full", className)} {...props} />
+    );
+  },
+  TabsList: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsList>) => (
+    <TabsList
+      className={cn(
+        "justify-start gap-4 rounded-none bg-transparent px-0",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  TabsTrigger: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsTrigger>) => (
+    <TabsTrigger
+      className={cn(
+        "not-typset rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base text-muted-foreground hover:text-primary data-active:border-primary data-active:bg-transparent data-active:text-foreground data-active:shadow-none! dark:data-active:border-primary dark:data-active:bg-transparent",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  TabsContent: ({
+    className,
+    ...props
+  }: React.ComponentProps<typeof TabsContent>) => (
+    <TabsContent
+      className={cn(
+        "relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-medium *:[figure]:first:mt-0 [&>.steps]:mt-6",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  Tab: (props: React.ComponentProps<"div">) => <div {...props} />,
+  Button: ({ className, ...props }: React.ComponentProps<typeof Button>) => (
+    <Button className={cn("not-typeset", className)} {...props} />
+  ),
+  Callout,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Alert,
+  AlertTitle,
+  AlertDescription,
+  CodeTabs,
+  ComponentPreview,
+  ComponentSource,
+  CodeCollapsibleWrapper,
+  Link,
+  Kbd,
   ...LinkedCards,
 };

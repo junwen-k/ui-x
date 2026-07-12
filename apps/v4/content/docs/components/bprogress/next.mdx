@@ -26,8 +26,7 @@ npx shadcn@latest add https://ui-x.junwen-k.dev/r/bprogress-provider-next-app.js
   Wrap your root layout with the `<BProgressProvider />` component:
 </Step>
 
-```tsx title="app/layout.tsx"
-/* [!code highlight] */
+```tsx title="app/layout.tsx" {1,8}
 import { BProgressProvider } from "@/components/bprogress-provider";
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -35,7 +34,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <head />
       <body>
-        {/* [!code highlight] */}
         <BProgressProvider>{children}</BProgressProvider>
       </body>
     </html>
@@ -67,8 +65,7 @@ npm install @bprogress/next
   Wrap your root layout with the `<BProgressProvider />` component:
 </Step>
 
-```tsx title="app/layout.tsx"
-/* [!code highlight] */
+```tsx title="app/layout.tsx" {1,8}
 import { BProgressProvider } from "@/components/bprogress-provider";
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -76,7 +73,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <head />
       <body>
-        {/* [!code highlight] */}
         <BProgressProvider>{children}</BProgressProvider>
       </body>
     </html>
@@ -113,16 +109,13 @@ npx shadcn@latest add https://ui-x.junwen-k.dev/r/bprogress-provider-next-pages.
   Wrap your root layout with the `<BProgressProvider />` component:
 </Step>
 
-```tsx title="pages/_app.tsx"
-/* [!code highlight] */
+```tsx title="pages/_app.tsx" {1,5,7}
 import { BProgressProvider } from "@/components/bprogress-provider";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    /* [!code highlight] */
     <BProgressProvider>
       <Component {...pageProps} />
-      {/* [!code highlight] */}
     </BProgressProvider>
   );
 }
@@ -152,16 +145,13 @@ npm install @bprogress/next
   Wrap your root layout with the `<BProgressProvider />` component:
 </Step>
 
-```tsx title="pages/_app.tsx"
-/* [!code highlight] */
+```tsx title="pages/_app.tsx" {1,5,7}
 import { BProgressProvider } from "@/components/bprogress-provider";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    /* [!code highlight] */
     <BProgressProvider>
       <Component {...pageProps} />
-      {/* [!code highlight] */}
     </BProgressProvider>
   );
 }

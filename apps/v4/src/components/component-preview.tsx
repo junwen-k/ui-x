@@ -1,33 +1,50 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { Loader2Icon } from "lucide-react";
 import * as React from "react";
 
-import { ComponentCode } from "@/components/code-block";
-import { CopyButton } from "@/components/copy-button";
-import { OpenInV0Button } from "@/components/open-in-v0-button";
-import {
-  UnderlinedTabs,
-  UnderlinedTabsContent,
-  UnderlinedTabsList,
-  UnderlinedTabsTrigger,
-} from "@/components/underlined-tabs";
+import { ComponentPreviewTabs } from "@/components/component-preview-tabs";
+import { ComponentCode } from "@/components/component-source";
 import { highlightCode } from "@/lib/highlight-code";
-import { cn } from "@/lib/utils";
 
-interface ComponentPreviewProps {
-  // TODO: potentially improve name typing
+export async function ComponentPreview({
+  name,
+  className,
+  previewClassName,
+  align = "center",
+  hideCode = false,
+  chromeLessOnMobile = false,
+  ...props
+}: React.ComponentProps<"div"> & {
   name: string;
-}
-
-export async function ComponentPreview({ name }: ComponentPreviewProps) {
+  previewClassName?: string;
+  align?: "center" | "start" | "end";
+  hideCode?: boolean;
+  chromeLessOnMobile?: boolean;
+}) {
   const filePath = path.join(
     process.cwd(),
     `src/components/examples/${name}.tsx`,
   );
 
-  let code = await fs.readFile(filePath, "utf8");
+  let code: string | undefined;
+  try {
+    code = await fs.readFile(filePath, "utf8");
+  } catch {
+    code = undefined;
+  }
+
+  if (!code) {
+    return (
+      <p className="mt-6 text-sm text-muted-foreground">
+        Component{" "}
+        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
+          {name}
+        </code>{" "}
+        not found.
+      </p>
+    );
+  }
 
   // Replace imports.
   // TODO: Use @swc/core and a visitor to replace this.
@@ -35,76 +52,36 @@ export async function ComponentPreview({ name }: ComponentPreviewProps) {
   code = code.replaceAll(`@/registry/new-york/`, "@/components/");
   code = code.replaceAll("export default", "export");
 
-  const highlightedCode = await highlightCode(code, "tsx");
-
-  return (
-    <UnderlinedTabs defaultValue="preview" className="mt-6 flex flex-col gap-4">
-      <UnderlinedTabsList>
-        <UnderlinedTabsTrigger value="preview">Preview</UnderlinedTabsTrigger>
-        <UnderlinedTabsTrigger value="code">Code</UnderlinedTabsTrigger>
-      </UnderlinedTabsList>
-      <UnderlinedTabsContent value="preview">
-        <ComponentCanvas>
-          <ComponentCanvasHeader>
-            <OpenInV0Button url={`https://ui-x.junwen-k.dev/r/${name}.json`} />
-            <CopyButton value={code} />
-          </ComponentCanvasHeader>
-          <ComponentCanvasExample
-            className="flex min-h-[350px] w-full items-center justify-center p-10"
-            name={name}
-          />
-        </ComponentCanvas>
-      </UnderlinedTabsContent>
-      <UnderlinedTabsContent
-        value="code"
-        className="[&_[data-slot='code-block-pre']]:my-0"
-      >
-        <ComponentCode code={code} highlightedCode={highlightedCode} />
-      </UnderlinedTabsContent>
-    </UnderlinedTabs>
-  );
-}
-
-export async function ComponentCanvas({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return <div className={cn("rounded-md border", className)} {...props} />;
-}
-
-interface ComponentCanvasExampleProps extends React.ComponentProps<"div"> {
-  name: string;
-}
-
-export async function ComponentCanvasExample({
-  name,
-  ...props
-}: ComponentCanvasExampleProps) {
   const Component = (await import(`@/components/examples/${name}`)).default;
 
-  return (
-    <div {...props}>
-      <React.Suspense
-        fallback={
-          <div className="text-muted-foreground flex w-full items-center justify-center text-sm">
-            <Loader2Icon className="mr-2 size-4 animate-spin" />
-            Loading...
-          </div>
-        }
-      >
-        <Component />
-      </React.Suspense>
-    </div>
-  );
-}
+  const highlightedCode = await highlightCode(code, "tsx");
+  const previewCode = code.split("\n").slice(0, 3).join("\n");
+  const highlightedPreviewCode = await highlightCode(previewCode, "tsx");
 
-export function ComponentCanvasHeader({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
   return (
-    <div
-      className={cn("flex items-center justify-end gap-2 p-4", className)}
+    <ComponentPreviewTabs
+      className={className}
+      previewClassName={previewClassName}
+      align={align}
+      hideCode={hideCode}
+      chromeLessOnMobile={chromeLessOnMobile}
+      component={<Component />}
+      source={
+        <ComponentCode
+          code={code}
+          highlightedCode={highlightedCode}
+          language="tsx"
+          title={undefined}
+        />
+      }
+      sourcePreview={
+        <ComponentCode
+          code={previewCode}
+          highlightedCode={highlightedPreviewCode}
+          language="tsx"
+          title={undefined}
+        />
+      }
       {...props}
     />
   );

@@ -1,86 +1,112 @@
 "use client";
 
+import { CheckIcon, CopyIcon, TerminalIcon } from "lucide-react";
 import * as React from "react";
 
-import { CopyButton } from "@/components/copy-button";
-import {
-  UnderlinedTabs,
-  UnderlinedTabsContent,
-  UnderlinedTabsList,
-  UnderlinedTabsTrigger,
-} from "@/components/underlined-tabs";
-import { PackageManager, usePackageManager } from "@/hooks/use-package-manager";
-
-export interface CodeBlockCommandProps extends React.ComponentProps<"pre"> {
-  /**
-   * The following props are added by the shiki transformers during build time.
-   * See highlight-code.ts for implementation details.
-   */
-  __npm__?: string;
-  __yarn__?: string;
-  __pnpm__?: string;
-  __bun__?: string;
-}
+import { copyToClipboard } from "@/components/copy-button";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useConfig } from "@/hooks/use-config";
 
 export function CodeBlockCommand({
   __npm__,
   __yarn__,
   __pnpm__,
   __bun__,
-}: CodeBlockCommandProps) {
-  const [packageManager, setPackageManager] = usePackageManager();
+}: React.ComponentProps<"pre"> & {
+  __npm__?: string;
+  __yarn__?: string;
+  __pnpm__?: string;
+  __bun__?: string;
+}) {
+  const [config, setConfig] = useConfig();
+  const [hasCopied, setHasCopied] = React.useState(false);
 
-  const tabs = React.useMemo(
-    () => ({
+  React.useEffect(() => {
+    if (hasCopied) {
+      const timer = setTimeout(() => setHasCopied(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasCopied]);
+
+  const packageManager = config.packageManager || "pnpm";
+  const tabs = React.useMemo(() => {
+    return {
+      pnpm: __pnpm__,
       npm: __npm__,
       yarn: __yarn__,
-      pnpm: __pnpm__,
       bun: __bun__,
-    }),
-    [__npm__, __yarn__, __pnpm__, __bun__],
-  );
+    };
+  }, [__npm__, __pnpm__, __yarn__, __bun__]);
+
+  const copyCommand = React.useCallback(() => {
+    const command = tabs[packageManager];
+
+    if (!command) {
+      return;
+    }
+
+    copyToClipboard(command);
+    setHasCopied(true);
+  }, [packageManager, tabs]);
 
   return (
-    <div className="relative mt-6 max-h-[650px] overflow-x-auto rounded-xl bg-zinc-950 dark:bg-zinc-900">
-      <UnderlinedTabs
+    <div className="overflow-x-auto">
+      <Tabs
         value={packageManager}
-        onValueChange={(value) => setPackageManager(value as PackageManager)}
+        className="gap-0"
+        onValueChange={(value) => {
+          setConfig({
+            ...config,
+            packageManager: value as "pnpm" | "npm" | "yarn" | "bun",
+          });
+        }}
       >
-        <UnderlinedTabsList className="border-b border-zinc-800 bg-zinc-900 px-3 pt-2.5">
-          {Object.entries(tabs).map(([packageManager]) => (
-            <UnderlinedTabsTrigger
-              key={packageManager}
-              value={packageManager}
-              className="border-b px-2 pt-1 pb-2 font-mono text-zinc-400 data-[state=active]:border-b-zinc-50 data-[state=active]:bg-transparent data-[state=active]:text-zinc-50"
-            >
-              {packageManager}
-            </UnderlinedTabsTrigger>
-          ))}
-        </UnderlinedTabsList>
-        {Object.entries(tabs).map(([packageManager, command]) => (
-          <UnderlinedTabsContent
-            key={packageManager}
-            value={packageManager}
-            className="group relative"
-          >
-            <pre className="overflow-x-auto px-4 py-4">
-              <code
-                className="relative font-mono text-sm leading-none text-zinc-50"
-                data-language="bash"
-              >
-                {command}
-              </code>
-            </pre>
-            {command && (
-              <CopyButton
-                data-slot="code-block-copy-button"
-                className="group/button absolute top-2 right-4 overflow-hidden opacity-0 transition group-focus-within:opacity-100 group-hover:opacity-100"
-                value={command}
-              />
-            )}
-          </UnderlinedTabsContent>
-        ))}
-      </UnderlinedTabs>
+        <div className="flex items-center gap-2 border-b border-border/50 px-3 py-1">
+          <div className="flex size-4 items-center justify-center rounded-[1px] bg-foreground opacity-70">
+            <TerminalIcon className="size-3 text-code" />
+          </div>
+          <TabsList className="rounded-none bg-transparent p-0">
+            {Object.entries(tabs).map(([key]) => {
+              return (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className="h-7 border border-transparent pt-0.5 shadow-none! data-active:border-input data-active:bg-background!"
+                >
+                  {key}
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+        </div>
+        <div className="no-scrollbar overflow-x-auto">
+          {Object.entries(tabs).map(([key, value]) => {
+            return (
+              <TabsContent key={key} value={key} className="mt-0 px-4 py-3.5">
+                <pre>
+                  <code
+                    className="relative font-mono text-sm leading-none"
+                    data-language="bash"
+                  >
+                    {value}
+                  </code>
+                </pre>
+              </TabsContent>
+            );
+          })}
+        </div>
+      </Tabs>
+      <Button
+        data-slot="copy-button"
+        size="icon"
+        variant="ghost"
+        className="absolute top-2 right-2 z-10 size-7 opacity-70 hover:opacity-100 focus-visible:opacity-100"
+        onClick={copyCommand}
+      >
+        <span className="sr-only">Copy</span>
+        {hasCopied ? <CheckIcon /> : <CopyIcon />}
+      </Button>
     </div>
   );
 }

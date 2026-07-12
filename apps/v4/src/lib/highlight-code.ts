@@ -73,14 +73,18 @@ export async function highlightCode(code: string, language: string = "tsx") {
 
   const html = await codeToHtml(code, {
     lang: language,
-    theme: "github-dark-dimmed",
+    themes: {
+      dark: "github-dark",
+      light: "github-light",
+    },
     transformers: [
       {
         pre(node) {
-          node.properties["data-slot"] = "code-block-pre";
           node.properties["class"] =
-            "my-6 grid max-h-[650px] overflow-auto rounded-xl shadow-[0_1.5px_2px_0_theme(colors.black/32%),0_0_0_1px_theme(colors.white/10%),0_-1px_0_0_theme(colors.white/4%)]";
-          delete node.properties["style"];
+            "no-scrollbar min-w-0 overflow-x-auto overflow-y-auto overscroll-x-contain overscroll-y-auto px-4 py-3.5 outline-none has-[[data-highlighted-line]]:px-0 has-[[data-line-numbers]]:px-0 has-[[data-slot=tabs]]:p-0 !bg-transparent";
+        },
+        code(node) {
+          node.properties["data-line-numbers"] = "";
         },
         line(node) {
           node.properties["data-line"] = "";
