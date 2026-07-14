@@ -56,6 +56,7 @@ export default async function Page({ params }: DocPageProps) {
                       variant="secondary"
                       size="icon"
                       className="extend-touch-target size-8 shadow-none md:size-7"
+                      nativeButton={false}
                       render={
                         <Link href={neighbours.previous.url}>
                           <ArrowLeftIcon />
@@ -69,6 +70,7 @@ export default async function Page({ params }: DocPageProps) {
                       variant="secondary"
                       size="icon"
                       className="extend-touch-target size-8 shadow-none md:size-7"
+                      nativeButton={false}
                       render={
                         <Link href={neighbours.next.url}>
                           <span className="sr-only">Next</span>
@@ -127,6 +129,7 @@ export default async function Page({ params }: DocPageProps) {
                 variant="secondary"
                 size="sm"
                 className="shadow-none"
+                nativeButton={false}
                 render={
                   <Link href={neighbours.previous.url}>
                     <ArrowLeftIcon /> {neighbours.previous.name}
@@ -139,6 +142,7 @@ export default async function Page({ params }: DocPageProps) {
                 variant="secondary"
                 size="sm"
                 className="ml-auto shadow-none"
+                nativeButton={false}
                 render={
                   <Link href={neighbours.next.url}>
                     {neighbours.next.name} <ArrowRightIcon />
