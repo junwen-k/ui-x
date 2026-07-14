@@ -1,16 +1,40 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
+import * as React from "react";
 
-import {
-  ComponentCanvas,
-  ComponentCanvasExample,
-} from "@/components/component-preview";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+
+function ComponentCanvas({ className, ...props }: React.ComponentProps<"div">) {
+  return <div className={cn("rounded-md border", className)} {...props} />;
+}
+
+async function ComponentCanvasExample({
+  name,
+  ...props
+}: React.ComponentProps<"div"> & { name: string }) {
+  const Component = (await import(`@/components/examples/${name}`)).default;
+
+  return (
+    <div {...props}>
+      <React.Suspense
+        fallback={
+          <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+            Loading...
+          </div>
+        }
+      >
+        <Component />
+      </React.Suspense>
+    </div>
+  );
+}
 
 export function ComponentDemoCarouselSection() {
   return (

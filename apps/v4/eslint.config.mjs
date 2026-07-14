@@ -1,18 +1,10 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 
-import { FlatCompat } from "@eslint/eslintrc";
-import tseslint from "typescript-eslint";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-export default tseslint.config(
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+export default defineConfig([
+  nextCoreWebVitals,
+  nextTypescript,
   {
     rules: {
       "import/order": [
@@ -39,6 +31,12 @@ export default tseslint.config(
           ignoreDeclarationSort: true,
         },
       ],
+      // TODO: New react-hooks v6 rules flag long-standing patterns in the
+      // registry components (composed event handlers reading refs, media
+      // query hooks). Revisit when refreshing the registry components.
+      "react-hooks/refs": "warn",
+      "react-hooks/set-state-in-effect": "warn",
     },
   },
-);
+  globalIgnores([".source/**"]),
+]);

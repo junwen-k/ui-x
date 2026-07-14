@@ -8,8 +8,9 @@ export function LinkedCard({
 }: React.ComponentProps<typeof Link>) {
   return (
     <Link
+      data-not-typeset
       className={cn(
-        "bg-card text-card-foreground hover:bg-muted/50 focus-visible:border-ring focus-visible:ring-ring/50 flex w-full flex-col items-center rounded-xl border p-6 shadow transition-colors focus-visible:ring-[3px] sm:p-10",
+        "flex w-full flex-col items-center rounded-xl bg-surface p-6 text-surface-foreground transition-colors hover:bg-surface/80 sm:p-10",
         className,
       )}
       {...props}
