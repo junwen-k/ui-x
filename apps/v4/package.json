@@ -5,9 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "turbo run build:next build:registry",
-    "build:next": "next build",
-    "build:registry": "shadcn build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "postinstall": "fumadocs-mdx"

@@ -40,8 +40,11 @@ only once the overhaul is finalized.
 
 - [x] Decide fate of WIP `location-input`: **abandoned** (2026-07-09) — stale,
       untracked files deleted. May revisit from scratch in Phase 5.
-- [ ] Upgrade `shadcn` CLI from `2.4.0-canary.13` to v3.x; verify
-      `pnpm build:registry` still produces a valid registry.
+- [x] Upgrade `shadcn` CLI (now `4.13.0`) — superseded by the GitHub registry
+      migration (2026-07-14): `shadcn build`/`build:registry` is gone entirely,
+      the CLI reads `registry.json` straight from the repo
+      (`npx shadcn@latest add junwen-k/ui-x/<item>`), validated in CI via
+      `shadcn registry validate`.
 - [ ] Dependency pass on `apps/v4`: zod (pinned at 3.21.4), lucide-react,
       react-day-picker, tailwindcss. (Radix packages get removed in Phase 4
       rather than upgraded.)
