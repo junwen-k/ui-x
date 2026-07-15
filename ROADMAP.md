@@ -17,11 +17,17 @@ only once the overhaul is finalized.
   banner — "You are viewing docs for Tailwind v3. Switch to latest →" — and the
   Tailwind v4 site becomes canonical at `ui-x.junwen-k.dev`.
 - **Base UI only — Radix is dropped** *(2026-07-10, supersedes the earlier
-  dual-library plan)*. shadcn's default for new projects is the `base-nova`
-  preset (`shadcn init --defaults`); maintaining a Radix twin of every
-  component doubles the surface for a single maintainer with no matching
-  demand. The pre-migration state of `next` (PR #55) is the final Radix-era
-  snapshot.
+  dual-library plan; reconfirmed 2026-07-15)*. shadcn's default for new
+  projects is the `base-nova` preset (`shadcn init --defaults`); maintaining a
+  Radix twin of every component doubles the surface for a single maintainer
+  with no matching demand. Because the registry distributes copies (not a
+  package dependency), dropping Radix breaks no existing install — users
+  already own their code.
+- **Radix legacy access via git tag, not a maintained variant.** The shadcn
+  GitHub registry supports refs: `npx shadcn@latest add
+  junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
+  the `next` → `main` merge; the changelog and superseded-component docs point
+  Radix users at `#radix`. No dual registry, no legacy branch to maintain.
 - **One published style: nova.** ui-x targets shadcn's default preset
   (nova: h-8 controls, rounded-lg, ring-3, Lucide, Geist) rather than the
   legacy `new-york-v4` or the full 8-style family (nova/vega/lyra/luma/maia/
@@ -110,8 +116,14 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
       nova theme adopted. Remaining straggler: `ui/form.tsx` still imports
       `@radix-ui/react-label`/`react-slot` — replace with Base UI
       `Field`/`Form` when demo form plumbing is reworked (see 4c).
-- [ ] Remove Radix dependencies from `apps/v4` once no vendored or registry
-      component imports them (blocked on the 4c ports + `ui/form.tsx`).
+- [ ] Remove Radix dependencies from `apps/v4` — reframed 2026-07-15: the goal
+      is **no maintained component imports Radix**. The 7 frozen superseded
+      components keep their Radix-utility imports (their registry payloads
+      declare npm deps for consumers), so the handful of packages they use
+      (`react-slot`, `react-primitive`, `compose-refs`, `primitive`,
+      `use-controllable-state`, plus `react-popover`/`roving-focus` via
+      `combobox-primitive`) stay in `apps/v4` for live previews. Everything
+      else goes after the 4c ports + `ui/form.tsx`.
 - [x] Fix site-header vertical separators — shipped 2026-07-15
       (PR #61, `fix/header-separator`).
 
