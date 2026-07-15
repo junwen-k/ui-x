@@ -109,6 +109,13 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
       adopt the nova theme (neutral base color, Geist, tw-animate-css).
 - [ ] Remove Radix dependencies from `apps/v4` once no vendored or registry
       component imports them.
+- [ ] Fix site-header vertical separators (found 2026-07-15): the base-nova
+      `Separator` uses `data-vertical:self-stretch`, which top-aligns the
+      divider once the header caps it with `**:data-[slot=separator]:h-4!`.
+      shadcn's own header sidesteps this by still importing the Radix
+      `new-york-v4` separator (`h-full`, centered by `items-center`); ui-x
+      needs `self-center` on the header's vertical separators (or track
+      upstream when shadcn migrates their header).
 
 ### 4c. Components — keep/drop audit, then port
 
@@ -117,18 +124,51 @@ catalog now cover several of them natively):
 
 | ui-x component | Likely call | Notes |
 | --- | --- | --- |
-| `combobox` / `combobox-primitive` | drop | Base UI Combobox does tags/async natively; shadcn ships it |
+| `combobox` / `combobox-primitive` | drop | Base UI Combobox does tags/async natively; shadcn ships it — reinforced by Base UI's newer `Autocomplete` |
 | `file-list` | drop | superseded by shadcn `attachment` |
-| `input-base` | drop/absorb | shadcn `input-group` covers it; ui-x components compose that instead |
+| `input-base` | drop/absorb | **confirmed 2026-07-15** — replace with shadcn `input-group`; see migration item below |
 | `kbd`, `control-group`, `badge-group` | drop or keep | official `kbd`, `button-group` exist; audit gaps first |
 | `native-select` | audit | shadcn now ships `native-select` in the new styles |
 | `calendar`, `date-picker` | audit | vs shadcn's rebuilt calendar + Base UI date pieces |
 | date/time fields, phone-input, dropzone, confirmer, timeline, description-list, wheel-picker, emoji-picker, sortable, virtualizer, time | keep | still differentiated — these are the port targets |
 
+Base UI coverage audit (2026-07-15, against installed `@base-ui/react`): the
+newer Base UI additions — `Autocomplete`, `OTP Field`, `Number Field`,
+`Drawer`, `Menubar`, `Field`/`Fieldset`/`Form` — don't cover ui-x's niche.
+Date/time fields, phone-input, dropzone, wheel-picker, timeline, confirmer,
+sortable, virtualizer and time have **no** Base UI counterpart and remain the
+port targets. `Field`/`Form` should replace hand-rolled form plumbing in
+demos.
+
+- [ ] **Replace `input-base` with shadcn `input-group`** (big change — many
+      dependents). Registry components composing InputBase today: `combobox`,
+      `date-picker`, `date-time-field`, `date-time-range-field`,
+      `native-select`, `password-input`, plus most form-component examples
+      (e.g. `phone-input-demo`). Migrating also fixes the phone-input demo
+      height mismatch: InputBase is still `min-h-9` (new-york-v4) while the
+      vendored nova Select trigger is `h-8`, so the joined control has a 4px
+      step (found 2026-07-15).
 - [ ] Port each kept component to Base UI primitives with classes from the
       `base-nova` sources; delete custom primitives Base UI now provides.
 - [ ] Rewrite demos/examples against the nova metrics; verify every page.
 - [ ] Rebuild registry payloads (single style), update install docs.
+
+### 4d. Docs content — API Reference & Accessibility sections (after ports)
+
+Follow shadcn's hand-authored format (surveyed 2026-07-15: 51 of their base
+docs have `## API Reference`, 8 newer ones have `## Accessibility`; no docgen
+tooling anywhere — tables are written by hand, thin Base UI wrappers just link
+out, e.g. accordion → "See the Base UI documentation").
+
+- [ ] Add **API Reference** to every doc: markdown tables per sub-component
+      (`Prop | Type | Default | Description`). Primitives get full tables;
+      wrapper components link to their primitive's section instead —
+      mirroring how shadcn defers to Base UI. Tables become part of the
+      definition-of-done when a component's props change.
+- [ ] Add **Accessibility** where there's real guidance to give (icon-only
+      button labeling, keyboard interaction, meaning beyond color): prose
+      with `###` sub-headings and short aria snippets, per shadcn's
+      attachment/message/field docs.
 
 ## Phase 5 — New components & catch-up (stretch)
 
@@ -157,3 +197,9 @@ catalog now cover several of them natively):
   8-style system discovered (`base-nova` is the default preset); decided to
   drop Radix entirely and do Base UI + nova + fumadocs as one Phase 4
   migration on `feat/base-nova`.
+- **2026-07-15** — PR #59 up (nativeButton fixes; docs tabs layout turned out
+  to be stale dev-server CSS, not a source bug). Decisions/triage: adopt
+  shadcn `input-group` to replace `input-base` (4c); Base UI coverage audit
+  confirms the port list unchanged; phone-input demo 4px height mismatch and
+  header separator top-alignment triaged (4c/4b); docs get hand-written API
+  Reference + Accessibility sections after the ports (4d).
