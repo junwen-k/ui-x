@@ -19,12 +19,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { InputGroupButton } from "@/components/ui/input-group";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { InputBaseAdornmentButton } from "@/registry/new-york/ui/input-base";
 import {
   TimeField,
   TimeFieldAmPm,
@@ -119,7 +119,7 @@ export default function WheelPickerForm() {
                     <TimeFieldAmPm />
                     <PopoverTrigger
                       className="ml-auto"
-                      render={<InputBaseAdornmentButton />}
+                      render={<InputGroupButton size="icon-xs" />}
                     >
                       <ClockIcon />
                     </PopoverTrigger>

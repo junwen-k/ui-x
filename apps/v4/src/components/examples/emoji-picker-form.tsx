@@ -18,6 +18,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+} from "@/components/ui/input-group";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -33,10 +38,6 @@ import {
   EmojiPickerFooter,
   EmojiPickerSearch,
 } from "@/registry/new-york/ui/emoji-picker";
-import {
-  InputBase,
-  InputBaseAdornmentButton,
-} from "@/registry/new-york/ui/input-base";
 
 const FormSchema = z.object({
   message: z.string().min(1, { message: "Message is required" }),
@@ -96,15 +97,21 @@ export default function EmojiPickerForm() {
                     </FormControl>
                   </ControlGroupItem>
                   <ControlGroupItem>
-                    <InputBase
-                      className="before:flex-1"
-                      error={Boolean(fieldState.error)}
-                    >
-                      <PopoverTrigger render={<InputBaseAdornmentButton />}>
-                        <SmilePlusIcon />
-                        <span className="sr-only">Pick emoji</span>
-                      </PopoverTrigger>
-                    </InputBase>
+                    <InputGroup>
+                      <InputGroupAddon align="inline-end" className="ml-auto">
+                        <PopoverTrigger
+                          render={
+                            <InputGroupButton
+                              size="icon-xs"
+                              aria-invalid={Boolean(fieldState.error)}
+                            />
+                          }
+                        >
+                          <SmilePlusIcon />
+                          <span className="sr-only">Pick emoji</span>
+                        </PopoverTrigger>
+                      </InputGroupAddon>
+                    </InputGroup>
                   </ControlGroupItem>
                 </ControlGroup>
                 <FormMessage />

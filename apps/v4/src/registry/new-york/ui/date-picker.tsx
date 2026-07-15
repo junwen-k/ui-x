@@ -3,7 +3,12 @@
 import { CalendarIcon, XIcon } from "lucide-react";
 import * as React from "react";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+} from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/registry/new-york/ui/calendar";
 import {
@@ -13,12 +18,6 @@ import {
   DateFieldYears,
 } from "@/registry/new-york/ui/date-field";
 import * as DatePickerPrimitive from "@/registry/new-york/ui/date-picker-primitive";
-import {
-  InputBase,
-  InputBaseAdornment,
-  InputBaseAdornmentButton,
-  InputBaseFlexWrapper,
-} from "@/registry/new-york/ui/input-base";
 
 function DatePicker(
   props: React.ComponentProps<typeof DatePickerPrimitive.Root>,
@@ -34,30 +33,33 @@ function DatePickerAnchor(
   );
 }
 
-function DatePickerInputBase({
+function DatePickerInputGroup({
   children,
+  className,
   ...props
-}: React.ComponentProps<typeof InputBase>) {
+}: React.ComponentProps<typeof InputGroup>) {
   return (
     <DatePickerPrimitive.Anchor asChild>
-      <InputBase data-slot="date-picker-input-base" {...props}>
-        <InputBaseFlexWrapper>{children}</InputBaseFlexWrapper>
-        <InputBaseAdornment>
-          <InputBaseAdornmentButton asChild>
-            <DatePickerPrimitive.Clear>
+      <InputGroup
+        data-slot="date-picker-input-group"
+        className={cn("pl-2", className)}
+        {...props}
+      >
+        <div className="flex flex-1 items-center">{children}</div>
+        <InputGroupAddon align="inline-end">
+          <DatePickerPrimitive.Clear asChild>
+            <InputGroupButton size="icon-xs">
               <span className="sr-only">Clear date</span>
               <XIcon />
-            </DatePickerPrimitive.Clear>
-          </InputBaseAdornmentButton>
-        </InputBaseAdornment>
-        <InputBaseAdornment>
-          <InputBaseAdornmentButton asChild>
-            <DatePickerPrimitive.Trigger>
+            </InputGroupButton>
+          </DatePickerPrimitive.Clear>
+          <DatePickerPrimitive.Trigger asChild>
+            <InputGroupButton size="icon-xs">
               <CalendarIcon />
-            </DatePickerPrimitive.Trigger>
-          </InputBaseAdornmentButton>
-        </InputBaseAdornment>
-      </InputBase>
+            </InputGroupButton>
+          </DatePickerPrimitive.Trigger>
+        </InputGroupAddon>
+      </InputGroup>
     </DatePickerPrimitive.Anchor>
   );
 }
@@ -161,7 +163,7 @@ function DatePickerInput({
   const { mode } = DatePickerPrimitive.useDatePicker();
 
   return (
-    <DatePickerInputBase className={className}>
+    <DatePickerInputGroup className={className}>
       {mode === "range" ? (
         <DatePickerDateRangeField
           {...(props as React.ComponentProps<typeof DatePickerDateRangeField>)}
@@ -171,7 +173,7 @@ function DatePickerInput({
           {...(props as React.ComponentProps<typeof DatePickerDateField>)}
         />
       )}
-    </DatePickerInputBase>
+    </DatePickerInputGroup>
   );
 }
 
@@ -181,22 +183,19 @@ function DatePickerTrigger({
   ...props
 }: React.ComponentProps<typeof DatePickerPrimitive.Trigger>) {
   return (
-    <InputBase
+    <DatePickerPrimitive.Trigger
       data-slot="date-picker-trigger"
       asChild
-      className={cn(
-        buttonVariants({ variant: "outline" }),
-        "cursor-pointer font-normal",
-        className,
-      )}
+      {...props}
     >
-      <DatePickerPrimitive.Trigger {...props}>
-        <InputBaseAdornment>
-          <CalendarIcon />
-        </InputBaseAdornment>
-        <InputBaseFlexWrapper>{children}</InputBaseFlexWrapper>
-      </DatePickerPrimitive.Trigger>
-    </InputBase>
+      <Button
+        variant="outline"
+        className={cn("w-full justify-start font-normal", className)}
+      >
+        <CalendarIcon className="text-muted-foreground" />
+        {children}
+      </Button>
+    </DatePickerPrimitive.Trigger>
   );
 }
 

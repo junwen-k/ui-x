@@ -296,8 +296,8 @@
       ],
       "registryDependencies": [
         "badge",
-        "https://ui-x.junwen-k.dev/r/combobox-primitive.json",
-        "https://ui-x.junwen-k.dev/r/input-base.json"
+        "input-group",
+        "https://ui-x.junwen-k.dev/r/combobox-primitive.json"
       ],
       "files": [
         {
@@ -362,8 +362,8 @@
       "title": "Date Time Field",
       "description": "Date Time Field allows user to enter date and time value.",
       "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/date-time-field-primitive.json",
-        "https://ui-x.junwen-k.dev/r/input-base.json"
+        "input-group",
+        "https://ui-x.junwen-k.dev/r/date-time-field-primitive.json"
       ],
       "files": [
         {
@@ -378,9 +378,9 @@
       "title": "Date Time Range Field",
       "description": "Date Time Range Field allows user to enter date and time value for a range of dates.",
       "registryDependencies": [
+        "input-group",
         "https://ui-x.junwen-k.dev/r/date-time-field.json",
-        "https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json",
-        "https://ui-x.junwen-k.dev/r/input-base.json"
+        "https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json"
       ],
       "files": [
         {
@@ -396,10 +396,10 @@
       "description": "A date picker component lets users select a date.",
       "registryDependencies": [
         "button",
+        "input-group",
         "https://ui-x.junwen-k.dev/r/calendar.json",
         "https://ui-x.junwen-k.dev/r/date-field.json",
-        "https://ui-x.junwen-k.dev/r/date-picker-primitive.json",
-        "https://ui-x.junwen-k.dev/r/input-base.json"
+        "https://ui-x.junwen-k.dev/r/date-picker-primitive.json"
       ],
       "files": [
         {
@@ -498,9 +498,6 @@
       "type": "registry:ui",
       "title": "Native Select",
       "description": "Native select element.",
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/input-base.json"
-      ],
       "files": [
         {
           "path": "src/registry/new-york/ui/native-select.tsx",
@@ -514,7 +511,7 @@
       "title": "Password Input",
       "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
       "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/input-base.json",
+        "input-group",
         "https://ui-x.junwen-k.dev/r/password-input-primitive.json"
       ],
       "files": [

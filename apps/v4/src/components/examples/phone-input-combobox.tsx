@@ -9,6 +9,7 @@ import {
   CommandGroup as ComboboxGroup,
   CommandList as ComboboxList,
 } from "@/components/ui/command";
+import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
 import { PopoverContent } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import {
@@ -21,11 +22,6 @@ import {
   ControlGroup,
   ControlGroupItem,
 } from "@/registry/new-york/ui/control-group";
-import {
-  InputBase,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
 import {
   Country,
   PhoneInput,
@@ -118,13 +114,11 @@ export default function PhoneInputCombobox() {
               </ComboboxPrimitive.Content>
             </ComboboxPrimitive.Portal>
             <ControlGroupItem>
-              <InputBase>
-                <InputBaseControl>
-                  <PhoneInputPrimitive.Input asChild>
-                    <InputBaseInput />
-                  </PhoneInputPrimitive.Input>
-                </InputBaseControl>
-              </InputBase>
+              <InputGroup>
+                <PhoneInputPrimitive.Input asChild>
+                  <InputGroupInput />
+                </PhoneInputPrimitive.Input>
+              </InputGroup>
             </ControlGroupItem>
           </ControlGroup>
         </ComboboxPrimitive.Anchor>

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { InputGroup } from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 import {
   DateTimeFieldAmPm,
@@ -14,7 +15,6 @@ import {
   DateTimeFieldYears,
 } from "@/registry/new-york/ui/date-time-field";
 import * as DateTimeRangeFieldPrimitive from "@/registry/new-york/ui/date-time-range-field-primitive";
-import { InputBase } from "@/registry/new-york/ui/input-base";
 
 function DateTimeRangeField({
   children,
@@ -27,7 +27,9 @@ function DateTimeRangeField({
       asChild
       {...props}
     >
-      <InputBase className={cn("gap-1.5", className)}>{children}</InputBase>
+      <InputGroup className={cn("gap-1.5 px-2", className)}>
+        {children}
+      </InputGroup>
     </DateTimeRangeFieldPrimitive.Root>
   );
 }
