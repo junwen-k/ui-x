@@ -32,7 +32,7 @@ function DateTimeFieldSeparator({
 }
 
 const dateTimeFieldInputStyle =
-  "focus:bg-primary focus:text-primary-foreground focus:placeholder:text-primary-foreground box-content h-fit flex-initial rounded-sm px-0.5 tabular-nums";
+  "focus:bg-primary dark:focus:bg-primary focus:text-primary-foreground focus:placeholder:text-primary-foreground box-content h-fit flex-initial rounded-sm px-0.5 tabular-nums";
 
 function DateTimeFieldYears({
   placeholder = "yyyy",
