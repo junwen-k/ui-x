@@ -26,8 +26,8 @@ only once the overhaul is finalized.
 - **Radix legacy access via git tag, not a maintained variant.** The shadcn
   GitHub registry supports refs: `npx shadcn@latest add
   junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
-  the `next` → `main` merge; the changelog and superseded-component docs point
-  Radix users at `#radix`. No dual registry, no legacy branch to maintain.
+  the `next` → `main` merge; the changelog points Radix users at `#radix`.
+  No dual registry, no legacy branch to maintain.
 - **One published style: nova.** ui-x targets shadcn's default preset
   (nova: h-8 controls, rounded-lg, ring-3, Lucide, Geist) rather than the
   legacy `new-york-v4` or the full 8-style family (nova/vega/lyra/luma/maia/
@@ -36,9 +36,18 @@ only once the overhaul is finalized.
 - **Docs move to fumadocs.** The velite setup was a learning exercise; the v4
   site is rebuilt following shadcn's own stack (`fumadocs-core`/`-mdx`/`-ui` +
   `fumadocs-docgen`, Next 16).
-- **Own the niche, acknowledge the overlap.** Components that shadcn has since
-  added (Kbd, Button Group, Input Group, Combobox, Attachment, …) get an honest
-  callout and a recommendation, rather than silently competing.
+- **Own the niche — superseded components are removed, not listed as-is**
+  *(2026-07-15, supersedes the earlier "callout + provided as-is" policy)*.
+  Components that shadcn has since added (Kbd, Button Group/Control Group,
+  Input Group/Input Base, Combobox, Attachment/File List, Native Select,
+  Calendar) are removed from the registry and docs entirely at ship time.
+  Keeping them frozen wasn't hacky, but the ROI wasn't there: permanently
+  off-style demos once the site goes nova, Radix packages pinned in `apps/v4`,
+  and docs pages whose main message is "use the official one". The ship
+  changelog announces Base UI as Radix's modern successor and points existing
+  users at the official shadcn/ui components and at `#radix` for the old
+  sources. (The interim callouts + "In shadcn/ui" sidebar group on `next`
+  served until removal.)
 
 ---
 
@@ -65,9 +74,14 @@ only once the overhaul is finalized.
 - [ ] Point canonical domain / SEO (sitemap, robots, `metadataBase`, og) at the
       v4 site; v3 moves to a `v3.` subdomain or subpath.
 - [x] Update `installation.mdx` with registry install instructions and
-      requirements (`index.mdx` / `tailwind-v4.mdx` reviewed, still accurate).
+      requirements. (`tailwind-v4.mdx` and the homepage "Introducing Tailwind
+      v4" announcement badge removed 2026-07-15 — old news; the v3 pointer
+      lives in `installation.mdx`.)
 - [ ] Refresh `changelog.mdx` — deferred: write a single entry once the
-      overhaul actually ships, not piecemeal.
+      overhaul actually ships, not piecemeal. Must announce Base UI as Radix's
+      modern successor, the removal of the superseded components, and the
+      `#radix` tag for old sources. Consider a new homepage announcement badge
+      pointing at it.
 - [x] Clear stale "New" labels in `src/config/docs.ts`.
 - [x] **Overlap callouts** added to kbd, control-group, input-base, combobox,
       file-list (→ Attachment) — placed above the preview, recommending the
@@ -116,14 +130,12 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
       nova theme adopted. Remaining straggler: `ui/form.tsx` still imports
       `@radix-ui/react-label`/`react-slot` — replace with Base UI
       `Field`/`Form` when demo form plumbing is reworked (see 4c).
-- [ ] Remove Radix dependencies from `apps/v4` — reframed 2026-07-15: the goal
-      is **no maintained component imports Radix**. The 7 frozen superseded
-      components keep their Radix-utility imports (their registry payloads
-      declare npm deps for consumers), so the handful of packages they use
-      (`react-slot`, `react-primitive`, `compose-refs`, `primitive`,
-      `use-controllable-state`, plus `react-popover`/`roving-focus` via
-      `combobox-primitive`) stay in `apps/v4` for live previews. Everything
-      else goes after the 4c ports + `ui/form.tsx`.
+- [ ] Remove Radix dependencies from `apps/v4` — **all of them** (re-decided
+      2026-07-15 with the clean-cut policy: the earlier "no maintained
+      component imports Radix" carve-out for frozen superseded components no
+      longer applies since those are removed rather than frozen). Zero
+      `@radix-ui/*` packages remain after the 4c ports, the superseded-
+      component removal, and the `ui/form.tsx` replacement.
 - [x] Fix site-header vertical separators — shipped 2026-07-15
       (PR #61, `fix/header-separator`).
 
@@ -132,8 +144,8 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
 **Audit closed 2026-07-15.** Every registry item now has a verdict; the docs
 sidebar's "In shadcn/ui" group mirrors the superseded list exactly.
 
-**Superseded — frozen as-is, never ported** (callout + sidebar group; stay at
-the Radix-era snapshot):
+**Superseded — removed entirely, never ported** (clean cut decided 2026-07-15;
+old sources remain reachable via the `#radix` tag):
 
 | ui-x component | Superseded by |
 | --- | --- |
@@ -174,11 +186,16 @@ demos.
         `compose-refs`, `use-controllable-state`, `primitive`) → Base UI
         `useRender`/`mergeProps` + React 19 ref handling. 16 registry files
         affected; `phone-input.tsx` already uses Base UI.
+- [ ] **Remove the 7 superseded components** (before or alongside the ports):
+      delete their registry sources, examples, docs pages and registry.json
+      entries; drop the "In shadcn/ui" sidebar group and the overlap callouts
+      with them. `date-picker`'s registry dep switches to the official bare
+      `"calendar"`.
 - [ ] Rewrite demos/examples against the nova metrics (adopt Base UI
       `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
       every page.
-- [ ] Update registry.json (single style): `date-picker` → bare `"calendar"`
-      dep; update install docs.
+- [ ] Update registry.json (single style) and install docs after the
+      removals + ports.
 
 ### 4d. Docs content — API Reference & Accessibility sections (after ports)
 
@@ -207,13 +224,12 @@ out, e.g. accordion → "See the Base UI documentation").
 
 ## Open questions
 
-- Deprecation policy — **partially decided (2026-07-09)**: overlapped
-  components stay published but are "provided as-is" with a prominent callout
-  recommending the official shadcn/ui version; since 2026-07-15 they are also
-  grouped under "In shadcn/ui" in the docs sidebar. Still open: whether
-  superseded components are removed from the registry entirely or left frozen
-  at the Radix-era snapshot (leaning: keep frozen — they'll be intentionally
-  style-inconsistent once the rest goes nova, which the as-is framing covers).
+- Deprecation policy — **decided (2026-07-15)**: clean cut. Superseded
+  components are removed from the registry and docs entirely at ship time
+  (see Guiding decisions); the ship changelog announces Base UI as the modern
+  successor and points at `#radix` for the old sources. The interim
+  "provided as-is" callouts and "In shadcn/ui" sidebar group go away with the
+  removal.
 - Monorepo: `packages/` is empty — flatten, or reserve for shared registry
   tooling in Phase 2?
 
@@ -242,3 +258,9 @@ out, e.g. accordion → "See the Base UI documentation").
   4a (fumadocs/Next 16) and most of 4b already shipped; remaining bulk is the
   4c ports (16 Radix-importing registry files, mostly utility packages) and
   4d docs sections.
+- **2026-07-15 (clean cut)** — Deprecation policy settled: superseded
+  components get removed entirely at ship time instead of staying frozen
+  "as-is"; changelog announces Base UI as the modern successor, `#radix` tag
+  covers legacy installs; all `@radix-ui/*` packages leave `apps/v4`. Also
+  removed the stale Tailwind v4 docs page and the homepage announcement badge
+  linking to it (plus the now-unused `@icons-pack/react-simple-icons` dep).
