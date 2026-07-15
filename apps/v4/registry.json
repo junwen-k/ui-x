@@ -36,27 +36,6 @@
       ]
     },
     {
-      "name": "combobox-primitive",
-      "type": "registry:ui",
-      "title": "Combobox Primitive",
-      "description": "An unstyled combobox component. Input field with autocomplete & autosuggest functionalities.",
-      "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-popover",
-        "@radix-ui/react-primitive@2.1.2",
-        "@radix-ui/react-roving-focus@1.1.9",
-        "@radix-ui/react-use-controllable-state@1.2.2",
-        "cmdk"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/combobox-primitive.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "date-time-field-primitive",
       "type": "registry:ui",
       "title": "Date Time Field Primitive",
@@ -268,45 +247,6 @@
       ]
     },
     {
-      "name": "calendar",
-      "type": "registry:ui",
-      "title": "Calendar",
-      "description": "A calendar component lets users select a date without any input or popper / modal.",
-      "dependencies": [
-        "react-day-picker",
-        "date-fns"
-      ],
-      "registryDependencies": [
-        "button"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/calendar.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "combobox",
-      "type": "registry:ui",
-      "title": "Combobox",
-      "description": "Input field with autocomplete & autosuggest functionalities.",
-      "dependencies": [
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [
-        "badge",
-        "input-group",
-        "https://ui-x.junwen-k.dev/r/combobox-primitive.json"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/combobox.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "confirmer",
       "type": "registry:ui",
       "title": "Confirmer",
@@ -321,22 +261,6 @@
       "files": [
         {
           "path": "src/registry/new-york/ui/confirmer.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "control-group",
-      "type": "registry:ui",
-      "title": "Control Group",
-      "description": "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
-      "dependencies": [
-        "@radix-ui/react-primitive@2.1.2",
-        "@radix-ui/react-slot"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/control-group.tsx",
           "type": "registry:ui"
         }
       ]
@@ -397,7 +321,7 @@
       "registryDependencies": [
         "button",
         "input-group",
-        "https://ui-x.junwen-k.dev/r/calendar.json",
+        "calendar",
         "https://ui-x.junwen-k.dev/r/date-field.json",
         "https://ui-x.junwen-k.dev/r/date-picker-primitive.json"
       ],
@@ -434,73 +358,6 @@
       "files": [
         {
           "path": "src/registry/new-york/ui/dropzone.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "file-list",
-      "type": "registry:ui",
-      "title": "File List",
-      "description": "A File List component displays a list of files with details such as name, size, and progress.",
-      "dependencies": [
-        "pretty-bytes"
-      ],
-      "registryDependencies": [
-        "button",
-        "progress"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/file-list.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "input-base",
-      "type": "registry:ui",
-      "title": "Input Base",
-      "description": "Base component to create custom inputs.",
-      "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
-        "@radix-ui/react-slot"
-      ],
-      "registryDependencies": [
-        "button"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/input-base.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "kbd",
-      "type": "registry:ui",
-      "title": "Kbd",
-      "description": "Displays which key or combination of keys performs a given action.",
-      "dependencies": [
-        "@radix-ui/react-slot"
-      ],
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/kbd.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "native-select",
-      "type": "registry:ui",
-      "title": "Native Select",
-      "description": "Native select element.",
-      "files": [
-        {
-          "path": "src/registry/new-york/ui/native-select.tsx",
           "type": "registry:ui"
         }
       ]

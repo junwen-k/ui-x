@@ -1,7 +1,6 @@
 {
   "title": "Primitives",
   "pages": [
-    "combobox",
     "date-time-field",
     "date-time-range-field",
     "date-picker",

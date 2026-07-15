@@ -186,11 +186,15 @@ demos.
         `compose-refs`, `use-controllable-state`, `primitive`) → Base UI
         `useRender`/`mergeProps` + React 19 ref handling. 16 registry files
         affected; `phone-input.tsx` already uses Base UI.
-- [ ] **Remove the 7 superseded components** (before or alongside the ports):
+- [x] **Remove the 7 superseded components** (before or alongside the ports):
       delete their registry sources, examples, docs pages and registry.json
       entries; drop the "In shadcn/ui" sidebar group and the overlap callouts
       with them. `date-picker`'s registry dep switches to the official bare
-      `"calendar"`.
+      `"calendar"`. Done 2026-07-16: 8 registry sources (incl.
+      `combobox-primitive`), 29 examples and 8 docs pages deleted;
+      registry.json 34 → 26 items; entangled keeper examples rewritten
+      against vendored shadcn `kbd`/`button-group`/`attachment`/`combobox`
+      (Base UI) in `apps/v4/src/components/ui/`.
 - [ ] Rewrite demos/examples against the nova metrics (adopt Base UI
       `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
       every page.
@@ -264,3 +268,10 @@ out, e.g. accordion → "See the Base UI documentation").
   covers legacy installs; all `@radix-ui/*` packages leave `apps/v4`. Also
   removed the stale Tailwind v4 docs page and the homepage announcement badge
   linking to it (plus the now-unused `@icons-pack/react-simple-icons` dep).
+- **2026-07-16** — Superseded-component removal executed on `next`: 8 registry
+  sources, 29 examples, 8 docs pages and the "In shadcn/ui" sidebar group
+  deleted; registry.json down to 26 items. shadcn's Base UI `kbd`,
+  `button-group`, `attachment` and `combobox` vendored into the site's
+  `components/ui/` to rewrite the entangled keeper examples (phone-input,
+  dropzone, emoji-picker, virtualizer). Verified with typecheck, `pnpm build`
+  (28 docs paths) and in-browser smoke tests of every rewritten page.

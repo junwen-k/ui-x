@@ -16,14 +16,6 @@
     "time-field",
     "time",
     "timeline",
-    "wheel-picker",
-    "---In shadcn/ui---",
-    "calendar",
-    "combobox",
-    "control-group",
-    "file-list",
-    "input-base",
-    "kbd",
-    "native-select"
+    "wheel-picker"
   ]
 }

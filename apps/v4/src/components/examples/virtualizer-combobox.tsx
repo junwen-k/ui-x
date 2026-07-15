@@ -6,10 +6,10 @@ import {
   Combobox,
   ComboboxContent,
   ComboboxEmpty,
-  ComboboxGroup,
   ComboboxInput,
   ComboboxItem,
-} from "@/registry/new-york/ui/combobox";
+  ComboboxList,
+} from "@/components/ui/combobox";
 import {
   Virtualized,
   VirtualizedVirtualizer,
@@ -35,30 +35,26 @@ export default function VirtualizerCombobox() {
 
   return (
     <Combobox
-      type="single"
       inputValue={inputValue}
       onInputValueChange={setInputValue}
-      shouldFilter={false}
+      filteredItems={filtered}
+      virtualized
     >
       <ComboboxInput placeholder="Search item..." />
-      <Virtualized asChild>
-        <ComboboxContent>
-          {filtered.length === 0 && (
-            <ComboboxEmpty>No item found.</ComboboxEmpty>
-          )}
-          {filtered.length > 0 && (
-            <ComboboxGroup heading="Items">
-              <VirtualizedVirtualizer startMargin={32}>
-                {filtered.map((item) => (
-                  <ComboboxItem key={item.value} value={item.value}>
-                    {item.label}
-                  </ComboboxItem>
-                ))}
-              </VirtualizedVirtualizer>
-            </ComboboxGroup>
-          )}
-        </ComboboxContent>
-      </Virtualized>
+      <ComboboxContent>
+        <ComboboxEmpty>No item found.</ComboboxEmpty>
+        <Virtualized asChild>
+          <ComboboxList>
+            <VirtualizedVirtualizer>
+              {filtered.map((item) => (
+                <ComboboxItem key={item.value} value={item.value}>
+                  {item.label}
+                </ComboboxItem>
+              ))}
+            </VirtualizedVirtualizer>
+          </ComboboxList>
+        </Virtualized>
+      </ComboboxContent>
     </Combobox>
   );
 }

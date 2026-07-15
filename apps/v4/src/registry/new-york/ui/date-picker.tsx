@@ -10,7 +10,7 @@ import {
   InputGroupButton,
 } from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
-import { Calendar } from "@/registry/new-york/ui/calendar";
+import { Calendar } from "@/components/ui/calendar";
 import {
   DateFieldDays,
   DateFieldMonths,

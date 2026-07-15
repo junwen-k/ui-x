@@ -2,11 +2,8 @@
 
 import * as React from "react";
 
+import { ButtonGroup } from "@/components/ui/button-group";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
-import {
-  ControlGroup,
-  ControlGroupItem,
-} from "@/registry/new-york/ui/control-group";
 import {
   PhoneInput,
   PhoneInputCountrySelect,
@@ -20,25 +17,21 @@ import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primiti
 export default function PhoneInputDemo() {
   return (
     <PhoneInput>
-      <ControlGroup>
+      <ButtonGroup>
         <PhoneInputCountrySelect>
-          <ControlGroupItem>
-            <PhoneInputCountrySelectTrigger>
-              <PhoneInputCountrySelectValue />
-            </PhoneInputCountrySelectTrigger>
-          </ControlGroupItem>
+          <PhoneInputCountrySelectTrigger>
+            <PhoneInputCountrySelectValue />
+          </PhoneInputCountrySelectTrigger>
           <PhoneInputCountrySelectContent>
             <PhoneInputCountrySelectOptions />
           </PhoneInputCountrySelectContent>
         </PhoneInputCountrySelect>
-        <ControlGroupItem>
-          <InputGroup>
-            <PhoneInputPrimitive.Input asChild>
-              <InputGroupInput />
-            </PhoneInputPrimitive.Input>
-          </InputGroup>
-        </ControlGroupItem>
-      </ControlGroup>
+        <InputGroup>
+          <PhoneInputPrimitive.Input asChild>
+            <InputGroupInput />
+          </PhoneInputPrimitive.Input>
+        </InputGroup>
+      </ButtonGroup>
     </PhoneInput>
   );
 }

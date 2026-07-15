@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { XIcon } from "lucide-react";
+import { FileIcon, XIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import { ErrorCode } from "react-dropzone";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -20,6 +20,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment";
+import {
   Dropzone,
   DropzoneDescription,
   DropzoneInput,
@@ -27,17 +36,6 @@ import {
   DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import {
-  FileList,
-  FileListAction,
-  FileListDescription,
-  FileListHeader,
-  FileListIcon,
-  FileListInfo,
-  FileListItem,
-  FileListName,
-  FileListSize,
-} from "@/registry/new-york/ui/file-list";
 
 // 1 MB
 const MAX_FILE_SIZE = 1e6;
@@ -152,25 +150,27 @@ export default function DropzoneForm() {
         {!!fields.length && (
           <div className="grid gap-4">
             <h6 className="leading-none font-semibold tracking-tight">{`Files (${fields.length})`}</h6>
-            <FileList>
+            <div className="grid gap-2">
               {fields.map((field, index) => (
-                <FileListItem key={field.id}>
-                  <FileListHeader>
-                    <FileListIcon />
-                    <FileListInfo>
-                      <FileListName>{field.file.name}</FileListName>
-                      <FileListDescription>
-                        <FileListSize>{field.file.size}</FileListSize>
-                      </FileListDescription>
-                    </FileListInfo>
-                    <FileListAction onClick={() => remove(index)}>
+                <Attachment key={field.id} className="w-full">
+                  <AttachmentMedia>
+                    <FileIcon />
+                  </AttachmentMedia>
+                  <AttachmentContent>
+                    <AttachmentTitle>{field.file.name}</AttachmentTitle>
+                    <AttachmentDescription>
+                      {prettyBytes(field.file.size)}
+                    </AttachmentDescription>
+                  </AttachmentContent>
+                  <AttachmentActions>
+                    <AttachmentAction onClick={() => remove(index)}>
                       <XIcon />
                       <span className="sr-only">Remove</span>
-                    </FileListAction>
-                  </FileListHeader>
-                </FileListItem>
+                    </AttachmentAction>
+                  </AttachmentActions>
+                </Attachment>
               ))}
-            </FileList>
+            </div>
           </div>
         )}
         <Button type="submit">Submit</Button>

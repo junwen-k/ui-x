@@ -53,27 +53,9 @@ export function ComponentDemoCarouselSection() {
                   "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
               },
               {
-                name: "calendar-dropdown-layout",
-                title: "Calendar",
-                description:
-                  "A calendar component lets users select a date without any input or popper / modal.",
-              },
-              {
-                name: "combobox-demo",
-                title: "Combobox",
-                description:
-                  "Input field with autocomplete & autosuggest functionalities.",
-              },
-              {
                 name: "confirmer-demo",
                 title: "Confirmer",
                 description: "Imperative confirm dialog implementation.",
-              },
-              {
-                name: "control-group-demo",
-                title: "Control Group",
-                description:
-                  "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
               },
               {
                 name: "date-field-demo",

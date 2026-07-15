@@ -1,27 +1,21 @@
 "use client";
 
-import { CheckIcon, ChevronsUpDown, SearchIcon } from "lucide-react";
 import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
 
 import { Button } from "@/components/ui/button";
-import {
-  CommandGroup as ComboboxGroup,
-  CommandList as ComboboxList,
-} from "@/components/ui/command";
-import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
-import { PopoverContent } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+import { ButtonGroup } from "@/components/ui/button-group";
 import {
   Combobox,
+  ComboboxContent,
   ComboboxEmpty,
-  comboboxItemStyle,
-} from "@/registry/new-york/ui/combobox";
-import * as ComboboxPrimitive from "@/registry/new-york/ui/combobox-primitive";
-import {
-  ControlGroup,
-  ControlGroupItem,
-} from "@/registry/new-york/ui/control-group";
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxTrigger,
+  useComboboxAnchor,
+} from "@/components/ui/combobox";
+import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
 import {
   Country,
   PhoneInput,
@@ -33,95 +27,52 @@ const regionNames = new Intl.DisplayNames(["en"], {
   type: "region",
 });
 
+const countries = PhoneInputPrimitive.getCountryOptions().map(
+  (option) => option.countryCode,
+);
+
 export default function PhoneInputCombobox() {
-  const [open, setOpen] = React.useState(false);
   const [country, setCountry] = React.useState<Country | null>(null);
+  const anchor = useComboboxAnchor();
 
   return (
     <PhoneInput country={country} onCountryChange={setCountry}>
       <Combobox
-        type="single"
-        value={country ?? ""}
+        items={countries}
+        value={country}
         onValueChange={(value) => setCountry(value as Country)}
-        open={open}
-        onOpenChange={setOpen}
+        itemToStringLabel={(value) => regionNames.of(value as Country) ?? ""}
       >
-        <ComboboxPrimitive.Anchor>
-          <ControlGroup>
-            <ControlGroupItem>
-              <ComboboxPrimitive.Trigger asChild>
-                <Button variant="outline" role="combobox" aria-expanded={open}>
-                  <PhoneInputFlag
-                    country={country}
-                    title={country ?? "International"}
-                  />
-                  <ChevronsUpDown className="opacity-50" />
-                </Button>
-              </ComboboxPrimitive.Trigger>
-            </ControlGroupItem>
-            <ComboboxPrimitive.Portal>
-              <ComboboxPrimitive.Content asChild>
-                <PopoverContent className="w-(--radix-popover-trigger-width) p-0">
-                  <div
-                    data-slot="command-input-wrapper"
-                    className="flex h-9 items-center gap-2 border-b px-3"
-                  >
-                    <SearchIcon className="size-4 shrink-0 opacity-50" />
-                    <ComboboxPrimitive.Input
-                      placeholder="Search country..."
-                      className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
-                    />
-                  </div>
-                  <ComboboxList>
-                    <ComboboxEmpty>No country found.</ComboboxEmpty>
-                    <ComboboxGroup>
-                      {PhoneInputPrimitive.getCountryOptions().map((option) => (
-                        <ComboboxPrimitive.Item
-                          value={option.countryCode}
-                          data-slot="combobox-item"
-                          className={cn(
-                            comboboxItemStyle(),
-                            "justify-between gap-4 pr-8",
-                          )}
-                          key={option.countryCode}
-                        >
-                          <div className="flex flex-1 items-center gap-2">
-                            <div>
-                              <PhoneInputFlag
-                                country={option.countryCode}
-                                title={option.countryCode}
-                              />
-                            </div>
-                            <div className="line-clamp-1">
-                              <ComboboxPrimitive.ItemText>
-                                {regionNames.of(option.countryCode)!}
-                              </ComboboxPrimitive.ItemText>
-                            </div>
-                          </div>
-                          <div className="text-muted-foreground">
-                            {`+${getCountryCallingCode(option.countryCode)}`}
-                          </div>
-                          <span className="absolute right-2 flex size-3.5 items-center justify-center">
-                            <ComboboxPrimitive.ItemIndicator>
-                              <CheckIcon className="size-4" />
-                            </ComboboxPrimitive.ItemIndicator>
-                          </span>
-                        </ComboboxPrimitive.Item>
-                      ))}
-                    </ComboboxGroup>
-                  </ComboboxList>
-                </PopoverContent>
-              </ComboboxPrimitive.Content>
-            </ComboboxPrimitive.Portal>
-            <ControlGroupItem>
-              <InputGroup>
-                <PhoneInputPrimitive.Input asChild>
-                  <InputGroupInput />
-                </PhoneInputPrimitive.Input>
-              </InputGroup>
-            </ControlGroupItem>
-          </ControlGroup>
-        </ComboboxPrimitive.Anchor>
+        <ButtonGroup ref={anchor}>
+          <ComboboxTrigger
+            render={<Button variant="outline" />}
+            aria-label="Select country"
+          >
+            <PhoneInputFlag country={country} title={country ?? "International"} />
+          </ComboboxTrigger>
+          <InputGroup>
+            <PhoneInputPrimitive.Input asChild>
+              <InputGroupInput />
+            </PhoneInputPrimitive.Input>
+          </InputGroup>
+        </ButtonGroup>
+        <ComboboxContent anchor={anchor}>
+          <ComboboxInput placeholder="Search country..." showTrigger={false} />
+          <ComboboxEmpty>No country found.</ComboboxEmpty>
+          <ComboboxList>
+            {(countryCode: Country) => (
+              <ComboboxItem key={countryCode} value={countryCode}>
+                <PhoneInputFlag country={countryCode} title={countryCode} />
+                <span className="line-clamp-1">
+                  {regionNames.of(countryCode)}
+                </span>
+                <span className="text-muted-foreground ml-auto">
+                  {`+${getCountryCallingCode(countryCode)}`}
+                </span>
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
       </Combobox>
     </PhoneInput>
   );

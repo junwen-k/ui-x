@@ -21,17 +21,13 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
+  InputGroupTextarea,
 } from "@/components/ui/input-group";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  ControlGroup,
-  ControlGroupItem,
-} from "@/registry/new-york/ui/control-group";
 import {
   EmojiPicker,
   EmojiPickerContent,
@@ -84,36 +80,30 @@ export default function EmojiPickerForm() {
             render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Message</FormLabel>
-                <ControlGroup orientation="vertical">
-                  <ControlGroupItem>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        ref={textareaRef}
-                        className="w-96"
-                        rows={3}
-                        placeholder="Type a message..."
-                      />
-                    </FormControl>
-                  </ControlGroupItem>
-                  <ControlGroupItem>
-                    <InputGroup>
-                      <InputGroupAddon align="inline-end" className="ml-auto">
-                        <PopoverTrigger
-                          render={
-                            <InputGroupButton
-                              size="icon-xs"
-                              aria-invalid={Boolean(fieldState.error)}
-                            />
-                          }
-                        >
-                          <SmilePlusIcon />
-                          <span className="sr-only">Pick emoji</span>
-                        </PopoverTrigger>
-                      </InputGroupAddon>
-                    </InputGroup>
-                  </ControlGroupItem>
-                </ControlGroup>
+                <InputGroup className="w-96">
+                  <FormControl>
+                    <InputGroupTextarea
+                      {...field}
+                      ref={textareaRef}
+                      rows={3}
+                      placeholder="Type a message..."
+                    />
+                  </FormControl>
+                  <InputGroupAddon align="block-end">
+                    <PopoverTrigger
+                      render={
+                        <InputGroupButton
+                          size="icon-xs"
+                          className="ml-auto"
+                          aria-invalid={Boolean(fieldState.error)}
+                        />
+                      }
+                    >
+                      <SmilePlusIcon />
+                      <span className="sr-only">Pick emoji</span>
+                    </PopoverTrigger>
+                  </InputGroupAddon>
+                </InputGroup>
                 <FormMessage />
               </FormItem>
             )}
