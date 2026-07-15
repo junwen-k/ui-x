@@ -2,7 +2,6 @@
   "pages": [
     "index",
     "installation",
-    "tailwind-v4",
     "changelog",
     "primitives",
     "utilities",

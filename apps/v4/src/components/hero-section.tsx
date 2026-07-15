@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import { Announcement } from "@/components/announcement";
 import { CircleDecorator } from "@/components/circle-decorator";
 import {
   HorizontalLineDecorator,
@@ -14,22 +13,6 @@ export function HeroSection() {
     <section className="overflow-hidden px-8 py-24">
       <div className="mx-auto max-w-screen-2xl">
         <div className="py-6 lg:py-8">
-          <div className="flex items-center justify-center py-6 md:hidden">
-            <Announcement />
-          </div>
-          <div className="flex items-center justify-center">
-            <div className="relative hidden min-w-[28rem] items-center justify-center p-8 md:flex">
-              <VerticalLineDecorator
-                lineFadeStop={50}
-                className="absolute left-0 [animation-duration:0.5s]"
-              />
-              <Announcement />
-              <VerticalLineDecorator
-                lineFadeStop={50}
-                className="absolute right-0 [animation-duration:0.5s]"
-              />
-            </div>
-          </div>
           <div className="relative isolate text-center">
             <HorizontalLineDecorator
               lineOffset={150}

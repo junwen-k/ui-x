@@ -19,7 +19,6 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@faker-js/faker": "^8.2.0",
     "@hookform/resolvers": "^5.0.1",
-    "@icons-pack/react-simple-icons": "^12.8.0",
     "@ncdai/react-wheel-picker": "^1.0.13",
     "@octokit/core": "^6.1.5",
     "@radix-ui/primitive": "1.1.2",
