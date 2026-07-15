@@ -1,18 +1,25 @@
 "use client";
 
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { Primitive } from "@radix-ui/react-primitive";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
+import { useControlled } from "@base-ui/utils/useControlled";
+import { useStableCallback } from "@base-ui/utils/useStableCallback";
 import * as React from "react";
 
-export type PasswordInputContextProps = Required<
-  Pick<PasswordInputProps, "visible" | "onVisibleChange">
->;
+export interface PasswordInputState {
+  /**
+   * Whether the password is currently visible.
+   */
+  visible: boolean;
+}
 
-const PasswordInputContext = React.createContext<PasswordInputContextProps>({
-  visible: false,
-  onVisibleChange: () => {},
-});
+interface PasswordInputContextValue {
+  visible: boolean;
+  setVisible: (visible: boolean) => void;
+}
+
+const PasswordInputContext =
+  React.createContext<PasswordInputContextValue | null>(null);
 
 function usePasswordInput() {
   const context = React.useContext(PasswordInputContext);
@@ -34,73 +41,94 @@ export interface PasswordInputProps {
 
 function PasswordInput({
   visible: visibleProp,
-  defaultVisible,
+  defaultVisible = false,
   onVisibleChange,
   children,
 }: PasswordInputProps) {
-  const [visible, setVisible] = useControllableState({
-    prop: visibleProp,
-    defaultProp: defaultVisible ?? false,
-    onChange: onVisibleChange,
+  const [visible, setVisibleUnwrapped] = useControlled({
+    controlled: visibleProp,
+    default: defaultVisible,
+    name: "PasswordInput",
+    state: "visible",
   });
 
+  const setVisible = useStableCallback((nextVisible: boolean) => {
+    setVisibleUnwrapped(nextVisible);
+    onVisibleChange?.(nextVisible);
+  });
+
+  const contextValue = React.useMemo(
+    () => ({ visible, setVisible }),
+    [visible, setVisible],
+  );
+
   return (
-    <PasswordInputContext.Provider
-      value={{
-        visible,
-        onVisibleChange: setVisible,
-      }}
-    >
+    <PasswordInputContext.Provider value={contextValue}>
       {children}
     </PasswordInputContext.Provider>
   );
 }
 
-function PasswordInputInput(
-  props: React.ComponentProps<typeof Primitive.input>,
-) {
+function PasswordInputInput({
+  render,
+  ...props
+}: useRender.ComponentProps<"input">) {
   const { visible } = usePasswordInput();
 
-  return (
-    <Primitive.input
-      data-slot="password-input-input"
-      type={visible ? "text" : "password"}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "input",
+    props: mergeProps<"input">(
+      {
+        "data-slot": "password-input-input",
+        type: visible ? "text" : "password",
+      } as React.ComponentProps<"input">,
+      props,
+    ),
+  });
 }
 
 function PasswordInputToggle({
-  type = "button",
-  onClick,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.button>) {
-  const { visible, onVisibleChange } = usePasswordInput();
+}: useRender.ComponentProps<"button", PasswordInputState>) {
+  const { visible, setVisible } = usePasswordInput();
+  const state = React.useMemo(() => ({ visible }), [visible]);
 
-  return (
-    <Primitive.button
-      data-slot="password-input-toggle"
-      type={type}
-      data-state={visible ? "visible" : "hidden"}
-      onClick={composeEventHandlers(onClick, () => onVisibleChange(!visible))}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    state,
+    defaultTagName: "button",
+    props: mergeProps<"button">(
+      {
+        "data-slot": "password-input-toggle",
+        type: "button",
+        onClick: () => setVisible(!visible),
+      } as React.ComponentProps<"button">,
+      props,
+    ),
+  });
 }
 
 function PasswordInputIndicator({
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.span>) {
+}: useRender.ComponentProps<"span", PasswordInputState>) {
   const { visible } = usePasswordInput();
+  const state = React.useMemo(() => ({ visible }), [visible]);
 
-  return (
-    <Primitive.span
-      data-slot="password-input-indicator"
-      aria-hidden="true"
-      data-state={visible ? "visible" : "hidden"}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    state,
+    defaultTagName: "span",
+    props: mergeProps<"span">(
+      {
+        "data-slot": "password-input-indicator",
+        "aria-hidden": true,
+      } as React.ComponentProps<"span">,
+      props,
+    ),
+  });
 }
 
 export {

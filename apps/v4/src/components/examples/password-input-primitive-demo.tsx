@@ -6,8 +6,8 @@ export default function PasswordInputPrimitiveDemo() {
       <PasswordInputPrimitive.Input />
       <PasswordInputPrimitive.Toggle>
         <PasswordInputPrimitive.Indicator className="group">
-          <span className="hidden group-data-[state=visible]:block">👁</span>
-          <span className="block group-data-[state=visible]:hidden">🙈</span>
+          <span className="hidden group-data-visible:block">👁</span>
+          <span className="block group-data-visible:hidden">🙈</span>
         </PasswordInputPrimitive.Indicator>
       </PasswordInputPrimitive.Toggle>
     </PasswordInputPrimitive.Root>
