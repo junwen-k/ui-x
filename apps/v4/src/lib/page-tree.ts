@@ -1,4 +1,5 @@
 import type * as PageTree from "fumadocs-core/page-tree";
+import type * as React from "react";
 
 /**
  * Flattens a page tree folder into its pages, including the folder's index
@@ -24,33 +25,49 @@ export function getPagesFromFolder(folder: PageTree.Folder): PageTree.Item[] {
   );
 }
 
+export interface FolderSection {
+  name?: React.ReactNode;
+  pages: PageTree.Item[];
+}
+
 /**
- * A folder's own pages: its index page plus its direct page children.
- * Nested folders (e.g. a component with framework-specific sub-pages like
- * bprogress/next) contribute only their index page, not their descendants —
- * those sub-pages are only reachable via linked cards on that index page,
- * matching shadcn/ui's dark-mode-style sub-pages.
+ * A folder's own pages — its index page plus its direct page children — split
+ * into sections at separator entries (`---Label---` in meta.json). The first
+ * section is unnamed and holds the pages before any separator. Nested folders
+ * (e.g. a component with framework-specific sub-pages like bprogress/next)
+ * contribute only their index page, not their descendants — those sub-pages
+ * are only reachable via linked cards on that index page, matching
+ * shadcn/ui's dark-mode-style sub-pages.
  */
-export function getOwnPagesFromFolder(
+export function getOwnSectionsFromFolder(
   folder: PageTree.Folder,
-): PageTree.Item[] {
-  const pages: PageTree.Item[] = [];
+): FolderSection[] {
+  const sections: FolderSection[] = [{ pages: [] }];
+  const seen = new Set<string>();
+
+  const push = (page: PageTree.Item) => {
+    if (seen.has(page.url)) {
+      return;
+    }
+    seen.add(page.url);
+    sections[sections.length - 1].pages.push(page);
+  };
 
   if (folder.index) {
-    pages.push(folder.index);
+    push(folder.index);
   }
 
   for (const child of folder.children) {
-    if (child.type === "page") {
-      pages.push(child);
+    if (child.type === "separator") {
+      sections.push({ name: child.name, pages: [] });
+    } else if (child.type === "page") {
+      push(child);
     } else if (child.type === "folder" && child.index) {
-      pages.push(child.index);
+      push(child.index);
     }
   }
 
-  return pages.filter(
-    (page, index, all) => all.findIndex((p) => p.url === page.url) === index,
-  );
+  return sections.filter((section) => section.pages.length > 0);
 }
 
 /**

@@ -12,7 +12,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PAGES_NEW } from "@/lib/docs";
-import { getOwnPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
+import { getOwnSectionsFromFolder, getTopLevelSections } from "@/lib/page-tree";
 import { cn } from "@/lib/utils";
 
 export function MobileNav({
@@ -103,18 +103,21 @@ export function MobileNav({
               ))}
             </div>
           </div>
-          {tree.children.map((group) => {
+          {tree.children.flatMap((group) => {
             if (group.type !== "folder") {
               return null;
             }
 
-            return (
-              <div key={group.$id} className="flex flex-col gap-4">
+            return getOwnSectionsFromFolder(group).map((section, index) => (
+              <div
+                key={`${group.$id}-${index}`}
+                className="flex flex-col gap-4"
+              >
                 <div className="text-sm font-medium text-muted-foreground">
-                  {group.name}
+                  {section.name ?? group.name}
                 </div>
                 <div className="flex flex-col gap-3">
-                  {getOwnPagesFromFolder(group).map((page) => (
+                  {section.pages.map((page) => (
                     <MobileLink
                       key={page.url}
                       href={page.url}
@@ -128,7 +131,7 @@ export function MobileNav({
                   ))}
                 </div>
               </div>
-            );
+            ));
           })}
         </div>
       </PopoverContent>
