@@ -57,13 +57,8 @@ function PasswordInput({
     onVisibleChange?.(nextVisible);
   });
 
-  const contextValue = React.useMemo(
-    () => ({ visible, setVisible }),
-    [visible, setVisible],
-  );
-
   return (
-    <PasswordInputContext.Provider value={contextValue}>
+    <PasswordInputContext.Provider value={{ visible, setVisible }}>
       {children}
     </PasswordInputContext.Provider>
   );
@@ -93,11 +88,10 @@ function PasswordInputToggle({
   ...props
 }: useRender.ComponentProps<"button", PasswordInputState>) {
   const { visible, setVisible } = usePasswordInput();
-  const state = React.useMemo(() => ({ visible }), [visible]);
 
   return useRender({
     render,
-    state,
+    state: { visible },
     defaultTagName: "button",
     props: mergeProps<"button">(
       {
@@ -115,11 +109,10 @@ function PasswordInputIndicator({
   ...props
 }: useRender.ComponentProps<"span", PasswordInputState>) {
   const { visible } = usePasswordInput();
-  const state = React.useMemo(() => ({ visible }), [visible]);
 
   return useRender({
     render,
-    state,
+    state: { visible },
     defaultTagName: "span",
     props: mergeProps<"span">(
       {
