@@ -198,6 +198,9 @@ demos.
 - [ ] Rewrite demos/examples against the nova metrics (adopt Base UI
       `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
       every page.
+- [ ] Styling polish during the ports: date/time field segments render
+      taller than desired (noted 2026-07-16) — revisit segment height when
+      applying nova classes to the field components.
 - [ ] Update registry.json (single style) and install docs after the
       removals + ports.
 
