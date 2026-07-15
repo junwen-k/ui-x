@@ -81,7 +81,7 @@
       "title": "Use Timescape",
       "description": "A reactive wrapper around Timescape that provides controlled and uncontrolled state management for date/time input.",
       "dependencies": [
-        "@radix-ui/react-use-controllable-state@1.2.2",
+        "@base-ui/utils",
         "react-day-picker",
         "timescape"
       ],
@@ -213,8 +213,7 @@
       "title": "Virtualized",
       "description": "A virtualized component that allows you to efficiently render large lists and tabular data.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "virtua"
       ],
       "files": [
@@ -430,7 +429,7 @@
       "title": "Timeline",
       "description": "Timeline displays a list of events in chronological order.",
       "dependencies": [
-        "@radix-ui/react-slot"
+        "@base-ui/react"
       ],
       "files": [
         {

@@ -1,12 +1,12 @@
 "use client";
 
-import { useComposedRefs } from "@radix-ui/react-compose-refs";
-import { Primitive } from "@radix-ui/react-primitive";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 import { experimental_VGrid as VGrid, VList, Virtualizer } from "virtua";
 
 const VirtualizedContext = React.createContext<{
-  scrollRef: React.RefObject<React.ComponentRef<typeof Primitive.div> | null>;
+  scrollRef: React.RefObject<HTMLDivElement | null>;
   withScrollRef: boolean;
 }>({
   scrollRef: { current: null },
@@ -21,18 +21,22 @@ function useVirtualized() {
   return context;
 }
 
-function Virtualized({
-  ref,
-  ...props
-}: React.ComponentProps<typeof Primitive.div>) {
-  const scrollRef =
-    React.useRef<React.ComponentRef<typeof Primitive.div>>(null);
+function Virtualized({ render, ...props }: useRender.ComponentProps<"div">) {
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
-  const composedRefs = useComposedRefs(scrollRef, ref);
+  const element = useRender({
+    render,
+    ref: scrollRef,
+    defaultTagName: "div",
+    props: mergeProps<"div">(
+      { "data-slot": "virtualized" } as React.ComponentProps<"div">,
+      props,
+    ),
+  });
 
   return (
     <VirtualizedContext.Provider value={{ scrollRef, withScrollRef: true }}>
-      <Primitive.div data-slot="virtualized" ref={composedRefs} {...props} />
+      {element}
     </VirtualizedContext.Provider>
   );
 }

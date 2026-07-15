@@ -68,7 +68,7 @@ npx shadcn@latest add junwen-k/ui-x/virtualized
 <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/react-compose-refs @radix-ui/react-primitive virtua
+npm install @base-ui/react virtua
 ```
 
 <Step>Copy and paste the following code into your project.</Step>
@@ -137,17 +137,15 @@ To virtualize a `<Combobox />` component, you'll need to use `<Virtualized />` c
 
 Attach the `scrollRef` to the `<ComboboxContent />` with `<Virtualized />`, as it serves as the scrollable container:
 
-```tsx showLineNumbers {5,8,11}
+```tsx showLineNumbers {5,7,9}
 export function VirtualizedComboboxDemo() {
   return (
     <Combobox>
       {/* ... */}
-      <Virtualized asChild>
-        <ComboboxContent>
-          {/* ... */}
-          <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
-          {/* ... */}
-        </ComboboxContent>
+      <Virtualized render={<ComboboxContent />}>
+        {/* ... */}
+        <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
+        {/* ... */}
       </Virtualized>
     </Combobox>
   );
@@ -251,19 +249,19 @@ export {
 
 Attach the `scrollRef` to the `<ScrollAreaViewport />` with `<Virtualized />`, as it serves as the scrollable container:
 
-```tsx showLineNumbers {7,10,13}
+```tsx showLineNumbers {7,9,11}
 export function VirtualizedScrollAreaDemo() {
   return (
     <ScrollArea
       className={cn(scrollAreaVariants(), "h-72 w-48 rounded-md border")}
     >
       {/* ... */}
-      <Virtualized asChild>
-        <ScrollAreaViewport className={scrollAreaViewportVariants()}>
-          {/* ... */}
-          <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
-          {/* ... */}
-        </ScrollAreaViewport>
+      <Virtualized
+        render={<ScrollAreaViewport className={scrollAreaViewportVariants()} />}
+      >
+        {/* ... */}
+        <VirtualizedVirtualizer>{/* ... */}</VirtualizedVirtualizer>
+        {/* ... */}
       </Virtualized>
       {/* ... */}
     </ScrollArea>
