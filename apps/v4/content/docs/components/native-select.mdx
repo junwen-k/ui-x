@@ -3,6 +3,12 @@ title: Native Select
 description: Native select element.
 ---
 
+<Callout className="mt-4 border-amber-200 bg-amber-50 dark:border-amber-950 dark:bg-amber-950/50 [&_[data-slot=alert-description]]:text-foreground">
+
+**Note**: shadcn/ui now includes its own [Native Select](https://ui.shadcn.com/docs/components/native-select) component. We recommend using the official version — this component predates it and is provided as-is.
+
+</Callout>
+
 <ComponentPreview name="native-select-demo" />
 
 ## Installation
@@ -24,16 +30,6 @@ npx shadcn@latest add junwen-k/ui-x/native-select
 <TabsContent value="manual">
 
 <Steps>
-
-<Step>
-
-Add `<InputBase />` component to your project.
-
-</Step>
-
-The `<NativeSelect />` component uses `<InputBase />` component. Make sure you have it installed in your project.
-
-See installation instructions for the [InputBase](/docs/components/input-base#installation) component.
 
 <Step>Copy and paste the following code into your project.</Step>
 

@@ -5,11 +5,10 @@ import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
 
 import {
-  InputBase,
-  InputBaseAdornment,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 import {
   Country,
   PhoneInput,
@@ -40,18 +39,16 @@ export default function PhoneInputSeparated() {
               <PhoneInputCountrySelectOptions />
             </PhoneInputCountrySelectContent>
           </PhoneInputCountrySelect>
-          <InputBase>
-            <InputBaseAdornment>
+          <InputGroup>
+            <InputGroupAddon>
               {country ? `+${getCountryCallingCode(country)}` : <PhoneIcon />}
-            </InputBaseAdornment>
-            <InputBaseControl>
-              <PhoneInputPrimitive.Input asChild>
-                <InputBaseInput
-                  placeholder={country === null ? "012-345 6789" : undefined}
-                />
-              </PhoneInputPrimitive.Input>
-            </InputBaseControl>
-          </InputBase>
+            </InputGroupAddon>
+            <PhoneInputPrimitive.Input asChild>
+              <InputGroupInput
+                placeholder={country === null ? "012-345 6789" : undefined}
+              />
+            </PhoneInputPrimitive.Input>
+          </InputGroup>
         </div>
         <p className="text-muted-foreground text-sm">
           Preferred country has been set to{" "}

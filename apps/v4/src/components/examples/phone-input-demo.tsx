@@ -2,15 +2,11 @@
 
 import * as React from "react";
 
+import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
 import {
   ControlGroup,
   ControlGroupItem,
 } from "@/registry/new-york/ui/control-group";
-import {
-  InputBase,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
 import {
   PhoneInput,
   PhoneInputCountrySelect,
@@ -36,13 +32,11 @@ export default function PhoneInputDemo() {
           </PhoneInputCountrySelectContent>
         </PhoneInputCountrySelect>
         <ControlGroupItem>
-          <InputBase>
-            <InputBaseControl>
-              <PhoneInputPrimitive.Input asChild>
-                <InputBaseInput />
-              </PhoneInputPrimitive.Input>
-            </InputBaseControl>
-          </InputBase>
+          <InputGroup>
+            <PhoneInputPrimitive.Input asChild>
+              <InputGroupInput />
+            </PhoneInputPrimitive.Input>
+          </InputGroup>
         </ControlGroupItem>
       </ControlGroup>
     </PhoneInput>

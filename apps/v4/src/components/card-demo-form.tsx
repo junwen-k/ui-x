@@ -25,17 +25,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
   DatePicker,
   DatePickerCalendar,
   DatePickerContent,
   DatePickerInput,
 } from "@/registry/new-york/ui/date-picker";
-import {
-  InputBase,
-  InputBaseAdornment,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
 import {
   PasswordInput,
   PasswordInputAdornment,
@@ -107,19 +106,17 @@ export function CardWithForm() {
             <FormField
               control={form.control}
               name="username"
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Username</FormLabel>
-                  <InputBase error={Boolean(fieldState.error)}>
-                    <InputBaseAdornment>
+                  <InputGroup>
+                    <InputGroupAddon>
                       <UserRoundPenIcon />
-                    </InputBaseAdornment>
-                    <InputBaseControl>
-                      <FormControl>
-                        <InputBaseInput placeholder="junwen-k" {...field} />
-                      </FormControl>
-                    </InputBaseControl>
-                  </InputBase>
+                    </InputGroupAddon>
+                    <FormControl>
+                      <InputGroupInput placeholder="junwen-k" {...field} />
+                    </FormControl>
+                  </InputGroup>
                   <FormMessage />
                 </FormItem>
               )}
@@ -127,22 +124,20 @@ export function CardWithForm() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
-                  <InputBase error={Boolean(fieldState.error)}>
-                    <InputBaseAdornment>
+                  <InputGroup>
+                    <InputGroupAddon>
                       <MailIcon />
-                    </InputBaseAdornment>
-                    <InputBaseControl>
-                      <FormControl>
-                        <InputBaseInput
-                          placeholder="example@junwen-k.dev"
-                          {...field}
-                        />
-                      </FormControl>
-                    </InputBaseControl>
-                  </InputBase>
+                    </InputGroupAddon>
+                    <FormControl>
+                      <InputGroupInput
+                        placeholder="example@junwen-k.dev"
+                        {...field}
+                      />
+                    </FormControl>
+                  </InputGroup>
                   <FormMessage />
                 </FormItem>
               )}

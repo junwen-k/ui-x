@@ -15,7 +15,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { PAGES_NEW } from "@/lib/docs";
-import { getOwnPagesFromFolder, getTopLevelSections } from "@/lib/page-tree";
+import { getOwnSectionsFromFolder, getTopLevelSections } from "@/lib/page-tree";
 
 export function DocsSidebar({
   tree,
@@ -63,19 +63,19 @@ export function DocsSidebar({
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {tree.children.map((item) => {
+        {tree.children.flatMap((item) => {
           if (item.type !== "folder") {
             return null;
           }
 
-          return (
-            <SidebarGroup key={item.$id}>
+          return getOwnSectionsFromFolder(item).map((section, index) => (
+            <SidebarGroup key={`${item.$id}-${index}`}>
               <SidebarGroupLabel className="font-medium text-muted-foreground">
-                {item.name}
+                {section.name ?? item.name}
               </SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu className="gap-0.5">
-                  {getOwnPagesFromFolder(item).map((page) => (
+                  {section.pages.map((page) => (
                     <SidebarMenuItem key={page.url}>
                       <SidebarMenuButton
                         isActive={page.url === pathname}
@@ -98,7 +98,7 @@ export function DocsSidebar({
                 </SidebarMenu>
               </SidebarGroupContent>
             </SidebarGroup>
-          );
+          ));
         })}
       </SidebarContent>
     </Sidebar>

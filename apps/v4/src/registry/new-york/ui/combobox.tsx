@@ -11,37 +11,38 @@ import {
 import * as React from "react";
 
 import { badgeVariants } from "@/components/ui/badge";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 import * as ComboboxPrimitive from "@/registry/new-york/ui/combobox-primitive";
-import {
-  InputBase,
-  InputBaseAdornmentButton,
-  InputBaseControl,
-  InputBaseFlexWrapper,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
 
 export const Combobox = ComboboxPrimitive.Root;
 
-function ComboboxInputBase({
+function ComboboxInputGroup({
   children,
   ...props
-}: React.ComponentProps<typeof InputBase>) {
+}: React.ComponentProps<typeof InputGroup>) {
   return (
     <ComboboxPrimitive.Anchor asChild>
-      <InputBase data-slot="combobox-input-base" {...props}>
+      <InputGroup data-slot="combobox-input-group" {...props}>
         {children}
-        <ComboboxPrimitive.Clear asChild>
-          <InputBaseAdornmentButton>
-            <XIcon />
-          </InputBaseAdornmentButton>
-        </ComboboxPrimitive.Clear>
-        <ComboboxPrimitive.Trigger asChild>
-          <InputBaseAdornmentButton>
-            <ChevronsUpDownIcon />
-          </InputBaseAdornmentButton>
-        </ComboboxPrimitive.Trigger>
-      </InputBase>
+        <InputGroupAddon align="inline-end">
+          <ComboboxPrimitive.Clear asChild>
+            <InputGroupButton size="icon-xs">
+              <XIcon />
+            </InputGroupButton>
+          </ComboboxPrimitive.Clear>
+          <ComboboxPrimitive.Trigger asChild>
+            <InputGroupButton size="icon-xs">
+              <ChevronsUpDownIcon />
+            </InputGroupButton>
+          </ComboboxPrimitive.Trigger>
+        </InputGroupAddon>
+      </InputGroup>
     </ComboboxPrimitive.Anchor>
   );
 }
@@ -50,13 +51,11 @@ function ComboboxInput(
   props: React.ComponentProps<typeof ComboboxPrimitive.Input>,
 ) {
   return (
-    <ComboboxInputBase>
-      <InputBaseControl>
-        <ComboboxPrimitive.Input asChild>
-          <InputBaseInput data-slot="combobox-input" {...props} />
-        </ComboboxPrimitive.Input>
-      </InputBaseControl>
-    </ComboboxInputBase>
+    <ComboboxInputGroup>
+      <ComboboxPrimitive.Input asChild>
+        <InputGroupInput data-slot="combobox-input" {...props} />
+      </ComboboxPrimitive.Input>
+    </ComboboxInputGroup>
   );
 }
 
@@ -65,21 +64,19 @@ function ComboboxTagsInput({
   ...props
 }: React.ComponentProps<typeof ComboboxPrimitive.Input>) {
   return (
-    <ComboboxInputBase>
+    <ComboboxInputGroup className="h-auto min-h-8">
       <ComboboxPrimitive.TagGroup asChild>
-        <InputBaseFlexWrapper
+        <div
           data-slot="combobox-tags-input"
-          className="flex items-center gap-2"
+          className="flex flex-1 flex-wrap items-center gap-1.5 py-1 pl-2.5"
         >
           {children}
-          <InputBaseControl>
-            <ComboboxPrimitive.Input asChild>
-              <InputBaseInput {...props} />
-            </ComboboxPrimitive.Input>
-          </InputBaseControl>
-        </InputBaseFlexWrapper>
+          <ComboboxPrimitive.Input asChild>
+            <InputGroupInput className="h-6 px-0" {...props} />
+          </ComboboxPrimitive.Input>
+        </div>
       </ComboboxPrimitive.TagGroup>
-    </ComboboxInputBase>
+    </ComboboxInputGroup>
   );
 }
 
@@ -220,7 +217,7 @@ function ComboboxItem({ className, children, ...props }: ComboboxItemProps) {
 }
 
 export {
-  ComboboxInputBase,
+  ComboboxInputGroup,
   ComboboxInput,
   ComboboxTagsInput,
   ComboboxTag,
