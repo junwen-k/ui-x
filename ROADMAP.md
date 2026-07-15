@@ -69,10 +69,10 @@ only once the overhaul is finalized.
 
 ## Phase 2 — Registry modernization (decides architecture for Phase 4)
 
-- [ ] Evaluate distribution options and pick one:
-      - [ ] Namespaced registry (`npx shadcn add @ui-x/date-field`)
-      - [ ] GitHub-repo-as-registry (https://ui.shadcn.com/docs/registry/github)
-      - [ ] Keep current self-hosted registry.json, upgraded to CLI v3 schema
+- [x] Evaluate distribution options — **decided (2026-07-14):
+      GitHub-repo-as-registry.** The CLI reads `registry.json` straight from
+      the repo (`npx shadcn@latest add junwen-k/ui-x/<item>`), validated in CI
+      via `shadcn registry validate`. No namespaced/self-hosted variant.
 - [x] Registry layout for library/style variants — **decided (2026-07-10)**:
       single library (Base UI), single style (nova). No variant matrix.
 - [ ] Universal registry items where applicable (hooks, utilities).
@@ -96,41 +96,49 @@ One migration, done together, because shadcn's nova sources are written against
 Base UI DOM — porting styles onto Radix first would mean doing the class work
 twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`.
 
-### 4a. Docs platform (fumadocs)
+### 4a. Docs platform (fumadocs) ✅
 
-- [ ] Rebuild the v4 docs site on fumadocs (`fumadocs-core`/`-mdx`/`-ui` +
-      `fumadocs-docgen`), following shadcn's `apps/v4` structure; remove velite.
-- [ ] Upgrade Next 15.5 → 16.x / React 19.2 to match shadcn's stack.
-- [ ] Migrate existing MDX content and demo/preview tooling.
+- [x] Rebuild the v4 docs site on fumadocs (`fumadocs-core` 16 /
+      `fumadocs-mdx` 15), following shadcn's `apps/v4` structure; velite
+      removed.
+- [x] Upgrade to Next 16.2.7 / React 19.2.
+- [x] Migrate existing MDX content and demo/preview tooling.
 
 ### 4b. Site foundation (nova)
 
-- [ ] Re-vendor the docs site's `components/ui/` from the `base-nova` preset;
-      adopt the nova theme (neutral base color, Geist, tw-animate-css).
+- [x] Re-vendor the docs site's `components/ui/` from the `base-nova` preset;
+      nova theme adopted. Remaining straggler: `ui/form.tsx` still imports
+      `@radix-ui/react-label`/`react-slot` — replace with Base UI
+      `Field`/`Form` when demo form plumbing is reworked (see 4c).
 - [ ] Remove Radix dependencies from `apps/v4` once no vendored or registry
-      component imports them.
-- [ ] Fix site-header vertical separators (found 2026-07-15): the base-nova
-      `Separator` uses `data-vertical:self-stretch`, which top-aligns the
-      divider once the header caps it with `**:data-[slot=separator]:h-4!`.
-      shadcn's own header sidesteps this by still importing the Radix
-      `new-york-v4` separator (`h-full`, centered by `items-center`); ui-x
-      needs `self-center` on the header's vertical separators (or track
-      upstream when shadcn migrates their header).
+      component imports them (blocked on the 4c ports + `ui/form.tsx`).
+- [x] Fix site-header vertical separators — shipped 2026-07-15
+      (PR #61, `fix/header-separator`).
 
-### 4c. Components — keep/drop audit, then port
+### 4c. Components — keep/drop audit ✅, then port
 
-For each ui-x component, decide **before** porting (Base UI and shadcn's
-catalog now cover several of them natively):
+**Audit closed 2026-07-15.** Every registry item now has a verdict; the docs
+sidebar's "In shadcn/ui" group mirrors the superseded list exactly.
 
-| ui-x component | Likely call | Notes |
-| --- | --- | --- |
-| `combobox` / `combobox-primitive` | drop | Base UI Combobox does tags/async natively; shadcn ships it — reinforced by Base UI's newer `Autocomplete` |
-| `file-list` | drop | superseded by shadcn `attachment` |
-| `input-base` | drop/absorb | **confirmed 2026-07-15** — replace with shadcn `input-group`; see migration item below |
-| `kbd`, `control-group`, `badge-group` | drop or keep | official `kbd`, `button-group` exist; audit gaps first |
-| `native-select` | audit | shadcn now ships `native-select` in the new styles |
-| `calendar`, `date-picker` | audit | vs shadcn's rebuilt calendar + Base UI date pieces |
-| date/time fields, phone-input, dropzone, confirmer, timeline, description-list, wheel-picker, emoji-picker, sortable, virtualizer, time | keep | still differentiated — these are the port targets |
+**Superseded — frozen as-is, never ported** (callout + sidebar group; stay at
+the Radix-era snapshot):
+
+| ui-x component | Superseded by |
+| --- | --- |
+| `calendar` | shadcn `calendar` — ours is a verbatim `new-york-v4` copy; the preferred bordered dropdown look is a `classNames` snippet on the official one, not a fork. Retire by pointing `date-picker`'s registry dep at bare `"calendar"` during the port |
+| `combobox` / `combobox-primitive` | shadcn `combobox` (Base UI Combobox/Autocomplete does tags/async natively). Dropping this also removes ui-x's hardest Radix dependency (`roving-focus` + popover state machine) |
+| `control-group` | shadcn `button-group` |
+| `file-list` | shadcn `attachment` |
+| `input-base` | shadcn `input-group` — dependents migrated 2026-07-15 (PR #62) |
+| `kbd` | shadcn `kbd` |
+| `native-select` | shadcn `native-select` |
+
+**Keep — truly ui-x, no shadcn/Base UI counterpart** (the port targets):
+date-field, date-time-field(+primitive), date-time-range-field(+primitive),
+date-picker(+primitive), time-field, time, phone-input(+primitive),
+password-input(+primitive), dropzone(+primitive), badge-group, confirmer,
+description-list, emoji-picker, timeline, wheel-picker, sortable,
+virtualizer, bprogress providers, use-timescape.
 
 Base UI coverage audit (2026-07-15, against installed `@base-ui/react`): the
 newer Base UI additions — `Autocomplete`, `OTP Field`, `Number Field`,
@@ -140,18 +148,25 @@ sortable, virtualizer and time have **no** Base UI counterpart and remain the
 port targets. `Field`/`Form` should replace hand-rolled form plumbing in
 demos.
 
-- [ ] **Replace `input-base` with shadcn `input-group`** (big change — many
-      dependents). Registry components composing InputBase today: `combobox`,
-      `date-picker`, `date-time-field`, `date-time-range-field`,
-      `native-select`, `password-input`, plus most form-component examples
-      (e.g. `phone-input-demo`). Migrating also fixes the phone-input demo
-      height mismatch: InputBase is still `min-h-9` (new-york-v4) while the
-      vendored nova Select trigger is `h-8`, so the joined control has a 4px
-      step (found 2026-07-15).
-- [ ] Port each kept component to Base UI primitives with classes from the
-      `base-nova` sources; delete custom primitives Base UI now provides.
-- [ ] Rewrite demos/examples against the nova metrics; verify every page.
-- [ ] Rebuild registry payloads (single style), update install docs.
+- [x] **Replace `input-base` with shadcn `input-group`** — shipped 2026-07-15
+      (PR #62): combobox, date-picker, date/time fields, native-select,
+      password-input and all examples migrated; phone-input 4px height
+      mismatch fixed; every page browser-verified.
+- [ ] Port each kept component: swap Radix building blocks for Base UI
+      equivalents and apply classes from the `base-nova` sources. Concrete
+      Radix → Base UI swaps (surveyed 2026-07-15):
+      - Full primitives: `date-picker-primitive` popover → Base UI Popover;
+        `badge-group` + `emoji-picker` toggle-group → Base UI Toggle Group;
+        `sortable` portal → React DOM `createPortal`.
+      - Utility packages everywhere else (`react-slot`, `react-primitive`,
+        `compose-refs`, `use-controllable-state`, `primitive`) → Base UI
+        `useRender`/`mergeProps` + React 19 ref handling. 16 registry files
+        affected; `phone-input.tsx` already uses Base UI.
+- [ ] Rewrite demos/examples against the nova metrics (adopt Base UI
+      `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
+      every page.
+- [ ] Update registry.json (single style): `date-picker` → bare `"calendar"`
+      dep; update install docs.
 
 ### 4d. Docs content — API Reference & Accessibility sections (after ports)
 
@@ -182,9 +197,11 @@ out, e.g. accordion → "See the Base UI documentation").
 
 - Deprecation policy — **partially decided (2026-07-09)**: overlapped
   components stay published but are "provided as-is" with a prominent callout
-  recommending the official shadcn/ui version. Still open: whether dropped
-  components are removed from the registry entirely or left frozen at the
-  Radix-era snapshot.
+  recommending the official shadcn/ui version; since 2026-07-15 they are also
+  grouped under "In shadcn/ui" in the docs sidebar. Still open: whether
+  superseded components are removed from the registry entirely or left frozen
+  at the Radix-era snapshot (leaning: keep frozen — they'll be intentionally
+  style-inconsistent once the rest goes nova, which the as-is framing covers).
 - Monorepo: `packages/` is empty — flatten, or reserve for shared registry
   tooling in Phase 2?
 
@@ -203,3 +220,13 @@ out, e.g. accordion → "See the Base UI documentation").
   confirms the port list unchanged; phone-input demo 4px height mismatch and
   header separator top-alignment triaged (4c/4b); docs get hand-written API
   Reference + Accessibility sections after the ports (4d).
+- **2026-07-15 (later)** — PRs #61 (header separators) and #62 (input-group
+  migration + overlap callouts for native-select and calendar + "In shadcn/ui"
+  sidebar group) merged into `next`. 4c keep/drop audit closed: 7 superseded
+  (calendar, combobox, control-group, file-list, input-base, kbd,
+  native-select), everything else confirmed as port targets. Calendar verdict:
+  verbatim shadcn copy — retire during the port, keep the bordered dropdown
+  look as a documented `classNames` snippet. Roadmap synced with reality:
+  4a (fumadocs/Next 16) and most of 4b already shipped; remaining bulk is the
+  4c ports (16 Radix-importing registry files, mostly utility packages) and
+  4d docs sections.
