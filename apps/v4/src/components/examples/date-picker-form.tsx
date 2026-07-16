@@ -81,7 +81,7 @@ export default function DatePickerForm() {
               <FormLabel>Event period</FormLabel>
               <DatePicker
                 mode="range"
-                value={field.value as DateRange}
+                value={(field.value ?? null) as DateRange | null}
                 onValueChange={field.onChange}
               >
                 <FormControl>

@@ -30,7 +30,7 @@ npx shadcn@latest add junwen-k/ui-x/date-picker-primitive
 <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/primitive @radix-ui/react-popover @radix-ui/react-primitive @radix-ui/react-slot @radix-ui/react-use-controllable-state date-fns react-day-picker
+npm install @base-ui/react @base-ui/utils date-fns react-day-picker
 ```
 
 <Step>Copy and paste the following code into your project.</Step>
@@ -62,9 +62,11 @@ export default () => (
     <DatePickerPrimitive.Anchor />
 
     <DatePickerPrimitive.Portal>
-      <DatePickerPrimitive.Content>
-        <DatePickerPrimitive.Calendar />
-      </DatePickerPrimitive.Content>
+      <DatePickerPrimitive.Positioner>
+        <DatePickerPrimitive.Content>
+          <DatePickerPrimitive.Calendar />
+        </DatePickerPrimitive.Content>
+      </DatePickerPrimitive.Positioner>
     </DatePickerPrimitive.Portal>
   </DatePickerPrimitive.Root>
 );
