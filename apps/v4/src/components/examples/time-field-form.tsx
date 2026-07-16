@@ -1,21 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   TimeField,
   TimeFieldAmPm,
@@ -57,37 +54,33 @@ export default function TimeFieldForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="eventTime"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Event time</FormLabel>
-              <TimeField
-                hour12
-                value={field.value}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <TimeFieldHours />
-                </FormControl>
-                <TimeFieldSeparator />
-                <TimeFieldMinutes />
-                <TimeFieldSeparator />
-                <TimeFieldSeconds />
-                <TimeFieldAmPm />
-              </TimeField>
-              <FormDescription>
-                Schedule your event by selecting a time.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="eventTime"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Event time</FieldLabel>
+            <TimeField
+              hour12
+              value={field.value}
+              onValueChange={field.onChange}
+            >
+              <TimeFieldHours aria-invalid={fieldState.invalid} />
+              <TimeFieldSeparator />
+              <TimeFieldMinutes />
+              <TimeFieldSeparator />
+              <TimeFieldSeconds />
+              <TimeFieldAmPm />
+            </TimeField>
+            <FieldDescription>
+              Schedule your event by selecting a time.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

@@ -1,21 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   DateField,
   DateFieldDays,
@@ -56,32 +53,28 @@ export default function DateFieldForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="dob"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date of birth</FormLabel>
-              <DateField value={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <DateFieldDays />
-                </FormControl>
-                <DateFieldSeparator />
-                <DateFieldMonths />
-                <DateFieldSeparator />
-                <DateFieldYears />
-              </DateField>
-              <FormDescription>
-                Your date of birth is used to calculate your age.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="dob"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Date of birth</FieldLabel>
+            <DateField value={field.value} onValueChange={field.onChange}>
+              <DateFieldDays aria-invalid={fieldState.invalid} />
+              <DateFieldSeparator />
+              <DateFieldMonths />
+              <DateFieldSeparator />
+              <DateFieldYears />
+            </DateField>
+            <FieldDescription>
+              Your date of birth is used to calculate your age.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

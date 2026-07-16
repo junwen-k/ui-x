@@ -2,21 +2,18 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DateRange } from "react-day-picker";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   DatePicker,
   DatePickerCalendar,
@@ -71,35 +68,34 @@ export default function DatePickerForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="eventPeriod"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Event period</FormLabel>
-              <DatePicker
-                mode="range"
-                value={(field.value ?? null) as DateRange | null}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <DatePickerInput className="w-[280px]" />
-                </FormControl>
-                <DatePickerContent>
-                  <DatePickerCalendar hideNavigation captionLayout="dropdown" />
-                </DatePickerContent>
-              </DatePicker>
-              <FormDescription>
-                Schedule your event by selecting a start and end date.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="eventPeriod"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Event period</FieldLabel>
+            <DatePicker
+              mode="range"
+              value={(field.value ?? null) as DateRange | null}
+              onValueChange={field.onChange}
+            >
+              <DatePickerInput
+                className="w-[280px]"
+                aria-invalid={fieldState.invalid}
+              />
+              <DatePickerContent>
+                <DatePickerCalendar hideNavigation captionLayout="dropdown" />
+              </DatePickerContent>
+            </DatePicker>
+            <FieldDescription>
+              Schedule your event by selecting a start and end date.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyholeIcon, MailIcon, UserRoundPenIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,14 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -93,112 +86,123 @@ export function CardWithForm() {
   }
 
   return (
-    <Form {...form}>
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle>Create your account</CardTitle>
-          <CardDescription>
-            Welcome! Please fill in the details to get started.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <UserRoundPenIcon />
-                    </InputGroupAddon>
-                    <FormControl>
-                      <InputGroupInput placeholder="junwen-k" {...field} />
-                    </FormControl>
-                  </InputGroup>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <InputGroup>
-                    <InputGroupAddon>
-                      <MailIcon />
-                    </InputGroupAddon>
-                    <FormControl>
-                      <InputGroupInput
-                        placeholder="example@junwen-k.dev"
-                        {...field}
-                      />
-                    </FormControl>
-                  </InputGroup>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* TODO: add phone number input here */}
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <PasswordInput>
-                    <PasswordInputAdornment>
-                      <LockKeyholeIcon />
-                    </PasswordInputAdornment>
-                    <FormControl>
-                      <PasswordInputInput
-                        autoComplete="new-password"
-                        placeholder="Password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <PasswordInputAdornmentToggle />
-                  </PasswordInput>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="dob"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date of Birth</FormLabel>
-                  <DatePicker
-                    mode="single"
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  >
-                    <FormControl>
-                      <DatePickerInput />
-                    </FormControl>
-                    <DatePickerContent>
-                      <DatePickerCalendar
-                        hideNavigation
-                        captionLayout="dropdown"
-                      />
-                    </DatePickerContent>
-                  </DatePicker>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </CardContent>
-        <CardFooter>
-          <Button type="submit" className="w-full">
-            Continue
-          </Button>
-        </CardFooter>
-      </Card>
-    </Form>
+    <Card>
+      <CardHeader className="text-center">
+        <CardTitle>Create your account</CardTitle>
+        <CardDescription>
+          Welcome! Please fill in the details to get started.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form
+          id="card-demo-form"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
+        >
+          <Controller
+            control={form.control}
+            name="username"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>Username</FieldLabel>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <UserRoundPenIcon />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    id={field.name}
+                    placeholder="junwen-k"
+                    aria-invalid={fieldState.invalid}
+                    {...field}
+                  />
+                </InputGroup>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="email"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+                <InputGroup>
+                  <InputGroupAddon>
+                    <MailIcon />
+                  </InputGroupAddon>
+                  <InputGroupInput
+                    id={field.name}
+                    placeholder="example@junwen-k.dev"
+                    aria-invalid={fieldState.invalid}
+                    {...field}
+                  />
+                </InputGroup>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          {/* TODO: add phone number input here */}
+          <Controller
+            control={form.control}
+            name="password"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                <PasswordInput>
+                  <PasswordInputAdornment>
+                    <LockKeyholeIcon />
+                  </PasswordInputAdornment>
+                  <PasswordInputInput
+                    id={field.name}
+                    autoComplete="new-password"
+                    placeholder="Password"
+                    aria-invalid={fieldState.invalid}
+                    {...field}
+                  />
+                  <PasswordInputAdornmentToggle />
+                </PasswordInput>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name="dob"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Date of Birth</FieldLabel>
+                <DatePicker
+                  mode="single"
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <DatePickerInput aria-invalid={fieldState.invalid} />
+                  <DatePickerContent>
+                    <DatePickerCalendar
+                      hideNavigation
+                      captionLayout="dropdown"
+                    />
+                  </DatePickerContent>
+                </DatePicker>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+        </form>
+      </CardContent>
+      <CardFooter>
+        <Button type="submit" form="card-demo-form" className="w-full">
+          Continue
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

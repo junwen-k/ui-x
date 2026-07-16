@@ -4,21 +4,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getHours, getMinutes, setHours, setMinutes } from "date-fns";
 import { ClockIcon } from "lucide-react";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import { InputGroupButton } from "@/components/ui/input-group";
 import {
   Popover,
@@ -89,89 +86,82 @@ export default function WheelPickerForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="eventTime"
-          render={({ field }) => {
-            const hour = getHours(field.value);
-            const minute = getMinutes(field.value);
-            const period = hour >= 12 ? "PM" : "AM";
-            const hour12 = hour % 12 || 12;
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="eventTime"
+        render={({ field, fieldState }) => {
+          const hour = getHours(field.value);
+          const minute = getMinutes(field.value);
+          const period = hour >= 12 ? "PM" : "AM";
+          const hour12 = hour % 12 || 12;
 
-            return (
-              <FormItem>
-                <FormLabel>Event time</FormLabel>
-                <Popover>
-                  <TimeField
-                    hour12
-                    value={field.value}
-                    onValueChange={field.onChange}
+          return (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel>Event time</FieldLabel>
+              <Popover>
+                <TimeField
+                  hour12
+                  value={field.value}
+                  onValueChange={field.onChange}
+                >
+                  <TimeFieldHours aria-invalid={fieldState.invalid} />
+                  <TimeFieldSeparator />
+                  <TimeFieldMinutes />
+                  <TimeFieldSeparator />
+                  <TimeFieldSeconds />
+                  <TimeFieldAmPm />
+                  <PopoverTrigger
+                    className="ml-auto"
+                    render={<InputGroupButton size="icon-xs" />}
                   >
-                    <FormControl>
-                      <TimeFieldHours />
-                    </FormControl>
-                    <TimeFieldSeparator />
-                    <TimeFieldMinutes />
-                    <TimeFieldSeparator />
-                    <TimeFieldSeconds />
-                    <TimeFieldAmPm />
-                    <PopoverTrigger
-                      className="ml-auto"
-                      render={<InputGroupButton size="icon-xs" />}
-                    >
-                      <ClockIcon />
-                    </PopoverTrigger>
-                  </TimeField>
-                  <PopoverContent
-                    align="end"
-                    sideOffset={8}
-                    className="border-none p-0 shadow-none"
-                  >
-                    <WheelPickerWrapper>
-                      <WheelPicker
-                        infinite
-                        options={hours.slice(1, 13)}
-                        value={hour12.toString()}
-                        onValueChange={(value) => {
-                          const newHour =
-                            parseInt(value) + (period === "PM" ? 12 : 0);
-                          field.onChange(setHours(field.value, newHour));
-                        }}
-                      />
-                      <WheelPicker
-                        infinite
-                        options={minutes}
-                        value={minute.toString()}
-                        onValueChange={(value) =>
-                          field.onChange(
-                            setMinutes(field.value, parseInt(value)),
-                          )
-                        }
-                      />
-                      <WheelPicker
-                        options={periods}
-                        value={period}
-                        onValueChange={(value) => {
-                          const newHour =
-                            (hour % 12) + (value === "PM" ? 12 : 0);
-                          field.onChange(setHours(field.value, newHour));
-                        }}
-                      />
-                    </WheelPickerWrapper>
-                  </PopoverContent>
-                </Popover>
-                <FormDescription>
-                  Schedule your event by selecting a time.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            );
-          }}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+                    <ClockIcon />
+                  </PopoverTrigger>
+                </TimeField>
+                <PopoverContent
+                  align="end"
+                  sideOffset={8}
+                  className="border-none p-0 shadow-none"
+                >
+                  <WheelPickerWrapper>
+                    <WheelPicker
+                      infinite
+                      options={hours.slice(1, 13)}
+                      value={hour12.toString()}
+                      onValueChange={(value) => {
+                        const newHour =
+                          parseInt(value) + (period === "PM" ? 12 : 0);
+                        field.onChange(setHours(field.value, newHour));
+                      }}
+                    />
+                    <WheelPicker
+                      infinite
+                      options={minutes}
+                      value={minute.toString()}
+                      onValueChange={(value) =>
+                        field.onChange(setMinutes(field.value, parseInt(value)))
+                      }
+                    />
+                    <WheelPicker
+                      options={periods}
+                      value={period}
+                      onValueChange={(value) => {
+                        const newHour = (hour % 12) + (value === "PM" ? 12 : 0);
+                        field.onChange(setHours(field.value, newHour));
+                      }}
+                    />
+                  </WheelPickerWrapper>
+                </PopoverContent>
+              </Popover>
+              <FieldDescription>
+                Schedule your event by selecting a time.
+              </FieldDescription>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          );
+        }}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

@@ -2,20 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import {
   PasswordInput,
   PasswordInputAdornment,
@@ -65,56 +58,54 @@ export default function PasswordInputForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <PasswordInput>
-                <PasswordInputAdornment>
-                  <LockKeyhole />
-                </PasswordInputAdornment>
-                <FormControl>
-                  <PasswordInputInput
-                    autoComplete="new-password"
-                    placeholder="Password"
-                    {...field}
-                  />
-                </FormControl>
-                <PasswordInputAdornmentToggle />
-              </PasswordInput>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="confirmPassword"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm Password</FormLabel>
-              <PasswordInput>
-                <PasswordInputAdornment>
-                  <LockKeyhole />
-                </PasswordInputAdornment>
-                <FormControl>
-                  <PasswordInputInput
-                    autoComplete="new-password"
-                    placeholder="Confirm Password"
-                    {...field}
-                  />
-                </FormControl>
-                <PasswordInputAdornmentToggle />
-              </PasswordInput>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <Controller
+        control={form.control}
+        name="password"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+            <PasswordInput>
+              <PasswordInputAdornment>
+                <LockKeyhole />
+              </PasswordInputAdornment>
+              <PasswordInputInput
+                id={field.name}
+                autoComplete="new-password"
+                placeholder="Password"
+                aria-invalid={fieldState.invalid}
+                {...field}
+              />
+              <PasswordInputAdornmentToggle />
+            </PasswordInput>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="confirmPassword"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Confirm Password</FieldLabel>
+            <PasswordInput>
+              <PasswordInputAdornment>
+                <LockKeyhole />
+              </PasswordInputAdornment>
+              <PasswordInputInput
+                id={field.name}
+                autoComplete="new-password"
+                placeholder="Confirm Password"
+                aria-invalid={fieldState.invalid}
+                {...field}
+              />
+              <PasswordInputAdornmentToggle />
+            </PasswordInput>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }
