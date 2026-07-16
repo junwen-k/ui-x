@@ -1,9 +1,10 @@
 "use client";
 
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { Slottable } from "@radix-ui/react-slot";
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { Toggle } from "@base-ui/react/toggle";
+import { ToggleGroup } from "@base-ui/react/toggle-group";
+import { useControlled } from "@base-ui/utils/useControlled";
+import { useStableCallback } from "@base-ui/utils/useStableCallback";
 import { XIcon } from "lucide-react";
 import * as React from "react";
 
@@ -24,12 +25,9 @@ export type BadgeGroupContextProps =
       onRemove: (value: string[]) => void;
     };
 
-const BadgeGroupContext = React.createContext<BadgeGroupContextProps>({
-  type: "single",
-  value: "",
-  onValueChange: () => {},
-  onRemove: undefined,
-});
+const BadgeGroupContext = React.createContext<BadgeGroupContextProps | null>(
+  null,
+);
 
 function useBadgeGroup() {
   const context = React.useContext(BadgeGroupContext);
@@ -47,13 +45,25 @@ export type BadgeGroupValue<T extends BadgeGroupType = "single"> =
 
 export type BadgeGroupProps = BadgeGroupSingleProps | BadgeGroupMultipleProps;
 
-export interface BadgeGroupSingleProps
-  extends ToggleGroupPrimitive.ToggleGroupSingleProps {
+interface BadgeGroupBaseProps
+  extends Omit<
+    ToggleGroup.Props,
+    "value" | "defaultValue" | "onValueChange" | "multiple"
+  > {}
+
+export interface BadgeGroupSingleProps extends BadgeGroupBaseProps {
+  type: "single";
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
   onRemove?: (value: string) => void;
 }
 
-export interface BadgeGroupMultipleProps
-  extends ToggleGroupPrimitive.ToggleGroupMultipleProps {
+export interface BadgeGroupMultipleProps extends BadgeGroupBaseProps {
+  type: "multiple";
+  value?: string[];
+  defaultValue?: string[];
+  onValueChange?: (value: string[]) => void;
   onRemove?: (value: string[]) => void;
 }
 
@@ -67,23 +77,33 @@ function BadgeGroup<T extends BadgeGroupType = "single">({
   onValueChange,
   ...props
 }: BadgeGroupProps) {
-  const [value, setValue] = useControllableState<BadgeGroupValue<T>>({
-    prop: valueProp as BadgeGroupValue<T>,
-    defaultProp: ((defaultValue ?? type === "multiple")
-      ? []
-      : "") as BadgeGroupValue<T>,
-    onChange: onValueChange as (value: BadgeGroupValue<T>) => void,
+  const [value, setValueUnwrapped] = useControlled({
+    controlled: valueProp as BadgeGroupValue<T> | undefined,
+    default: (defaultValue ??
+      (type === "multiple" ? [] : "")) as BadgeGroupValue<T>,
+    name: "BadgeGroup",
+    state: "value",
+  });
+  const setValue = useStableCallback((nextValue: BadgeGroupValue<T>) => {
+    setValueUnwrapped(nextValue);
+    (onValueChange as ((value: BadgeGroupValue<T>) => void) | undefined)?.(
+      nextValue,
+    );
   });
 
   return (
-    <ToggleGroupPrimitive.Root
+    <ToggleGroup
       data-slot="badge-group"
       className={cn("flex gap-2", className)}
-      {...({
-        type,
-        value,
-        onValueChange: setValue,
-      } as React.ComponentProps<typeof ToggleGroupPrimitive.Root>)}
+      multiple={type === "multiple"}
+      value={(type === "multiple" ? value : value ? [value] : []) as string[]}
+      onValueChange={(groupValue) =>
+        setValue(
+          (type === "multiple"
+            ? groupValue
+            : (groupValue[0] ?? "")) as BadgeGroupValue<T>,
+        )
+      }
       {...props}
     >
       <BadgeGroupContext.Provider
@@ -96,18 +116,22 @@ function BadgeGroup<T extends BadgeGroupType = "single">({
           } as BadgeGroupContextProps
         }
       >
-        <Slottable>{children}</Slottable>
+        {children}
       </BadgeGroupContext.Provider>
-    </ToggleGroupPrimitive.Root>
+    </ToggleGroup>
   );
 }
 BadgeGroup.displayName = "BadgeGroup";
+
+interface BadgeGroupItemProps extends Toggle.Props {
+  value: string;
+}
 
 function BadgeGroupItem({
   value: valueProp,
   className,
   ...props
-}: React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item>) {
+}: BadgeGroupItemProps) {
   const { type, onRemove, value } = useBadgeGroup();
 
   return (
@@ -116,7 +140,7 @@ function BadgeGroupItem({
       value={valueProp}
       className={cn(
         badgeVariants({ variant: "outline" }),
-        "data-[state=on]:bg-primary data-[state=on]:text-primary-foreground data-[state=on]:[a&]:hover:bg-primary/90 data-[state=on]:border-transparent",
+        "data-[pressed]:bg-primary data-[pressed]:text-primary-foreground data-[pressed]:[a&]:hover:bg-primary/90 data-[pressed]:border-transparent",
         "disabled:pointer-events-none disabled:opacity-50",
         className,
       )}
@@ -145,8 +169,7 @@ function BadgeGroupItem({
   );
 }
 
-interface BadgeGroupItemImplProps
-  extends React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> {
+interface BadgeGroupItemImplProps extends Toggle.Props {
   onRemove?: (
     event: React.MouseEvent | React.KeyboardEvent,
     reason: "closeClick" | "backspaceKeyDown" | "deleteKeyDown",
@@ -155,24 +178,29 @@ interface BadgeGroupItemImplProps
 
 function BadgeGroupItemImpl({
   onRemove,
-  onKeyDown,
   children,
   ...props
 }: BadgeGroupItemImplProps) {
   return (
-    <ToggleGroupPrimitive.Item
+    <Toggle
       data-slot="badge-group-item-impl"
-      onKeyDown={composeEventHandlers(onKeyDown, (event) => {
-        if (event.key === "Backspace" || event.key === "Delete") {
-          onRemove?.(
-            event,
-            event.key === "Backspace" ? "backspaceKeyDown" : "deleteKeyDown",
-          );
-        }
-      })}
-      {...props}
+      {...mergeProps<typeof Toggle>(
+        {
+          onKeyDown: (event) => {
+            if (event.key === "Backspace" || event.key === "Delete") {
+              onRemove?.(
+                event,
+                event.key === "Backspace"
+                  ? "backspaceKeyDown"
+                  : "deleteKeyDown",
+              );
+            }
+          },
+        },
+        props,
+      )}
     >
-      <Slottable>{children}</Slottable>
+      {children}
       {onRemove && (
         <div
           aria-hidden
@@ -186,7 +214,7 @@ function BadgeGroupItemImpl({
           <span className="sr-only">Remove</span>
         </div>
       )}
-    </ToggleGroupPrimitive.Item>
+    </Toggle>
   );
 }
 

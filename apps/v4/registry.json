@@ -41,8 +41,7 @@
       "title": "Date Time Field Primitive",
       "description": "Date Time Field Primitive allows user to enter date and time value.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "timescape"
       ],
       "registryDependencies": [
@@ -61,7 +60,7 @@
       "title": "Emoji Picker",
       "description": "A emoji picker is a component that allows users to select an emoji from a list of emojis.",
       "dependencies": [
-        "@radix-ui/react-toggle-group",
+        "@base-ui/react",
         "frimousse"
       ],
       "registryDependencies": [
@@ -81,7 +80,7 @@
       "title": "Use Timescape",
       "description": "A reactive wrapper around Timescape that provides controlled and uncontrolled state management for date/time input.",
       "dependencies": [
-        "@radix-ui/react-use-controllable-state@1.2.2",
+        "@base-ui/utils",
         "react-day-picker",
         "timescape"
       ],
@@ -98,8 +97,7 @@
       "title": "Date Time Range Field Primitive",
       "description": "Date Time Range Field Primitive allows user to enter date and time value for a range of dates.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "timescape"
       ],
       "registryDependencies": [
@@ -118,11 +116,8 @@
       "title": "Date Picker",
       "description": "An unstyled date picker component.",
       "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-popover",
-        "@radix-ui/react-primitive@2.1.2",
-        "@radix-ui/react-slot",
-        "@radix-ui/react-use-controllable-state@1.2.2",
+        "@base-ui/react",
+        "@base-ui/utils",
         "date-fns",
         "react-day-picker"
       ],
@@ -143,8 +138,7 @@
       "title": "Dropzone Primitive",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
       "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "react-dropzone"
       ],
       "files": [
@@ -160,9 +154,8 @@
       "title": "Password Input Primitive",
       "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
       "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
-        "@radix-ui/react-use-controllable-state@1.2.2"
+        "@base-ui/react",
+        "@base-ui/utils"
       ],
       "files": [
         {
@@ -177,7 +170,8 @@
       "title": "Phone Input Primitive",
       "description": "Phone Input allows user to enter phone number in E.164 format.",
       "dependencies": [
-        "@radix-ui/react-use-controllable-state@1.2.2",
+        "@base-ui/react",
+        "@base-ui/utils",
         "react-phone-number-input"
       ],
       "files": [
@@ -196,10 +190,7 @@
         "@dnd-kit/core",
         "@dnd-kit/sortable",
         "@dnd-kit/utilities",
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-portal",
-        "@radix-ui/react-primitive@2.1.2"
+        "@base-ui/react"
       ],
       "files": [
         {
@@ -214,8 +205,7 @@
       "title": "Virtualized",
       "description": "A virtualized component that allows you to efficiently render large lists and tabular data.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "virtua"
       ],
       "files": [
@@ -231,10 +221,8 @@
       "title": "Badge Group",
       "description": "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
       "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-slot",
-        "@radix-ui/react-toggle-group",
-        "@radix-ui/react-use-controllable-state@1.2.2"
+        "@base-ui/react",
+        "@base-ui/utils"
       ],
       "registryDependencies": [
         "badge"
@@ -350,7 +338,7 @@
       "title": "Dropzone",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
       "dependencies": [
-        "@radix-ui/react-primitive@2.1.2"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui-x.junwen-k.dev/r/dropzone-primitive.json"
@@ -431,7 +419,7 @@
       "title": "Timeline",
       "description": "Timeline displays a list of events in chronological order.",
       "dependencies": [
-        "@radix-ui/react-slot"
+        "@base-ui/react"
       ],
       "files": [
         {

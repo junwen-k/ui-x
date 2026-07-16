@@ -1,21 +1,18 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   DateTimeField,
   DateTimeFieldAmPm,
@@ -60,39 +57,38 @@ export default function DateTimeFieldForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="eventDate"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Event date</FormLabel>
-              <DateTimeField value={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <DateTimeFieldDays />
-                </FormControl>
-                <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
-                <DateTimeFieldMonths />
-                <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
-                <DateTimeFieldYears />
-                <DateTimeFieldSeparator>·</DateTimeFieldSeparator>
-                <DateTimeFieldHours />
-                <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
-                <DateTimeFieldMinutes />
-                <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
-                <DateTimeFieldSeconds />
-                <DateTimeFieldAmPm />
-              </DateTimeField>
-              <FormDescription>
-                Schedule your event by selecting a date and time.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="eventDate"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Event date</FieldLabel>
+            <DateTimeField
+              value={field.value ?? null}
+              onValueChange={field.onChange}
+            >
+              <DateTimeFieldDays aria-invalid={fieldState.invalid} />
+              <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
+              <DateTimeFieldMonths />
+              <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
+              <DateTimeFieldYears />
+              <DateTimeFieldSeparator>·</DateTimeFieldSeparator>
+              <DateTimeFieldHours />
+              <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
+              <DateTimeFieldMinutes />
+              <DateTimeFieldSeparator>:</DateTimeFieldSeparator>
+              <DateTimeFieldSeconds />
+              <DateTimeFieldAmPm />
+            </DateTimeField>
+            <FieldDescription>
+              Schedule your event by selecting a date and time.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

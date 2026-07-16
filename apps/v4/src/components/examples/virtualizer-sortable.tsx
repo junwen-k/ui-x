@@ -74,18 +74,24 @@ export default function VirtualizerSortable() {
       <SortableList items={items} className="flex size-80 flex-col gap-3">
         <VirtualizedList>
           {items.map((item, index) => (
-            <SortableItem asChild key={item.id} id={item.id}>
-              <SortableItemTrigger asChild>
-                <Item
-                  title={item.title}
-                  description={item.description}
-                  className={cn(
-                    "mb-4 min-w-64 aria-pressed:opacity-50 aria-pressed:shadow-sm",
-                    index === items.length - 1 && "mb-0",
-                  )}
+            <SortableItem
+              key={item.id}
+              id={item.id}
+              render={
+                <SortableItemTrigger
+                  render={
+                    <Item
+                      title={item.title}
+                      description={item.description}
+                      className={cn(
+                        "mb-4 min-w-64 aria-pressed:opacity-50 aria-pressed:shadow-sm",
+                        index === items.length - 1 && "mb-0",
+                      )}
+                    />
+                  }
                 />
-              </SortableItemTrigger>
-            </SortableItem>
+              }
+            />
           ))}
         </VirtualizedList>
       </SortableList>

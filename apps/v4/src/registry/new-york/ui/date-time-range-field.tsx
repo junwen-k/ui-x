@@ -17,20 +17,15 @@ import {
 import * as DateTimeRangeFieldPrimitive from "@/registry/new-york/ui/date-time-range-field-primitive";
 
 function DateTimeRangeField({
-  children,
   className,
   ...props
 }: React.ComponentProps<typeof DateTimeRangeFieldPrimitive.Root>) {
   return (
     <DateTimeRangeFieldPrimitive.Root
       data-slot="date-time-range-field"
-      asChild
+      render={<InputGroup className={cn("gap-1.5 px-2", className)} />}
       {...props}
-    >
-      <InputGroup className={cn("gap-1.5 px-2", className)}>
-        {children}
-      </InputGroup>
-    </DateTimeRangeFieldPrimitive.Root>
+    />
   );
 }
 
@@ -77,11 +72,9 @@ function DateTimeRangeFieldYears(
   return (
     <DateTimeRangeFieldPrimitive.Years
       data-slot="date-time-range-field-years"
-      asChild
+      render={<DateTimeFieldYears />}
       {...props}
-    >
-      <DateTimeFieldYears />
-    </DateTimeRangeFieldPrimitive.Years>
+    />
   );
 }
 
@@ -91,11 +84,9 @@ function DateTimeRangeFieldMonths(
   return (
     <DateTimeRangeFieldPrimitive.Months
       data-slot="date-time-range-field-months"
-      asChild
+      render={<DateTimeFieldMonths />}
       {...props}
-    >
-      <DateTimeFieldMonths />
-    </DateTimeRangeFieldPrimitive.Months>
+    />
   );
 }
 
@@ -105,11 +96,9 @@ function DateTimeRangeFieldDays(
   return (
     <DateTimeRangeFieldPrimitive.Days
       data-slot="date-time-range-field-days"
-      asChild
+      render={<DateTimeFieldDays />}
       {...props}
-    >
-      <DateTimeFieldDays />
-    </DateTimeRangeFieldPrimitive.Days>
+    />
   );
 }
 
@@ -119,11 +108,9 @@ function DateTimeRangeFieldHours(
   return (
     <DateTimeRangeFieldPrimitive.Hours
       data-slot="date-time-range-field-hours"
-      asChild
+      render={<DateTimeFieldHours />}
       {...props}
-    >
-      <DateTimeFieldHours />
-    </DateTimeRangeFieldPrimitive.Hours>
+    />
   );
 }
 
@@ -133,11 +120,9 @@ function DateTimeRangeFieldMinutes(
   return (
     <DateTimeRangeFieldPrimitive.Minutes
       data-slot="date-time-range-field-minutes"
-      asChild
+      render={<DateTimeFieldMinutes />}
       {...props}
-    >
-      <DateTimeFieldMinutes />
-    </DateTimeRangeFieldPrimitive.Minutes>
+    />
   );
 }
 
@@ -147,11 +132,9 @@ function DateTimeRangeFieldSeconds(
   return (
     <DateTimeRangeFieldPrimitive.Seconds
       data-slot="date-time-range-field-seconds"
-      asChild
+      render={<DateTimeFieldSeconds />}
       {...props}
-    >
-      <DateTimeFieldSeconds />
-    </DateTimeRangeFieldPrimitive.Seconds>
+    />
   );
 }
 
@@ -161,11 +144,9 @@ function DateTimeRangeFieldAmPm(
   return (
     <DateTimeRangeFieldPrimitive.AmPm
       data-slot="date-time-range-field-am-pm"
-      asChild
+      render={<DateTimeFieldAmPm />}
       {...props}
-    >
-      <DateTimeFieldAmPm />
-    </DateTimeRangeFieldPrimitive.AmPm>
+    />
   );
 }
 

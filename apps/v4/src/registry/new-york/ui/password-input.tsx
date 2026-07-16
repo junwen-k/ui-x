@@ -56,11 +56,9 @@ function PasswordInputInput(
   return (
     <PasswordInputPrimitive.Input
       data-slot="password-input-input"
-      asChild
+      render={<InputGroupInput />}
       {...props}
-    >
-      <InputGroupInput />
-    </PasswordInputPrimitive.Input>
+    />
   );
 }
 
@@ -72,15 +70,15 @@ function PasswordInputAdornmentToggle({
     <InputGroupAddon align="inline-end">
       <PasswordInputPrimitive.Toggle
         data-slot="password-input-adornment-toggle"
-        asChild
+        render={
+          <InputGroupButton size="icon-xs">
+            <EyeIcon className="hidden size-4 group-data-visible:block" />
+            <EyeOffIcon className="block size-4 group-data-visible:hidden" />
+          </InputGroupButton>
+        }
         className={cn("group", className)}
         {...props}
-      >
-        <InputGroupButton size="icon-xs">
-          <EyeIcon className="hidden size-4 group-data-[state=visible]:block" />
-          <EyeOffIcon className="block size-4 group-data-[state=visible]:hidden" />
-        </InputGroupButton>
-      </PasswordInputPrimitive.Toggle>
+      />
     </InputGroupAddon>
   );
 }

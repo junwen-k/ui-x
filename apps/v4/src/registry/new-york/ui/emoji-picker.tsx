@@ -1,6 +1,7 @@
 "use client";
 
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
+import { Toggle } from "@base-ui/react/toggle";
+import { ToggleGroup } from "@base-ui/react/toggle-group";
 import {
   type EmojiPickerListCategoryHeaderProps,
   type EmojiPickerListEmojiProps,
@@ -202,24 +203,23 @@ function EmojiPickerSkinToneSelector() {
         align="center"
         className="w-fit overflow-hidden p-0"
       >
-        <ToggleGroupPrimitive.Root
-          type="single"
-          value={skinTone}
-          onValueChange={(value) => value && setSkinTone(value as SkinTone)}
+        <ToggleGroup
+          value={[skinTone]}
+          onValueChange={([value]) => value && setSkinTone(value as SkinTone)}
           aria-label="Select skin tone"
           orientation="horizontal"
         >
           {skinToneVariations.map((variation) => (
-            <ToggleGroupPrimitive.Item
+            <Toggle
               key={variation.skinTone}
               aria-label={`${variation.skinTone} skin tone`}
               value={variation.skinTone}
-              className="data-[state=on]:bg-accent data-[state=on]:text-accent-foreground hover:bg-muted focus-visible:ring-ring size-7"
+              className="data-[pressed]:bg-accent data-[pressed]:text-accent-foreground hover:bg-muted focus-visible:ring-ring size-7"
             >
               {variation.emoji}
-            </ToggleGroupPrimitive.Item>
+            </Toggle>
           ))}
-        </ToggleGroupPrimitive.Root>
+        </ToggleGroup>
       </PopoverContent>
     </Popover>
   );

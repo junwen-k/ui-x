@@ -1,20 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { BadgeGroup, BadgeGroupItem } from "@/registry/new-york/ui/badge-group";
 
 const FormSchema = z.object({
@@ -78,44 +71,39 @@ export default function BadgeGroupForm() {
   const options = form.watch("options");
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="selected"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ice cream flavor</FormLabel>
-              <FormControl>
-                <BadgeGroup
-                  type="multiple"
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  onRemove={(value) => {
-                    form.setValue(
-                      "options",
-                      options.filter((option) => !value.includes(option.value)),
-                    );
-                    field.onChange(
-                      field.value.filter(
-                        (selected) => !value.includes(selected),
-                      ),
-                    );
-                  }}
-                >
-                  {options.map((option) => (
-                    <BadgeGroupItem key={option.value} value={option.value}>
-                      {option.label}
-                    </BadgeGroupItem>
-                  ))}
-                </BadgeGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <Controller
+        control={form.control}
+        name="selected"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel>Ice cream flavor</FieldLabel>
+            <BadgeGroup
+              type="multiple"
+              value={field.value}
+              onValueChange={field.onChange}
+              onRemove={(value) => {
+                form.setValue(
+                  "options",
+                  options.filter((option) => !value.includes(option.value)),
+                );
+                field.onChange(
+                  field.value.filter((selected) => !value.includes(selected)),
+                );
+              }}
+              aria-invalid={fieldState.invalid}
+            >
+              {options.map((option) => (
+                <BadgeGroupItem key={option.value} value={option.value}>
+                  {option.label}
+                </BadgeGroupItem>
+              ))}
+            </BadgeGroup>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

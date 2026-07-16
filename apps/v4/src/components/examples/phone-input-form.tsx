@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { parsePhoneNumber } from "react-phone-number-input";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
@@ -10,14 +10,11 @@ import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field";
 import {
   PhoneInput,
   PhoneInputInput,
@@ -82,28 +79,28 @@ export default function PhoneInputForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone number</FormLabel>
-              <PhoneInput value={field.value} onValueChange={field.onChange}>
-                <FormControl>
-                  <PhoneInputInput placeholder="Phone number" />
-                </FormControl>
-              </PhoneInput>
-              <FormDescription>
-                Your phone number is used to contact you.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Controller
+        control={form.control}
+        name="phoneNumber"
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <FieldLabel htmlFor={field.name}>Phone number</FieldLabel>
+            <PhoneInput value={field.value} onValueChange={field.onChange}>
+              <PhoneInputInput
+                id={field.name}
+                placeholder="Phone number"
+                aria-invalid={fieldState.invalid}
+              />
+            </PhoneInput>
+            <FieldDescription>
+              Your phone number is used to contact you.
+            </FieldDescription>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <Button type="submit">Submit</Button>
+    </form>
   );
 }

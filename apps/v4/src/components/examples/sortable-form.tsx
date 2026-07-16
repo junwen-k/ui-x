@@ -7,7 +7,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GripVertical, Pencil, PlusCircle, Trash2 } from "lucide-react";
 import * as React from "react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { codeToHtml } from "shiki";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -24,14 +24,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -150,55 +143,61 @@ const EditItemFormDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       {children}
       <DialogContent className="sm:max-w-[425px]">
-        <Form {...form}>
-          <form
-            onSubmit={(event) => {
-              event.stopPropagation();
-              event.preventDefault();
+        <form
+          onSubmit={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
 
-              form.handleSubmit(handleSubmit)(event);
-            }}
-          >
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>{description}</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <DialogFooter>
-              <DialogClose render={<Button type="button" variant="outline" />}>
-                Cancel
-              </DialogClose>
-              <Button type="submit">{actionText}</Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            form.handleSubmit(handleSubmit)(event);
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Controller
+              control={form.control}
+              name="title"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>Title</FieldLabel>
+                  <Input
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    {...field}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="description"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={field.name}>Description</FieldLabel>
+                  <Textarea
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    {...field}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+              Cancel
+            </DialogClose>
+            <Button type="submit">{actionText}</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -290,37 +289,39 @@ export default function SortableForm() {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="items"
-          render={() => (
-            <FormItem>
-              <Sortable
-                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-                onDragEnd={(event) => {
-                  const { active, over } = event;
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <Controller
+        control={form.control}
+        name="items"
+        render={({ fieldState }) => (
+          <Field data-invalid={fieldState.invalid}>
+            <Sortable
+              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+              onDragEnd={(event) => {
+                const { active, over } = event;
 
-                  if (over && active.id !== over.id) {
-                    const oldIndex = fields.findIndex(
-                      (field) => field._id === active.id,
-                    );
-                    const newIndex = fields.findIndex(
-                      (field) => field._id === over.id,
-                    );
+                if (over && active.id !== over.id) {
+                  const oldIndex = fields.findIndex(
+                    (field) => field._id === active.id,
+                  );
+                  const newIndex = fields.findIndex(
+                    (field) => field._id === over.id,
+                  );
 
-                    move(oldIndex, newIndex);
-                  }
-                }}
+                  move(oldIndex, newIndex);
+                }
+              }}
+            >
+              <SortableList
+                items={fields.map((field) => field._id)}
+                className="flex flex-col gap-3"
               >
-                <SortableList
-                  items={fields.map((field) => field._id)}
-                  className="flex flex-col gap-3"
-                >
-                  {fields.length > 0 ? (
-                    fields.map((field, index) => (
-                      <SortableItem asChild key={field._id} id={field._id}>
+                {fields.length > 0 ? (
+                  fields.map((field, index) => (
+                    <SortableItem
+                      key={field._id}
+                      id={field._id}
+                      render={
                         <Item
                           title={field.title}
                           description={field.description}
@@ -329,55 +330,55 @@ export default function SortableForm() {
                           onEdit={(data) => update(index, data)}
                           className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
                         />
-                      </SortableItem>
-                    ))
-                  ) : (
-                    <div className="text-muted-foreground flex h-32 min-w-96 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
-                      No items added
-                    </div>
-                  )}
-                </SortableList>
-                <SortableOverlay>
-                  {(activeId) => {
-                    const activeItem = fields.find(
-                      (field) => field._id === activeId,
-                    );
-                    if (!activeItem) {
-                      return null;
-                    }
+                      }
+                    />
+                  ))
+                ) : (
+                  <div className="text-muted-foreground flex h-32 min-w-96 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
+                    No items added
+                  </div>
+                )}
+              </SortableList>
+              <SortableOverlay>
+                {(activeId) => {
+                  const activeItem = fields.find(
+                    (field) => field._id === activeId,
+                  );
+                  if (!activeItem) {
+                    return null;
+                  }
 
-                    return (
-                      <Item
-                        title={activeItem.title}
-                        description={activeItem.description}
-                        onEdit={() => {}}
-                        className="cursor-grabbing shadow-lg"
-                      />
-                    );
-                  }}
-                </SortableOverlay>
-              </Sortable>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex items-center justify-between gap-4">
-          <EditItemFormDialog
-            title="Add item"
-            description="Add a new item to your list. Click add item when you're done."
-            actionText="Add item"
-            onSubmit={(data) => append(data)}
+                  return (
+                    <Item
+                      title={activeItem.title}
+                      description={activeItem.description}
+                      onEdit={() => {}}
+                      className="cursor-grabbing shadow-lg"
+                    />
+                  );
+                }}
+              </SortableOverlay>
+            </Sortable>
+            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+          </Field>
+        )}
+      />
+      <div className="flex items-center justify-between gap-4">
+        <EditItemFormDialog
+          title="Add item"
+          description="Add a new item to your list. Click add item when you're done."
+          actionText="Add item"
+          onSubmit={(data) => append(data)}
+        >
+          <EditItemFormDialogTrigger
+            render={<Button type="button" variant="outline" />}
           >
-            <EditItemFormDialogTrigger
-              render={<Button type="button" variant="outline" />}
-            >
-              <PlusCircle />
-              Add Item
-            </EditItemFormDialogTrigger>
-          </EditItemFormDialog>
-          <Button type="submit">Submit</Button>
-        </div>
-      </form>
-    </Form>
+            <PlusCircle />
+            Add Item
+          </EditItemFormDialogTrigger>
+        </EditItemFormDialog>
+        <Button type="submit">Submit</Button>
+      </div>
+    </form>
   );
 }

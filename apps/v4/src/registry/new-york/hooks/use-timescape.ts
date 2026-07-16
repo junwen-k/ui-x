@@ -1,4 +1,5 @@
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { useControlled } from "@base-ui/utils/useControlled";
+import { useStableCallback } from "@base-ui/utils/useStableCallback";
 import * as React from "react";
 import { DateRange } from "react-day-picker";
 import {
@@ -27,10 +28,16 @@ export function useTimescape({
   wheelControl,
   wrapAround,
 }: UseTimescapeOptions) {
-  const [value, setValue] = useControllableState({
-    prop: valueProp,
-    defaultProp: defaultValue ?? null,
-    onChange: onValueChange,
+  const [value, setValueUnwrapped] = useControlled({
+    controlled: valueProp,
+    default: defaultValue ?? null,
+    name: "useTimescape",
+    state: "value",
+  });
+
+  const setValue = useStableCallback((nextValue: Date | null) => {
+    setValueUnwrapped(nextValue);
+    onValueChange?.(nextValue);
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -109,11 +116,20 @@ export const useTimescapeRange = ({
   from: fromOptions = {},
   to: toOptions = {},
 }: UseTimescapeRangeOptions) => {
-  const [value, setValue] = useControllableState({
-    prop: valueProp,
-    defaultProp: defaultValue ?? null,
-    onChange: onValueChange,
+  const [value, setValueUnwrapped] = useControlled({
+    controlled: valueProp,
+    default: defaultValue ?? null,
+    name: "useTimescapeRange",
+    state: "value",
   });
+
+  const setValue = useStableCallback(
+    (action: React.SetStateAction<DateRange | null>) => {
+      const nextValue = typeof action === "function" ? action(value) : action;
+      setValueUnwrapped(nextValue);
+      onValueChange?.(nextValue);
+    },
+  );
 
   const { from, to, ...timescape } = useReactTimescapeRange({
     from: {

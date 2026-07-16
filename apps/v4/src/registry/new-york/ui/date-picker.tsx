@@ -39,27 +39,29 @@ function DatePickerInputGroup({
   ...props
 }: React.ComponentProps<typeof InputGroup>) {
   return (
-    <DatePickerPrimitive.Anchor asChild>
-      <InputGroup
-        data-slot="date-picker-input-group"
-        className={cn("pl-2", className)}
-        {...props}
-      >
-        <div className="flex flex-1 items-center">{children}</div>
-        <InputGroupAddon align="inline-end">
-          <DatePickerPrimitive.Clear asChild>
-            <InputGroupButton size="icon-xs">
-              <span className="sr-only">Clear date</span>
-              <XIcon />
-            </InputGroupButton>
-          </DatePickerPrimitive.Clear>
-          <DatePickerPrimitive.Trigger asChild>
-            <InputGroupButton size="icon-xs">
-              <CalendarIcon />
-            </InputGroupButton>
-          </DatePickerPrimitive.Trigger>
-        </InputGroupAddon>
-      </InputGroup>
+    <DatePickerPrimitive.Anchor
+      render={
+        <InputGroup
+          data-slot="date-picker-input-group"
+          className={cn("pl-2", className)}
+          {...props}
+        />
+      }
+    >
+      <div className="flex flex-1 items-center">{children}</div>
+      <InputGroupAddon align="inline-end">
+        <DatePickerPrimitive.Clear
+          render={<InputGroupButton size="icon-xs" />}
+        >
+          <span className="sr-only">Clear date</span>
+          <XIcon />
+        </DatePickerPrimitive.Clear>
+        <DatePickerPrimitive.Trigger
+          render={<InputGroupButton size="icon-xs" />}
+        >
+          <CalendarIcon />
+        </DatePickerPrimitive.Trigger>
+      </InputGroupAddon>
     </DatePickerPrimitive.Anchor>
   );
 }
@@ -79,21 +81,17 @@ function DatePickerDateRangeField({
       {...props}
     >
       <DatePickerPrimitive.DateRangeFieldFrom className="flex items-center">
-        <DatePickerPrimitive.DateRangeFieldYears asChild>
-          <DateFieldYears />
-        </DatePickerPrimitive.DateRangeFieldYears>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldMonths asChild>
-          <DateFieldMonths />
-        </DatePickerPrimitive.DateRangeFieldMonths>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldDays asChild>
-          <DateFieldDays />
-        </DatePickerPrimitive.DateRangeFieldDays>
+        <DatePickerPrimitive.DateRangeFieldYears render={<DateFieldYears />} />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldMonths
+          render={<DateFieldMonths />}
+        />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldDays render={<DateFieldDays />} />
       </DatePickerPrimitive.DateRangeFieldFrom>
 
       <DatePickerPrimitive.DateRangeFieldSeparator>
@@ -101,21 +99,17 @@ function DatePickerDateRangeField({
       </DatePickerPrimitive.DateRangeFieldSeparator>
 
       <DatePickerPrimitive.DateRangeFieldTo className="flex items-center">
-        <DatePickerPrimitive.DateRangeFieldYears asChild>
-          <DateFieldYears />
-        </DatePickerPrimitive.DateRangeFieldYears>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldMonths asChild>
-          <DateFieldMonths />
-        </DatePickerPrimitive.DateRangeFieldMonths>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldDays asChild>
-          <DateFieldDays />
-        </DatePickerPrimitive.DateRangeFieldDays>
+        <DatePickerPrimitive.DateRangeFieldYears render={<DateFieldYears />} />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldMonths
+          render={<DateFieldMonths />}
+        />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldDays render={<DateFieldDays />} />
       </DatePickerPrimitive.DateRangeFieldTo>
     </DatePickerPrimitive.DateRangeField>
   );
@@ -135,21 +129,11 @@ function DatePickerDateField({
       className={cn("flex", className)}
       {...props}
     >
-      <DatePickerPrimitive.DateFieldYears asChild>
-        <DateFieldYears />
-      </DatePickerPrimitive.DateFieldYears>
-      <DatePickerPrimitive.DateFieldSeparator asChild>
-        <DateFieldSeparator />
-      </DatePickerPrimitive.DateFieldSeparator>
-      <DatePickerPrimitive.DateFieldMonths asChild>
-        <DateFieldMonths />
-      </DatePickerPrimitive.DateFieldMonths>
-      <DatePickerPrimitive.DateFieldSeparator asChild>
-        <DateFieldSeparator />
-      </DatePickerPrimitive.DateFieldSeparator>
-      <DatePickerPrimitive.DateFieldDays asChild>
-        <DateFieldDays />
-      </DatePickerPrimitive.DateFieldDays>
+      <DatePickerPrimitive.DateFieldYears render={<DateFieldYears />} />
+      <DatePickerPrimitive.DateFieldSeparator render={<DateFieldSeparator />} />
+      <DatePickerPrimitive.DateFieldMonths render={<DateFieldMonths />} />
+      <DatePickerPrimitive.DateFieldSeparator render={<DateFieldSeparator />} />
+      <DatePickerPrimitive.DateFieldDays render={<DateFieldDays />} />
     </DatePickerPrimitive.DateField>
   );
 }
@@ -185,16 +169,16 @@ function DatePickerTrigger({
   return (
     <DatePickerPrimitive.Trigger
       data-slot="date-picker-trigger"
-      asChild
+      render={
+        <Button
+          variant="outline"
+          className={cn("w-full justify-start font-normal", className)}
+        />
+      }
       {...props}
     >
-      <Button
-        variant="outline"
-        className={cn("w-full justify-start font-normal", className)}
-      >
-        <CalendarIcon className="text-muted-foreground" />
-        {children}
-      </Button>
+      <CalendarIcon className="text-muted-foreground" />
+      {children}
     </DatePickerPrimitive.Trigger>
   );
 }
@@ -216,30 +200,38 @@ function DatePickerContent({
   className,
   align = "start",
   alignOffset = 4,
+  side = "bottom",
+  sideOffset = 0,
   ...props
-}: React.ComponentProps<typeof DatePickerPrimitive.Content>) {
+}: React.ComponentProps<typeof DatePickerPrimitive.Content> &
+  Pick<
+    React.ComponentProps<typeof DatePickerPrimitive.Positioner>,
+    "align" | "alignOffset" | "side" | "sideOffset"
+  >) {
   return (
     <DatePickerPrimitive.Portal>
-      <DatePickerPrimitive.Content
-        data-slot="date-picker-content"
+      <DatePickerPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
-        className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 w-auto origin-(--radix-popover-content-transform-origin) overflow-hidden rounded-md border p-0 shadow-md outline-hidden",
-          className,
-        )}
-        {...props}
-      />
+        side={side}
+        sideOffset={sideOffset}
+        className="isolate z-50"
+      >
+        <DatePickerPrimitive.Content
+          data-slot="date-picker-content"
+          className={cn(
+            "bg-popover text-popover-foreground data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 relative z-50 max-h-96 w-auto origin-(--transform-origin) overflow-hidden rounded-md border p-0 shadow-md outline-hidden",
+            className,
+          )}
+          {...props}
+        />
+      </DatePickerPrimitive.Positioner>
     </DatePickerPrimitive.Portal>
   );
 }
 
 function DatePickerCalendar(props: React.ComponentProps<typeof Calendar>) {
-  return (
-    <DatePickerPrimitive.Calendar data-slot="date-picker-calendar" asChild>
-      <Calendar {...props} />
-    </DatePickerPrimitive.Calendar>
-  );
+  return <DatePickerPrimitive.Calendar render={<Calendar {...props} />} />;
 }
 
 export {

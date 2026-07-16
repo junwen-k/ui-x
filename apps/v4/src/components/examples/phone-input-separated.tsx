@@ -43,11 +43,13 @@ export default function PhoneInputSeparated() {
             <InputGroupAddon>
               {country ? `+${getCountryCallingCode(country)}` : <PhoneIcon />}
             </InputGroupAddon>
-            <PhoneInputPrimitive.Input asChild>
-              <InputGroupInput
-                placeholder={country === null ? "012-345 6789" : undefined}
-              />
-            </PhoneInputPrimitive.Input>
+            <PhoneInputPrimitive.Input
+              render={
+                <InputGroupInput
+                  placeholder={country === null ? "012-345 6789" : undefined}
+                />
+              }
+            />
           </InputGroup>
         </div>
         <p className="text-muted-foreground text-sm">

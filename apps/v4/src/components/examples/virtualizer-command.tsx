@@ -59,16 +59,14 @@ export default function VirtualizerCommand() {
       <ComboboxContent>
         <ComboboxInput placeholder="Search item..." showTrigger={false} />
         <ComboboxEmpty>No item found.</ComboboxEmpty>
-        <Virtualized asChild>
-          <ComboboxList>
-            <VirtualizedVirtualizer>
-              {filtered.map((item) => (
-                <ComboboxItem key={item.value} value={item.value}>
-                  {item.label}
-                </ComboboxItem>
-              ))}
-            </VirtualizedVirtualizer>
-          </ComboboxList>
+        <Virtualized render={<ComboboxList />}>
+          <VirtualizedVirtualizer>
+            {filtered.map((item) => (
+              <ComboboxItem key={item.value} value={item.value}>
+                {item.label}
+              </ComboboxItem>
+            ))}
+          </VirtualizedVirtualizer>
         </Virtualized>
       </ComboboxContent>
     </Combobox>

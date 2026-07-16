@@ -9,7 +9,7 @@ links:
 
 ## About
 
-The `<PhoneInput />` component is built on top of [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/), wrapping the library to deliver a more consistent API that aligns with Radix UI conventions.
+The `<PhoneInput />` component is built on top of [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/), wrapping the library to deliver a more consistent API that aligns with Base UI conventions.
 
 <Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
 
@@ -84,7 +84,7 @@ npx shadcn@latest add junwen-k/ui-x/phone-input-primitive
 <Step>Install the following dependencies:</Step>
 
 ```bash
-npm install @radix-ui/react-use-controllable-state react-phone-number-input
+npm install @base-ui/react @base-ui/utils react-phone-number-input
 ```
 
 <Step>Copy and paste the following code into your project.</Step>
@@ -136,8 +136,8 @@ In this example, the default country is set to Malaysia, with the initial value 
 
 <Callout className="mt-4 border-amber-200 bg-amber-50 dark:border-amber-950 dark:bg-amber-950/50 [&_[data-slot=alert-description]]:text-foreground">
 
-**Important**: Since `react-phone-number-input` uses a function-based approach for its `inputComponent` prop, this differs from Radix UI's `asChild` composition which expects a JSX element directly.
+**Important**: Since `react-phone-number-input` uses a function-based approach for its `inputComponent` prop, this differs from Base UI's `render` composition which expects a JSX element directly.
 
-To ensure stable behavior and prevent focus issues, it's recommended to always wrap your input element or custom component with `useMemo` to maintain a stable reference. Avoid using components directly as children without `useMemo`, as this will cause focus issues on each change.
+To ensure stable behavior and prevent focus issues, it's recommended to always wrap your `render` element with `useMemo` to maintain a stable reference. Avoid passing inline elements without `useMemo`, as this will cause focus issues on each change.
 
 </Callout>

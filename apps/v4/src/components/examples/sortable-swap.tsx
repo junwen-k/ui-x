@@ -109,11 +109,17 @@ export default function SortableSwap() {
         className="flex flex-col gap-3"
       >
         {items.map((item) => (
-          <SortableItem asChild key={item.id} id={item.id}>
-            <SortableItemTrigger asChild>
-              <Item title={item.title} description={item.description} />
-            </SortableItemTrigger>
-          </SortableItem>
+          <SortableItem
+            key={item.id}
+            id={item.id}
+            render={
+              <SortableItemTrigger
+                render={
+                  <Item title={item.title} description={item.description} />
+                }
+              />
+            }
+          />
         ))}
       </SortableList>
     </Sortable>

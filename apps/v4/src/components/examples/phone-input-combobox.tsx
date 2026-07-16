@@ -51,9 +51,7 @@ export default function PhoneInputCombobox() {
             <PhoneInputFlag country={country} title={country ?? "International"} />
           </ComboboxTrigger>
           <InputGroup>
-            <PhoneInputPrimitive.Input asChild>
-              <InputGroupInput />
-            </PhoneInputPrimitive.Input>
+            <PhoneInputPrimitive.Input render={<InputGroupInput />} />
           </InputGroup>
         </ButtonGroup>
         <ComboboxContent anchor={anchor}>

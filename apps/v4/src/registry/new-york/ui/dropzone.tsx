@@ -1,6 +1,7 @@
 "use client";
 
-import { Primitive } from "@radix-ui/react-primitive";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import { BanIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
 import * as React from "react";
 
@@ -66,41 +67,56 @@ function DropzoneUploadIcon({
 
 function DropzoneGroup({
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.div>) {
-  return (
-    <Primitive.div
-      data-slot="dropzone-group"
-      className={cn("grid place-items-center gap-1.5", className)}
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"div">) {
+  return useRender({
+    render,
+    defaultTagName: "div",
+    props: mergeProps<"div">(
+      {
+        "data-slot": "dropzone-group",
+        className: cn("grid place-items-center gap-1.5", className),
+      } as React.ComponentProps<"div">,
+      props,
+    ),
+  });
 }
 
 function DropzoneTitle({
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.h3>) {
-  return (
-    <Primitive.h3
-      data-slot="dropzone-title"
-      className={cn("leading-none font-medium tracking-tight", className)}
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"h3">) {
+  return useRender({
+    render,
+    defaultTagName: "h3",
+    props: mergeProps<"h3">(
+      {
+        "data-slot": "dropzone-title",
+        className: cn("leading-none font-medium tracking-tight", className),
+      } as React.ComponentProps<"h3">,
+      props,
+    ),
+  });
 }
 
 function DropzoneDescription({
   className,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.p>) {
-  return (
-    <Primitive.p
-      data-slot="dropzone-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
+}: useRender.ComponentProps<"p">) {
+  return useRender({
+    render,
+    defaultTagName: "p",
+    props: mergeProps<"p">(
+      {
+        "data-slot": "dropzone-description",
+        className: cn("text-muted-foreground text-sm", className),
+      } as React.ComponentProps<"p">,
+      props,
+    ),
+  });
 }
 
 function DropzoneTrigger(
