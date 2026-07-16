@@ -79,21 +79,17 @@ function DatePickerDateRangeField({
       {...props}
     >
       <DatePickerPrimitive.DateRangeFieldFrom className="flex items-center">
-        <DatePickerPrimitive.DateRangeFieldYears asChild>
-          <DateFieldYears />
-        </DatePickerPrimitive.DateRangeFieldYears>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldMonths asChild>
-          <DateFieldMonths />
-        </DatePickerPrimitive.DateRangeFieldMonths>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldDays asChild>
-          <DateFieldDays />
-        </DatePickerPrimitive.DateRangeFieldDays>
+        <DatePickerPrimitive.DateRangeFieldYears render={<DateFieldYears />} />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldMonths
+          render={<DateFieldMonths />}
+        />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldDays render={<DateFieldDays />} />
       </DatePickerPrimitive.DateRangeFieldFrom>
 
       <DatePickerPrimitive.DateRangeFieldSeparator>
@@ -101,21 +97,17 @@ function DatePickerDateRangeField({
       </DatePickerPrimitive.DateRangeFieldSeparator>
 
       <DatePickerPrimitive.DateRangeFieldTo className="flex items-center">
-        <DatePickerPrimitive.DateRangeFieldYears asChild>
-          <DateFieldYears />
-        </DatePickerPrimitive.DateRangeFieldYears>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldMonths asChild>
-          <DateFieldMonths />
-        </DatePickerPrimitive.DateRangeFieldMonths>
-        <DatePickerPrimitive.DateRangeFieldSeparator asChild>
-          <DateFieldSeparator />
-        </DatePickerPrimitive.DateRangeFieldSeparator>
-        <DatePickerPrimitive.DateRangeFieldDays asChild>
-          <DateFieldDays />
-        </DatePickerPrimitive.DateRangeFieldDays>
+        <DatePickerPrimitive.DateRangeFieldYears render={<DateFieldYears />} />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldMonths
+          render={<DateFieldMonths />}
+        />
+        <DatePickerPrimitive.DateRangeFieldSeparator
+          render={<DateFieldSeparator />}
+        />
+        <DatePickerPrimitive.DateRangeFieldDays render={<DateFieldDays />} />
       </DatePickerPrimitive.DateRangeFieldTo>
     </DatePickerPrimitive.DateRangeField>
   );
@@ -135,21 +127,11 @@ function DatePickerDateField({
       className={cn("flex", className)}
       {...props}
     >
-      <DatePickerPrimitive.DateFieldYears asChild>
-        <DateFieldYears />
-      </DatePickerPrimitive.DateFieldYears>
-      <DatePickerPrimitive.DateFieldSeparator asChild>
-        <DateFieldSeparator />
-      </DatePickerPrimitive.DateFieldSeparator>
-      <DatePickerPrimitive.DateFieldMonths asChild>
-        <DateFieldMonths />
-      </DatePickerPrimitive.DateFieldMonths>
-      <DatePickerPrimitive.DateFieldSeparator asChild>
-        <DateFieldSeparator />
-      </DatePickerPrimitive.DateFieldSeparator>
-      <DatePickerPrimitive.DateFieldDays asChild>
-        <DateFieldDays />
-      </DatePickerPrimitive.DateFieldDays>
+      <DatePickerPrimitive.DateFieldYears render={<DateFieldYears />} />
+      <DatePickerPrimitive.DateFieldSeparator render={<DateFieldSeparator />} />
+      <DatePickerPrimitive.DateFieldMonths render={<DateFieldMonths />} />
+      <DatePickerPrimitive.DateFieldSeparator render={<DateFieldSeparator />} />
+      <DatePickerPrimitive.DateFieldDays render={<DateFieldDays />} />
     </DatePickerPrimitive.DateField>
   );
 }

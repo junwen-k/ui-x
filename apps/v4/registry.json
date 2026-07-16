@@ -41,8 +41,7 @@
       "title": "Date Time Field Primitive",
       "description": "Date Time Field Primitive allows user to enter date and time value.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "timescape"
       ],
       "registryDependencies": [
@@ -98,8 +97,7 @@
       "title": "Date Time Range Field Primitive",
       "description": "Date Time Range Field Primitive allows user to enter date and time value for a range of dates.",
       "dependencies": [
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "timescape"
       ],
       "registryDependencies": [

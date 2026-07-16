@@ -7,14 +7,15 @@ import { cn } from "@/lib/utils";
 import * as DateTimeFieldPrimitive from "@/registry/new-york/ui/date-time-field-primitive";
 
 function DateTimeField({
-  children,
   className,
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Root>) {
   return (
-    <DateTimeFieldPrimitive.Root data-slot="date-time-field" asChild {...props}>
-      <InputGroup className={cn("px-2", className)}>{children}</InputGroup>
-    </DateTimeFieldPrimitive.Root>
+    <DateTimeFieldPrimitive.Root
+      data-slot="date-time-field"
+      render={<InputGroup className={cn("px-2", className)} />}
+      {...props}
+    />
   );
 }
 
@@ -42,18 +43,18 @@ function DateTimeFieldYears({
   return (
     <DateTimeFieldPrimitive.Years
       data-slot="date-time-field-years"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(4ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(4ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Years>
+    />
   );
 }
 
@@ -65,18 +66,18 @@ function DateTimeFieldMonths({
   return (
     <DateTimeFieldPrimitive.Months
       data-slot="date-time-field-months"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Months>
+    />
   );
 }
 
@@ -88,18 +89,18 @@ function DateTimeFieldDays({
   return (
     <DateTimeFieldPrimitive.Days
       data-slot="date-time-field-days"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Days>
+    />
   );
 }
 
@@ -111,18 +112,18 @@ function DateTimeFieldHours({
   return (
     <DateTimeFieldPrimitive.Hours
       data-slot="date-time-field-hours"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Hours>
+    />
   );
 }
 
@@ -134,18 +135,18 @@ function DateTimeFieldMinutes({
   return (
     <DateTimeFieldPrimitive.Minutes
       data-slot="date-time-field-minutes"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Minutes>
+    />
   );
 }
 
@@ -157,18 +158,18 @@ function DateTimeFieldSeconds({
   return (
     <DateTimeFieldPrimitive.Seconds
       data-slot="date-time-field-seconds"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)]",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)]",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.Seconds>
+    />
   );
 }
 
@@ -180,18 +181,18 @@ function DateTimeFieldAmPm({
   return (
     <DateTimeFieldPrimitive.AmPm
       data-slot="date-time-field-am-pm"
-      asChild
       placeholder={placeholder}
+      render={
+        <InputGroupInput
+          className={cn(
+            dateTimeFieldInputStyle,
+            "max-w-[calc(2ch_+_0.5rem)] text-center",
+            className,
+          )}
+        />
+      }
       {...props}
-    >
-      <InputGroupInput
-        className={cn(
-          dateTimeFieldInputStyle,
-          "max-w-[calc(2ch_+_0.5rem)] text-center",
-          className,
-        )}
-      />
-    </DateTimeFieldPrimitive.AmPm>
+    />
   );
 }
 
