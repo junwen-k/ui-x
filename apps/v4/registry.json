@@ -173,7 +173,8 @@
       "title": "Phone Input Primitive",
       "description": "Phone Input allows user to enter phone number in E.164 format.",
       "dependencies": [
-        "@radix-ui/react-use-controllable-state@1.2.2",
+        "@base-ui/react",
+        "@base-ui/utils",
         "react-phone-number-input"
       ],
       "files": [

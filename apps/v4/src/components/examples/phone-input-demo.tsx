@@ -27,9 +27,7 @@ export default function PhoneInputDemo() {
           </PhoneInputCountrySelectContent>
         </PhoneInputCountrySelect>
         <InputGroup>
-          <PhoneInputPrimitive.Input asChild>
-            <InputGroupInput />
-          </PhoneInputPrimitive.Input>
+          <PhoneInputPrimitive.Input render={<InputGroupInput />} />
         </InputGroup>
       </ButtonGroup>
     </PhoneInput>

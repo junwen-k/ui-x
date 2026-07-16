@@ -53,15 +53,14 @@ function PhoneInput(
 function PhoneInputInput(
   props: React.ComponentProps<typeof PhoneInputPrimitive.Input>,
 ) {
+  const render = React.useMemo(() => <Input />, []);
+
   return (
-    <PhoneInputPrimitive.Input data-slot="phone-input-input" asChild {...props}>
-      {React.useMemo(
-        () => (
-          <Input />
-        ),
-        [],
-      )}
-    </PhoneInputPrimitive.Input>
+    <PhoneInputPrimitive.Input
+      data-slot="phone-input-input"
+      render={render}
+      {...props}
+    />
   );
 }
 
