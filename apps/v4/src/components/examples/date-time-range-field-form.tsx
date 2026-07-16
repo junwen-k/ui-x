@@ -79,7 +79,7 @@ export default function DateTimeRangeFieldForm() {
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Event period</FieldLabel>
             <DateTimeRangeField
-              value={field.value as DateRange}
+              value={(field.value ?? null) as DateRange | null}
               onValueChange={field.onChange}
             >
               <DateTimeRangeFieldFrom>

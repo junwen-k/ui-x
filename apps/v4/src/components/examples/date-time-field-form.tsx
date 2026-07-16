@@ -64,7 +64,10 @@ export default function DateTimeFieldForm() {
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Event date</FieldLabel>
-            <DateTimeField value={field.value} onValueChange={field.onChange}>
+            <DateTimeField
+              value={field.value ?? null}
+              onValueChange={field.onChange}
+            >
               <DateTimeFieldDays aria-invalid={fieldState.invalid} />
               <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
               <DateTimeFieldMonths />

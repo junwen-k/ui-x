@@ -60,7 +60,10 @@ export default function DateFieldForm() {
         render={({ field, fieldState }) => (
           <Field data-invalid={fieldState.invalid}>
             <FieldLabel>Date of birth</FieldLabel>
-            <DateField value={field.value} onValueChange={field.onChange}>
+            <DateField
+              value={field.value ?? null}
+              onValueChange={field.onChange}
+            >
               <DateFieldDays aria-invalid={fieldState.invalid} />
               <DateFieldSeparator />
               <DateFieldMonths />

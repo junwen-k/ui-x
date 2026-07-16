@@ -63,7 +63,7 @@ export default function TimeFieldForm() {
             <FieldLabel>Event time</FieldLabel>
             <TimeField
               hour12
-              value={field.value}
+              value={field.value ?? null}
               onValueChange={field.onChange}
             >
               <TimeFieldHours aria-invalid={fieldState.invalid} />
