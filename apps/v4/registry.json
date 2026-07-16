@@ -190,10 +190,7 @@
         "@dnd-kit/core",
         "@dnd-kit/sortable",
         "@dnd-kit/utilities",
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-compose-refs@1.1.2",
-        "@radix-ui/react-portal",
-        "@radix-ui/react-primitive@2.1.2"
+        "@base-ui/react"
       ],
       "files": [
         {

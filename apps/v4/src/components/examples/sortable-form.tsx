@@ -320,16 +320,20 @@ export default function SortableForm() {
                 >
                   {fields.length > 0 ? (
                     fields.map((field, index) => (
-                      <SortableItem asChild key={field._id} id={field._id}>
-                        <Item
-                          title={field.title}
-                          description={field.description}
-                          tabIndex={undefined}
-                          onRemove={() => remove(index)}
-                          onEdit={(data) => update(index, data)}
-                          className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
-                        />
-                      </SortableItem>
+                      <SortableItem
+                        key={field._id}
+                        id={field._id}
+                        render={
+                          <Item
+                            title={field.title}
+                            description={field.description}
+                            tabIndex={undefined}
+                            onRemove={() => remove(index)}
+                            onEdit={(data) => update(index, data)}
+                            className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
+                          />
+                        }
+                      />
                     ))
                   ) : (
                     <div className="text-muted-foreground flex h-32 min-w-96 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">

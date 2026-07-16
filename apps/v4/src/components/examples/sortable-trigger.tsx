@@ -110,14 +110,18 @@ export default function SortableTrigger() {
         className="flex snap-start gap-3 overflow-x-auto px-1 py-2"
       >
         {items.map((item) => (
-          <SortableItem asChild key={item.id} id={item.id}>
-            <Item
-              title={item.title}
-              description={item.description}
-              tabIndex={undefined}
-              className="min-w-64 aria-pressed:opacity-50 aria-pressed:shadow-sm"
-            />
-          </SortableItem>
+          <SortableItem
+            key={item.id}
+            id={item.id}
+            render={
+              <Item
+                title={item.title}
+                description={item.description}
+                tabIndex={undefined}
+                className="min-w-64 aria-pressed:opacity-50 aria-pressed:shadow-sm"
+              />
+            }
+          />
         ))}
       </SortableList>
       <SortableOverlay>
