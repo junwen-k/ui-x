@@ -22,10 +22,10 @@ export default function DropzoneTriggerDemo() {
               Please upload file with less than 4MB.
             </DropzoneDescription>
           </div>
-          <DropzoneTrigger asChild>
-            <Button variant="outline" className="w-full">
-              Open
-            </Button>
+          <DropzoneTrigger
+            render={<Button variant="outline" className="w-full" />}
+          >
+            Open
           </DropzoneTrigger>
         </div>
       </DropzoneZone>

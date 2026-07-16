@@ -143,8 +143,7 @@
       "title": "Dropzone Primitive",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
       "dependencies": [
-        "@radix-ui/primitive@1.1.2",
-        "@radix-ui/react-primitive@2.1.2",
+        "@base-ui/react",
         "react-dropzone"
       ],
       "files": [
@@ -348,7 +347,7 @@
       "title": "Dropzone",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
       "dependencies": [
-        "@radix-ui/react-primitive@2.1.2"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "https://ui-x.junwen-k.dev/r/dropzone-primitive.json"
