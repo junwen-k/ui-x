@@ -60,7 +60,7 @@
       "title": "Emoji Picker",
       "description": "A emoji picker is a component that allows users to select an emoji from a list of emojis.",
       "dependencies": [
-        "@radix-ui/react-toggle-group",
+        "@base-ui/react",
         "frimousse"
       ],
       "registryDependencies": [
