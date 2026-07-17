@@ -1,30 +1,6 @@
 import type * as PageTree from "fumadocs-core/page-tree";
 import type * as React from "react";
 
-/**
- * Flattens a page tree folder into its pages, including the folder's index
- * page and pages nested in sub-folders, deduplicated by URL.
- */
-export function getPagesFromFolder(folder: PageTree.Folder): PageTree.Item[] {
-  const pages: PageTree.Item[] = [];
-
-  if (folder.index) {
-    pages.push(folder.index);
-  }
-
-  for (const child of folder.children) {
-    if (child.type === "page") {
-      pages.push(child);
-    } else if (child.type === "folder") {
-      pages.push(...getPagesFromFolder(child));
-    }
-  }
-
-  return pages.filter(
-    (page, index, all) => all.findIndex((p) => p.url === page.url) === index,
-  );
-}
-
 export interface FolderSection {
   name?: React.ReactNode;
   pages: PageTree.Item[];

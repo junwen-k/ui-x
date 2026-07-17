@@ -29,7 +29,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useMutationObserver } from "@/hooks/use-mutation-observer";
 import { REGISTRY_NAMES } from "@/lib/docs";
-import { getPagesFromFolder } from "@/lib/page-tree";
+import { getOwnSectionsFromFolder } from "@/lib/page-tree";
 import { cn } from "@/lib/utils";
 
 export function CommandMenu({
@@ -163,7 +163,9 @@ export function CommandMenu({
         return null;
       }
 
-      const pages = getPagesFromFolder(group);
+      const pages = getOwnSectionsFromFolder(group).flatMap(
+        (section) => section.pages,
+      );
 
       if (pages.length === 0) {
         return null;
