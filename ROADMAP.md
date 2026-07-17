@@ -127,15 +127,15 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
 ### 4b. Site foundation (nova)
 
 - [x] Re-vendor the docs site's `components/ui/` from the `base-nova` preset;
-      nova theme adopted. Remaining straggler: `ui/form.tsx` still imports
-      `@radix-ui/react-label`/`react-slot` — replace with Base UI
-      `Field`/`Form` when demo form plumbing is reworked (see 4c).
-- [ ] Remove Radix dependencies from `apps/v4` — **all of them** (re-decided
+      nova theme adopted. The `ui/form.tsx` straggler (Radix label/slot) was
+      replaced with base-nova `field.tsx` in PR #63 (2026-07-16).
+- [x] Remove Radix dependencies from `apps/v4` — **all of them** (re-decided
       2026-07-15 with the clean-cut policy: the earlier "no maintained
       component imports Radix" carve-out for frozen superseded components no
-      longer applies since those are removed rather than frozen). Zero
-      `@radix-ui/*` packages remain after the 4c ports, the superseded-
-      component removal, and the `ui/form.tsx` replacement.
+      longer applies since those are removed rather than frozen). Shipped
+      2026-07-16 (PR #63): zero `@radix-ui/*` packages remain after the 4c
+      ports, the superseded-component removal, and the `ui/form.tsx` →
+      base-nova `field.tsx` replacement.
 - [x] Fix site-header vertical separators — shipped 2026-07-15
       (PR #61, `fix/header-separator`).
 
@@ -176,9 +176,10 @@ demos.
       (PR #62): combobox, date-picker, date/time fields, native-select,
       password-input and all examples migrated; phone-input 4px height
       mismatch fixed; every page browser-verified.
-- [ ] Port each kept component: swap Radix building blocks for Base UI
-      equivalents and apply classes from the `base-nova` sources. Concrete
-      Radix → Base UI swaps (surveyed 2026-07-15):
+- [x] Port each kept component: swap Radix building blocks for Base UI
+      equivalents and apply classes from the `base-nova` sources — shipped
+      2026-07-16 (PR #63). Concrete Radix → Base UI swaps (surveyed
+      2026-07-15):
       - Full primitives: `date-picker-primitive` popover → Base UI Popover;
         `badge-group` + `emoji-picker` toggle-group → Base UI Toggle Group;
         `sortable` portal → React DOM `createPortal`.
@@ -195,14 +196,19 @@ demos.
       registry.json 34 → 26 items; entangled keeper examples rewritten
       against vendored shadcn `kbd`/`button-group`/`attachment`/`combobox`
       (Base UI) in `apps/v4/src/components/ui/`.
-- [ ] Rewrite demos/examples against the nova metrics (adopt Base UI
+- [x] Rewrite demos/examples against the nova metrics (adopt Base UI
       `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
-      every page.
+      every page — shipped 2026-07-16 (PR #63); form demos stay controlled
+      from first render (`field.value ?? null`).
 - [ ] Styling polish during the ports: date/time field segments render
       taller than desired (noted 2026-07-16) — revisit segment height when
       applying nova classes to the field components.
-- [ ] Update registry.json (single style) and install docs after the
-      removals + ports.
+- [x] Update registry.json (single style) and install docs after the
+      removals + ports — done 2026-07-16: internal `registryDependencies`
+      switched from dead self-hosted `https://ui-x.junwen-k.dev/r/*.json`
+      URLs to GitHub-registry addresses (`junwen-k/ui-x/<item>`), registry
+      validated (`shadcn registry validate`, 26 items); `installation.mdx`
+      already documents the `junwen-k/ui-x/<item>` install form.
 
 ### 4d. Docs content — API Reference & Accessibility sections (after ports)
 

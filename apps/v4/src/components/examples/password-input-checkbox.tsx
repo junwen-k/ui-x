@@ -3,6 +3,7 @@
 import * as React from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import {
   PasswordInput,
   PasswordInputInput,
@@ -22,12 +23,7 @@ export default function PasswordInputCheckbox() {
           checked={visible}
           onCheckedChange={(checked) => setVisible(Boolean(checked))}
         />
-        <label
-          htmlFor="toggle-password"
-          className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-        >
-          Show password
-        </label>
+        <Label htmlFor="toggle-password">Show password</Label>
       </div>
     </div>
   );

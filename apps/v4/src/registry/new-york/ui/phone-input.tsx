@@ -5,6 +5,7 @@ import { CheckIcon, GlobeIcon } from "lucide-react";
 import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
+import en from "react-phone-number-input/locale/en";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -170,10 +171,6 @@ interface PhoneInputCountrySelectItemProps
   value: PhoneInputPrimitive.Country;
 }
 
-const regionNames = new Intl.DisplayNames(["en"], {
-  type: "region",
-});
-
 function PhoneInputCountrySelectItem({
   className,
   value,
@@ -193,9 +190,7 @@ function PhoneInputCountrySelectItem({
         <div>
           <PhoneInputFlag country={value} title={value} />
         </div>
-        <SelectPrimitive.ItemText>
-          {regionNames.of(value)}
-        </SelectPrimitive.ItemText>
+        <SelectPrimitive.ItemText>{en[value]}</SelectPrimitive.ItemText>
       </div>
       <div className="text-muted-foreground">
         {`+${getCountryCallingCode(value)}`}

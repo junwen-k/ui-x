@@ -121,7 +121,6 @@ function BadgeGroup<T extends BadgeGroupType = "single">({
     </ToggleGroup>
   );
 }
-BadgeGroup.displayName = "BadgeGroup";
 
 interface BadgeGroupItemProps extends Toggle.Props {
   value: string;

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
+import en from "react-phone-number-input/locale/en";
 
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -23,10 +24,6 @@ import {
 } from "@/registry/new-york/ui/phone-input";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
 
-const regionNames = new Intl.DisplayNames(["en"], {
-  type: "region",
-});
-
 const countries = PhoneInputPrimitive.getCountryOptions().map(
   (option) => option.countryCode,
 );
@@ -41,14 +38,17 @@ export default function PhoneInputCombobox() {
         items={countries}
         value={country}
         onValueChange={(value) => setCountry(value as Country)}
-        itemToStringLabel={(value) => regionNames.of(value as Country) ?? ""}
+        itemToStringLabel={(value) => en[value as Country] ?? ""}
       >
         <ButtonGroup ref={anchor}>
           <ComboboxTrigger
             render={<Button variant="outline" />}
             aria-label="Select country"
           >
-            <PhoneInputFlag country={country} title={country ?? "International"} />
+            <PhoneInputFlag
+              country={country}
+              title={country ?? "International"}
+            />
           </ComboboxTrigger>
           <InputGroup>
             <PhoneInputPrimitive.Input render={<InputGroupInput />} />
@@ -61,9 +61,7 @@ export default function PhoneInputCombobox() {
             {(countryCode: Country) => (
               <ComboboxItem key={countryCode} value={countryCode}>
                 <PhoneInputFlag country={countryCode} title={countryCode} />
-                <span className="line-clamp-1">
-                  {regionNames.of(countryCode)}
-                </span>
+                <span className="line-clamp-1">{en[countryCode]}</span>
                 <span className="text-muted-foreground ml-auto">
                   {`+${getCountryCallingCode(countryCode)}`}
                 </span>

@@ -8,9 +8,7 @@
       "type": "registry:component",
       "title": "BProgress Provider Next App",
       "description": "A smooth progress bar for page transitions in Next.js apps, using the App Router.",
-      "dependencies": [
-        "@bprogress/next"
-      ],
+      "dependencies": ["@bprogress/next"],
       "files": [
         {
           "path": "src/registry/new-york/components/bprogress-provider-next-app.tsx",
@@ -24,9 +22,7 @@
       "type": "registry:component",
       "title": "BProgress Provider Next Pages",
       "description": "A smooth progress bar for page transitions in Next.js pages, using the Pages Router.",
-      "dependencies": [
-        "@bprogress/next"
-      ],
+      "dependencies": ["@bprogress/next"],
       "files": [
         {
           "path": "src/registry/new-york/components/bprogress-provider-next-pages.tsx",
@@ -40,13 +36,8 @@
       "type": "registry:ui",
       "title": "Date Time Field Primitive",
       "description": "Date Time Field Primitive allows user to enter date and time value.",
-      "dependencies": [
-        "@base-ui/react",
-        "timescape"
-      ],
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/use-timescape.json"
-      ],
+      "dependencies": ["@base-ui/react", "timescape"],
+      "registryDependencies": ["junwen-k/ui-x/use-timescape"],
       "files": [
         {
           "path": "src/registry/new-york/ui/date-time-field-primitive.tsx",
@@ -59,14 +50,8 @@
       "type": "registry:ui",
       "title": "Emoji Picker",
       "description": "A emoji picker is a component that allows users to select an emoji from a list of emojis.",
-      "dependencies": [
-        "@base-ui/react",
-        "frimousse"
-      ],
-      "registryDependencies": [
-        "button",
-        "popover"
-      ],
+      "dependencies": ["@base-ui/react", "frimousse"],
+      "registryDependencies": ["button", "popover"],
       "files": [
         {
           "path": "src/registry/new-york/ui/emoji-picker.tsx",
@@ -79,11 +64,7 @@
       "type": "registry:hook",
       "title": "Use Timescape",
       "description": "A reactive wrapper around Timescape that provides controlled and uncontrolled state management for date/time input.",
-      "dependencies": [
-        "@base-ui/utils",
-        "react-day-picker",
-        "timescape"
-      ],
+      "dependencies": ["@base-ui/utils", "react-day-picker", "timescape"],
       "files": [
         {
           "path": "src/registry/new-york/hooks/use-timescape.ts",
@@ -96,13 +77,8 @@
       "type": "registry:ui",
       "title": "Date Time Range Field Primitive",
       "description": "Date Time Range Field Primitive allows user to enter date and time value for a range of dates.",
-      "dependencies": [
-        "@base-ui/react",
-        "timescape"
-      ],
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/use-timescape.json"
-      ],
+      "dependencies": ["@base-ui/react", "timescape"],
+      "registryDependencies": ["junwen-k/ui-x/use-timescape"],
       "files": [
         {
           "path": "src/registry/new-york/ui/date-time-range-field-primitive.tsx",
@@ -122,8 +98,8 @@
         "react-day-picker"
       ],
       "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/date-time-field-primitive.json",
-        "https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json"
+        "junwen-k/ui-x/date-time-field-primitive",
+        "junwen-k/ui-x/date-time-range-field-primitive"
       ],
       "files": [
         {
@@ -137,10 +113,7 @@
       "type": "registry:ui",
       "title": "Dropzone Primitive",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
-      "dependencies": [
-        "@base-ui/react",
-        "react-dropzone"
-      ],
+      "dependencies": ["@base-ui/react", "react-dropzone"],
       "files": [
         {
           "path": "src/registry/new-york/ui/dropzone-primitive.tsx",
@@ -153,10 +126,7 @@
       "type": "registry:ui",
       "title": "Password Input Primitive",
       "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
-      "dependencies": [
-        "@base-ui/react",
-        "@base-ui/utils"
-      ],
+      "dependencies": ["@base-ui/react", "@base-ui/utils"],
       "files": [
         {
           "path": "src/registry/new-york/ui/password-input-primitive.tsx",
@@ -204,10 +174,7 @@
       "type": "registry:ui",
       "title": "Virtualized",
       "description": "A virtualized component that allows you to efficiently render large lists and tabular data.",
-      "dependencies": [
-        "@base-ui/react",
-        "virtua"
-      ],
+      "dependencies": ["@base-ui/react", "virtua"],
       "files": [
         {
           "path": "src/registry/new-york/ui/virtualized.tsx",
@@ -220,13 +187,8 @@
       "type": "registry:ui",
       "title": "Badge Group",
       "description": "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
-      "dependencies": [
-        "@base-ui/react",
-        "@base-ui/utils"
-      ],
-      "registryDependencies": [
-        "badge"
-      ],
+      "dependencies": ["@base-ui/react", "@base-ui/utils"],
+      "registryDependencies": ["badge"],
       "files": [
         {
           "path": "src/registry/new-york/ui/badge-group.tsx",
@@ -239,13 +201,8 @@
       "type": "registry:ui",
       "title": "Confirmer",
       "description": "Imperative confirm dialog implementation.",
-      "dependencies": [
-        "react-call"
-      ],
-      "registryDependencies": [
-        "alert-dialog",
-        "button"
-      ],
+      "dependencies": ["react-call"],
+      "registryDependencies": ["alert-dialog", "button"],
       "files": [
         {
           "path": "src/registry/new-york/ui/confirmer.tsx",
@@ -258,9 +215,7 @@
       "type": "registry:ui",
       "title": "Date Field",
       "description": "Date Field allows user to enter date value.",
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/date-time-field.json"
-      ],
+      "registryDependencies": ["junwen-k/ui-x/date-time-field"],
       "files": [
         {
           "path": "src/registry/new-york/ui/date-field.tsx",
@@ -275,7 +230,7 @@
       "description": "Date Time Field allows user to enter date and time value.",
       "registryDependencies": [
         "input-group",
-        "https://ui-x.junwen-k.dev/r/date-time-field-primitive.json"
+        "junwen-k/ui-x/date-time-field-primitive"
       ],
       "files": [
         {
@@ -291,8 +246,8 @@
       "description": "Date Time Range Field allows user to enter date and time value for a range of dates.",
       "registryDependencies": [
         "input-group",
-        "https://ui-x.junwen-k.dev/r/date-time-field.json",
-        "https://ui-x.junwen-k.dev/r/date-time-range-field-primitive.json"
+        "junwen-k/ui-x/date-time-field",
+        "junwen-k/ui-x/date-time-range-field-primitive"
       ],
       "files": [
         {
@@ -310,8 +265,8 @@
         "button",
         "input-group",
         "calendar",
-        "https://ui-x.junwen-k.dev/r/date-field.json",
-        "https://ui-x.junwen-k.dev/r/date-picker-primitive.json"
+        "junwen-k/ui-x/date-field",
+        "junwen-k/ui-x/date-picker-primitive"
       ],
       "files": [
         {
@@ -337,12 +292,8 @@
       "type": "registry:ui",
       "title": "Dropzone",
       "description": "A dropzone is an area into which one or multiple objects can be dragged and dropped.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/dropzone-primitive.json"
-      ],
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["junwen-k/ui-x/dropzone-primitive"],
       "files": [
         {
           "path": "src/registry/new-york/ui/dropzone.tsx",
@@ -357,7 +308,7 @@
       "description": "Password Input provides a way for the user to securely enter a password, with the ability to toggle the visibility of the password.",
       "registryDependencies": [
         "input-group",
-        "https://ui-x.junwen-k.dev/r/password-input-primitive.json"
+        "junwen-k/ui-x/password-input-primitive"
       ],
       "files": [
         {
@@ -372,7 +323,7 @@
       "title": "Phone Input",
       "description": "Phone Input allows user to enter phone number in E.164 format.",
       "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/phone-input-primitive.json",
+        "junwen-k/ui-x/phone-input-primitive",
         "input",
         "select"
       ],
@@ -388,9 +339,7 @@
       "type": "registry:ui",
       "title": "Time Field",
       "description": "Time Field allows user to enter time value.",
-      "registryDependencies": [
-        "https://ui-x.junwen-k.dev/r/date-time-field.json"
-      ],
+      "registryDependencies": ["junwen-k/ui-x/date-time-field"],
       "files": [
         {
           "path": "src/registry/new-york/ui/time-field.tsx",
@@ -403,9 +352,7 @@
       "type": "registry:ui",
       "title": "Time",
       "description": "Displays a specific time (or datetime).",
-      "dependencies": [
-        "date-fns"
-      ],
+      "dependencies": ["date-fns"],
       "files": [
         {
           "path": "src/registry/new-york/ui/time.tsx",
@@ -418,9 +365,7 @@
       "type": "registry:ui",
       "title": "Timeline",
       "description": "Timeline displays a list of events in chronological order.",
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "files": [
         {
           "path": "src/registry/new-york/ui/timeline.tsx",
@@ -433,9 +378,7 @@
       "type": "registry:ui",
       "title": "Wheel Picker",
       "description": "iOS-like wheel picker for React with smooth inertia scrolling and infinite loop support.",
-      "dependencies": [
-        "@ncdai/react-wheel-picker"
-      ],
+      "dependencies": ["@ncdai/react-wheel-picker"],
       "files": [
         {
           "path": "src/registry/new-york/ui/wheel-picker.tsx",
