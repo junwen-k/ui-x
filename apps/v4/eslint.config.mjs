@@ -31,6 +31,15 @@ export default defineConfig([
           ignoreDeclarationSort: true,
         },
       ],
+      // The registry deliberately exports named props interfaces
+      // (`interface XProps extends useRender.ComponentProps<"div"> {}`),
+      // mirroring Base UI's public API idiom.
+      "@typescript-eslint/no-empty-object-type": [
+        "error",
+        {
+          allowInterfaces: "with-single-extends",
+        },
+      ],
       // TODO: New react-hooks v6 rules flag long-standing patterns in the
       // registry components (composed event handlers reading refs, media
       // query hooks). Revisit when refreshing the registry components.
