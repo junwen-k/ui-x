@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  DndContextProps,
-  UniqueIdentifier,
-} from "@dnd-kit/core";
+import type { DndContextProps, UniqueIdentifier } from "@dnd-kit/core";
 import {
   DndContext,
   DragOverlay,
@@ -58,6 +55,7 @@ export interface SortableProps extends DndContextProps {
 }
 
 function Sortable({
+  id,
   onDragStart,
   onDragEnd,
   onDragCancel,
@@ -66,6 +64,7 @@ function Sortable({
   getTransformStyle = CSS.Transform.toString,
   ...props
 }: SortableProps) {
+  const instanceId = React.useId();
   const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -83,6 +82,7 @@ function Sortable({
       }}
     >
       <DndContext
+        id={id ?? instanceId}
         data-slot="sortable"
         onDragStart={(event) => {
           onDragStart?.(event);
