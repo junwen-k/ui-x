@@ -15,6 +15,12 @@ export type DateTimeFieldContextProps = {
 const DateTimeFieldContext = React.createContext<DateTimeFieldContextProps>({
   getInputProps: () => ({ ref: () => null }),
   getRootProps: () => ({ ref: () => null }),
+  ampm: {
+    value: undefined,
+    set: () => {},
+    toggle: () => {},
+    getSelectProps: () => ({ value: undefined, onChange: () => {} }),
+  },
   options: {},
   disabled: false,
 });
