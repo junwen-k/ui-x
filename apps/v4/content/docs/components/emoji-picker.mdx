@@ -83,3 +83,23 @@ import {
 **Tip**: If you're looking to build a robust input field that supports emoji insertion, you're likely looking for a rich text editor. Some interesting solutions worth exploring include [Novel](https://novel.sh/) (powered by [Tiptap](https://tiptap.dev/)), [Plate](https://platejs.org/) (powered by [Slate](https://slatejs.org)), or [shadcn-editor](https://shadcn-editor.vercel.app/) (powered by [Lexical](https://lexical.dev/)). For lower-level control, you can also look into their underlying frameworks.
 
 </Callout>
+
+## API Reference
+
+Styled wrappers around [frimousse](https://frimousse.liveblocks.io/) — see the [frimousse API reference](https://frimousse.liveblocks.io/#api-reference) for the underlying props.
+
+### EmojiPicker
+
+Wraps `EmojiPicker.Root` and accepts all of its props (`onEmojiSelect`, `locale`, `skinTone`, `columns`, …).
+
+### EmojiPickerSearch
+
+Wraps `EmojiPicker.Search` with a search icon, accepting standard `<input>` props such as `placeholder`.
+
+### EmojiPickerContent
+
+Wraps `EmojiPicker.Viewport` with the loading, empty and list states already composed and styled.
+
+### EmojiPickerFooter
+
+A footer showing a preview of the active emoji and a skin tone selector. Renders a `<div>` and accepts its props.

@@ -93,3 +93,54 @@ export default () => (
 ### Disabled
 
 <ComponentPreview name="date-time-field-primitive-disabled" />
+
+## API Reference
+
+### Root
+
+Runs [timescape](https://github.com/dan-lee/timescape) and provides its state to the segments. Renders a `<div>` by default that manages focus between segments.
+
+| Prop            | Type                            | Default     | Description                                                                |
+| --------------- | ------------------------------- | ----------- | -------------------------------------------------------------------------- |
+| `value`         | `Date \| null`                  | -           | The date value. Use for controlled value; pass `null` for empty.           |
+| `defaultValue`  | `Date`                          | -           | The initial value when uncontrolled.                                       |
+| `onValueChange` | `(value: Date \| null) => void` | -           | Called when the value changes.                                             |
+| `digits`        | `"numeric" \| "2-digit"`        | `"2-digit"` | Whether segments are zero-padded.                                          |
+| `hour12`        | `boolean`                       | `false`     | Use a 12-hour clock. Required for the `AmPm` segment to render.            |
+| `minDate`       | `Date`                          | -           | The minimum selectable date.                                               |
+| `maxDate`       | `Date`                          | -           | The maximum selectable date.                                               |
+| `snapToStep`    | `boolean`                       | `false`     | Snap values to the segment's `step` when incrementing.                     |
+| `wheelControl`  | `boolean`                       | `false`     | Allow changing segment values with the mouse wheel.                        |
+| `wrapAround`    | `boolean`                       | `false`     | Wrap from the last value back to the first when incrementing past the end. |
+| `disabled`      | `boolean`                       | -           | Disables every segment.                                                    |
+| `render`        | `ReactElement \| function`      | -           | Render as a different element.                                             |
+| `...props`      | `React.ComponentProps<"div">`   | -           | Props spread to the root element.                                          |
+
+See the [timescape options](https://github.com/dan-lee/timescape?tab=readme-ov-file#options) for more detail on the option props.
+
+### Segments
+
+The `Days`, `Months`, `Years`, `Hours`, `Minutes` and `Seconds` parts. Each renders an `<input>` wired to its timescape segment and shares the same props.
+
+| Prop       | Type                            | Default | Description                          |
+| ---------- | ------------------------------- | ------- | ------------------------------------ |
+| `disabled` | `boolean`                       | -       | Disables this segment only.          |
+| `render`   | `ReactElement \| function`      | -       | Render as a different element.       |
+| `...props` | `React.ComponentProps<"input">` | -       | Props spread to the segment element. |
+
+### AmPm
+
+The meridiem segment. Renders only when the root has `hour12`; toggle it with <Kbd>A</Kbd> / <Kbd>P</Kbd> or the arrow keys. Same props as the other segments.
+
+### Separator
+
+A decorative separator between segments (e.g. `/` or `:`). Hidden from assistive technology with `aria-hidden`. Renders a `<span>` by default.
+
+| Prop       | Type                           | Default | Description                            |
+| ---------- | ------------------------------ | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`     | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"span">` | -       | Props spread to the separator element. |
+
+### useDateTimeField
+
+Hook exposing the field context (`getInputProps`, `getRootProps`, `options`, `disabled`) for building custom segments. Must be used within `<DateTimeFieldPrimitive.Root>`.

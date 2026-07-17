@@ -126,3 +126,26 @@ confirm({
 ### Default
 
 <ComponentPreview name="confirmer-demo" />
+
+## API Reference
+
+### Confirmer
+
+The dialog host. Render it once near the root of your app; it renders nothing until `confirm` is called. Takes no props.
+
+### confirm
+
+Opens the confirm dialog imperatively and resolves with the user's choice — `true` for the action button, `false` for cancel or dismissing the dialog.
+
+```tsx
+function confirm(options?: ConfirmOptions): Promise<boolean>;
+```
+
+| Option        | Type                                             | Default           | Description                                                                                         |
+| ------------- | ------------------------------------------------ | ----------------- | --------------------------------------------------------------------------------------------------- |
+| `title`       | `ReactNode`                                      | `"Are you sure?"` | The dialog title.                                                                                   |
+| `description` | `ReactNode`                                      | -                 | The dialog description.                                                                             |
+| `cancelText`  | `ReactNode`                                      | `"Cancel"`        | The cancel button label.                                                                            |
+| `actionText`  | `ReactNode`                                      | `"Continue"`      | The action button label.                                                                            |
+| `CancelProps` | `React.ComponentProps<typeof AlertDialogCancel>` | -                 | Props spread to the cancel button.                                                                  |
+| `ActionProps` | `React.ComponentProps<typeof AlertDialogAction>` | -                 | Props spread to the action button, e.g. `{ variant: "destructive" }` for destructive confirmations. |

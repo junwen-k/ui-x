@@ -81,3 +81,39 @@ import {
   </DescriptionGroup>
 </DescriptionList>
 ```
+
+## API Reference
+
+All parts render semantic HTML description-list elements and accept the corresponding element props.
+
+### DescriptionList
+
+The list container. Renders a `<dl>`.
+
+| Prop       | Type                         | Default | Description                         |
+| ---------- | ---------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"dl">` | -       | Props spread to the `<dl>` element. |
+
+### DescriptionGroup
+
+Groups a term with its details for layout. Renders a `<div>`.
+
+| Prop       | Type                          | Default | Description                          |
+| ---------- | ----------------------------- | ------- | ------------------------------------ |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the `<div>` element. |
+
+### DescriptionTerm
+
+The term being described. Renders a `<dt>`.
+
+| Prop       | Type                         | Default | Description                         |
+| ---------- | ---------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"dt">` | -       | Props spread to the `<dt>` element. |
+
+### DescriptionDetail
+
+The description of the preceding term. Renders a `<dd>`.
+
+| Prop       | Type                         | Default | Description                         |
+| ---------- | ---------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"dd">` | -       | Props spread to the `<dd>` element. |

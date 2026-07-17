@@ -116,3 +116,65 @@ export default () => (
 ### Disabled
 
 <ComponentPreview name="date-time-range-field-primitive-disabled" />
+
+## API Reference
+
+### Root
+
+Runs [timescape](https://github.com/dan-lee/timescape)'s range mode and provides the `from` and `to` fields to the parts below. Renders a `<div>` by default that manages focus across both fields.
+
+| Prop            | Type                                 | Default     | Description                                                                                      |
+| --------------- | ------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------ |
+| `value`         | `DateRange \| null`                  | -           | The range value (`{ from?: Date; to?: Date }`). Use for controlled value; pass `null` for empty. |
+| `defaultValue`  | `DateRange`                          | -           | The initial value when uncontrolled.                                                             |
+| `onValueChange` | `(value: DateRange \| null) => void` | -           | Called when the range changes.                                                                   |
+| `digits`        | `"numeric" \| "2-digit"`             | `"2-digit"` | Whether segments are zero-padded.                                                                |
+| `hour12`        | `boolean`                            | `false`     | Use a 12-hour clock. Required for the `AmPm` segments to render.                                 |
+| `minDate`       | `Date`                               | -           | The minimum selectable date.                                                                     |
+| `maxDate`       | `Date`                               | -           | The maximum selectable date.                                                                     |
+| `snapToStep`    | `boolean`                            | `false`     | Snap values to the segment's `step` when incrementing.                                           |
+| `wheelControl`  | `boolean`                            | `false`     | Allow changing segment values with the mouse wheel.                                              |
+| `wrapAround`    | `boolean`                            | `false`     | Wrap from the last value back to the first when incrementing past the end.                       |
+| `from`          | `TimescapeOptions`                   | -           | Option overrides applied to the `from` field only.                                               |
+| `to`            | `TimescapeOptions`                   | -           | Option overrides applied to the `to` field only.                                                 |
+| `disabled`      | `boolean`                            | -           | Disables every segment.                                                                          |
+| `render`        | `ReactElement \| function`           | -           | Render as a different element.                                                                   |
+| `...props`      | `React.ComponentProps<"div">`        | -           | Props spread to the root element.                                                                |
+
+See the [timescape options](https://github.com/dan-lee/timescape?tab=readme-ov-file#options) for more detail on the option props.
+
+### From, To
+
+Containers that scope the segments inside them to the start or end of the range. Segments must be placed inside one of the two. Each renders a `<div>` by default.
+
+| Prop       | Type                          | Default | Description                            |
+| ---------- | ----------------------------- | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the container element. |
+
+### Segments
+
+The `Days`, `Months`, `Years`, `Hours`, `Minutes` and `Seconds` parts, identical to the [Date Time Field segments](/docs/primitives/date-time-field#segments). Each renders an `<input>` and must live inside `From` or `To`.
+
+| Prop       | Type                            | Default | Description                          |
+| ---------- | ------------------------------- | ------- | ------------------------------------ |
+| `disabled` | `boolean`                       | -       | Disables this segment only.          |
+| `render`   | `ReactElement \| function`      | -       | Render as a different element.       |
+| `...props` | `React.ComponentProps<"input">` | -       | Props spread to the segment element. |
+
+### AmPm
+
+The meridiem segment. Renders only when `hour12` is set for its field. Same props as the other segments.
+
+### Separator
+
+A decorative separator, hidden from assistive technology with `aria-hidden`. Renders a `<span>` by default.
+
+| Prop       | Type                           | Default | Description                            |
+| ---------- | ------------------------------ | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`     | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"span">` | -       | Props spread to the separator element. |
+
+### useDateTimeRangeField
+
+Hook exposing the range field context (`from`, `to`, `getRootProps`, `disabled`) for building custom parts. Must be used within `<DateTimeRangeFieldPrimitive.Root>`.

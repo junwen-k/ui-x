@@ -123,6 +123,66 @@ import {
 
 <ComponentPreview name="timeline-horizontal" />
 
+## Accessibility
+
+The timeline renders an ordered list (`<ol role="list">`), so assistive technology announces the number of events and their order. Dots and connectors are purely visual — keep the meaning of each event in its `TimelineTitle` and `TimelineDescription` text rather than in the dot's color or icon alone.
+
+## API Reference
+
+### Timeline
+
+The list container. Renders an `<ol>`.
+
+| Prop          | Type                         | Default      | Description                           |
+| ------------- | ---------------------------- | ------------ | ------------------------------------- |
+| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` | The layout direction of the timeline. |
+| `...props`    | `React.ComponentProps<"ol">` | -            | Props spread to the list element.     |
+
+### TimelineItem
+
+A single event. Renders an `<li>`.
+
+| Prop       | Type                         | Default | Description                       |
+| ---------- | ---------------------------- | ------- | --------------------------------- |
+| `render`   | `ReactElement \| function`   | -       | Render as a different element.    |
+| `...props` | `React.ComponentProps<"li">` | -       | Props spread to the item element. |
+
+### TimelineSeparator
+
+Lays out the dot and connector alongside the content. Renders a `<div>`.
+
+| Prop       | Type                          | Default | Description                            |
+| ---------- | ----------------------------- | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the separator element. |
+
+### TimelineDot
+
+The event marker. Renders a `<div>` showing a dot while empty; place an icon inside to replace it.
+
+| Prop       | Type                          | Default     | Description                                 |
+| ---------- | ----------------------------- | ----------- | ------------------------------------------- |
+| `variant`  | `"default" \| "outline"`      | `"default"` | Filled or outlined dot when rendered empty. |
+| `render`   | `ReactElement \| function`    | -           | Render as a different element.              |
+| `...props` | `React.ComponentProps<"div">` | -           | Props spread to the dot element.            |
+
+### TimelineConnector
+
+The line connecting one event to the next. Renders a `<div>`; omit it on the last item.
+
+| Prop       | Type                          | Default | Description                            |
+| ---------- | ----------------------------- | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the connector element. |
+
+### TimelineContent, TimelineTitle, TimelineDescription
+
+The event's content, heading text and supporting text. Each renders a `<div>` and supports the `render` prop.
+
+### useTimeline
+
+Hook exposing the timeline context (`orientation`) for building custom parts. Must be used within `<Timeline />`.
+
 ## Changelog
 
 ### 10 Febuary 2025 - a11y for title and description

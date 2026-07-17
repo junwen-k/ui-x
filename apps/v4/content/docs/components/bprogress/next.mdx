@@ -162,3 +162,17 @@ export default function App({ Component, pageProps }: AppProps) {
 </TabsContent>
 
 </Tabs>
+
+## API Reference
+
+### BProgressProvider
+
+Wraps `@bprogress/next`'s progress provider (`AppProgressProvider` for the App Router, `PagesProgressProvider` for the Pages Router) with theme-aware defaults, and accepts all of its props — see the [BProgress provider documentation](https://bprogress.vercel.app/docs/next/app-dir/provider) for the full list.
+
+| Prop             | Type                    | Default                         | Description                                                         |
+| ---------------- | ----------------------- | ------------------------------- | ------------------------------------------------------------------- |
+| `color`          | `string`                | `"var(--primary)"`              | The progress bar color.                                             |
+| `height`         | `string`                | `"calc(var(--spacing) * 0.75)"` | The progress bar height.                                            |
+| `options`        | `ProgressOptions`       | `{ showSpinner: false }`        | [BProgress options](https://bprogress.vercel.app/docs/api#options). |
+| `shallowRouting` | `boolean`               | `true`                          | Skips the progress bar when only search params change.              |
+| `...props`       | `ProgressProviderProps` | -                               | Props spread to the underlying provider.                            |

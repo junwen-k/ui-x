@@ -141,3 +141,66 @@ In this example, the default country is set to Malaysia, with the initial value 
 To ensure stable behavior and prevent focus issues, it's recommended to always wrap your `render` element with `useMemo` to maintain a stable reference. Avoid passing inline elements without `useMemo`, as this will cause focus issues on each change.
 
 </Callout>
+
+## API Reference
+
+### Root
+
+Manages the phone value and selected country and provides them to the parts below. Renders no element of its own.
+
+| Prop                                      | Type                                 | Default | Description                                                                                                                                                             |
+| ----------------------------------------- | ------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`                                   | `Value`                              | -       | The phone number in E.164 format (e.g. `"+12133734253"`). Use for controlled value.                                                                                     |
+| `defaultValue`                            | `Value`                              | `""`    | The initial value when uncontrolled.                                                                                                                                    |
+| `onValueChange`                           | `(value: Value) => void`             | -       | Called when the phone number changes.                                                                                                                                   |
+| `country`                                 | `Country \| null`                    | -       | The selected country. `null` means "International". Use for controlled country.                                                                                         |
+| `defaultCountry`                          | `Country`                            | -       | The initial country when uncontrolled.                                                                                                                                  |
+| `onCountryChange`                         | `(country: Country \| null) => void` | -       | Called when the selected country changes.                                                                                                                               |
+| `preferredCountry`                        | `Country`                            | -       | Suggests a country while no country is selected: numbers can be typed in this country's national format while international numbers for any other country keep working. |
+| `defaultInternationalForPreferredCountry` | `boolean`                            | `false` | Forces international format for initial values that match the preferred country. Only valid together with `preferredCountry`.                                           |
+| `international`                           | `boolean`                            | `false` | Forces international format when a country is explicitly selected.                                                                                                      |
+| `withCountryCallingCode`                  | `boolean`                            | `false` | Keeps the country calling code visible and undeletable in international format. Only valid together with `international`.                                               |
+| `disabled`                                | `boolean`                            | `false` | Disables the input and the country select.                                                                                                                              |
+| `children`                                | `ReactNode`                          | -       | The phone input parts.                                                                                                                                                  |
+
+### Input
+
+The phone number input, formatting as you type via [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/). Renders an `<input>` by default.
+
+| Prop         | Type                                           | Default | Description                                                                                                             |
+| ------------ | ---------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `render`     | `ReactElement`                                 | -       | Render as a different input element. Wrap it in `useMemo` — see the callout above.                                      |
+| `smartCaret` | `boolean`                                      | `true`  | Keeps the caret position stable while the value is reformatted.                                                         |
+| `...props`   | `React.ComponentProps<typeof ReactPhoneInput>` | -       | Remaining [react-phone-number-input props](https://catamphetamine.gitlab.io/react-phone-number-input/docs/) are spread. |
+
+### CountrySelect
+
+The country selector. Renders a native `<select>` wired to the country state.
+
+| Prop       | Type                             | Default | Description                         |
+| ---------- | -------------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"select">` | -       | Props spread to the select element. |
+
+### CountrySelectOption
+
+A country option. Renders an `<option>`.
+
+| Prop       | Type                             | Default | Description                         |
+| ---------- | -------------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"option">` | -       | Props spread to the option element. |
+
+### CountryInternationalSelectOption
+
+The "International" option. Selecting it clears the country (`null`).
+
+| Prop       | Type                                            | Default | Description                         |
+| ---------- | ----------------------------------------------- | ------- | ----------------------------------- |
+| `...props` | `Omit<React.ComponentProps<"option">, "value">` | -       | Props spread to the option element. |
+
+### getCountryOptions
+
+A helper that returns `{ countryCode, countryCallingCode }` for every supported country — useful for rendering the options list.
+
+### usePhoneInput
+
+Hook exposing the phone input context (`value`, `country`, change handlers, `disabled`) for building custom parts. Must be used within `<PhoneInput.Root>`.

@@ -357,3 +357,33 @@ export function VirtualizedSelectDemo() {
 This section is empty for now.
 
 </Callout>
+
+## API Reference
+
+Thin wrappers around [virtua](https://github.com/inokawa/virtua) — see the [virtua API reference](https://github.com/inokawa/virtua/blob/main/docs/react/API.md) for the full list of underlying props and imperative handle methods.
+
+### Virtualized
+
+The scrollable container. Renders a `<div>` and provides its scroll ref to a `<VirtualizedVirtualizer />` inside. Use the `render` prop to attach the scroll container to an existing component, e.g. `render={<ComboboxContent />}`.
+
+| Prop       | Type                          | Default | Description                            |
+| ---------- | ----------------------------- | ------- | -------------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.         |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the container element. |
+
+### VirtualizedList
+
+A standalone virtualized list that scrolls itself. Wraps virtua's [VList](https://github.com/inokawa/virtua/blob/main/docs/react/API.md#vlist) and accepts all of its props (`keepMounted`, `shift`, imperative `ref`, …). Must not be used within a `<Virtualized />` — use `<VirtualizedVirtualizer />` there instead.
+
+| Prop          | Type                                 | Default      | Description                       |
+| ------------- | ------------------------------------ | ------------ | --------------------------------- |
+| `orientation` | `"vertical" \| "horizontal"`         | `"vertical"` | The scroll direction of the list. |
+| `...props`    | `React.ComponentProps<typeof VList>` | -            | Props spread to virtua's `VList`. |
+
+### VirtualizedGrid
+
+A virtualized grid that virtualizes both rows and columns. Wraps virtua's experimental [VGrid](https://github.com/inokawa/virtua/blob/main/docs/react/API.md#experimental_vgrid) and accepts all of its props (`row`, `col`, `cellHeight`, `cellWidth`, …).
+
+### VirtualizedVirtualizer
+
+The virtualized viewport for a `<Virtualized />` container. Wraps virtua's [Virtualizer](https://github.com/inokawa/virtua/blob/main/docs/react/API.md#virtualizer) with `scrollRef` already wired to the surrounding `<Virtualized />`, and accepts all of its remaining props (`startMargin`, `keepMounted`, imperative `ref`, …).
