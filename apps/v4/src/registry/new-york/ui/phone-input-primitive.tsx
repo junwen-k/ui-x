@@ -23,8 +23,7 @@ export interface PhoneInputBaseProps {
   disabled?: boolean;
 }
 
-export interface PhoneInputWithoutInternationalProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithoutInternationalProps extends PhoneInputBaseProps {
   international?: false;
   withCountryCallingCode?: never;
 }
@@ -52,14 +51,12 @@ export interface PhoneInputWithInternationalProps extends PhoneInputBaseProps {
   withCountryCallingCode?: boolean;
 }
 
-export interface PhoneInputWithoutPreferredCountryProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithoutPreferredCountryProps extends PhoneInputBaseProps {
   preferredCountry?: never;
   defaultInternationalForPreferredCountry?: never;
 }
 
-export interface PhoneInputWithPreferredCountryProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithPreferredCountryProps extends PhoneInputBaseProps {
   /**
    * Suggests a default country while maintaining flexibility for international numbers.
    * This prop acts as a smart fallback when no country is selected.
@@ -83,12 +80,10 @@ export interface PhoneInputWithPreferredCountryProps
 }
 
 export type PhoneInputProps = (
-  | PhoneInputWithoutInternationalProps
-  | PhoneInputWithInternationalProps
+  PhoneInputWithoutInternationalProps | PhoneInputWithInternationalProps
 ) &
   (
-    | PhoneInputWithoutPreferredCountryProps
-    | PhoneInputWithPreferredCountryProps
+    PhoneInputWithoutPreferredCountryProps | PhoneInputWithPreferredCountryProps
   );
 
 interface PhoneInputContextProps {
@@ -180,16 +175,15 @@ function PhoneInput({
   );
 }
 
-interface PhoneInputInputProps
-  extends Omit<
-    React.ComponentProps<typeof ReactPhoneInput>,
-    | "value"
-    | "onChange"
-    | "inputComponent"
-    | "international"
-    | "withCountryCallingCode"
-    | "useNationalFormatForDefaultCountryValue"
-  > {
+interface PhoneInputInputProps extends Omit<
+  React.ComponentProps<typeof ReactPhoneInput>,
+  | "value"
+  | "onChange"
+  | "inputComponent"
+  | "international"
+  | "withCountryCallingCode"
+  | "useNationalFormatForDefaultCountryValue"
+> {
   render?: React.ReactElement<React.ComponentProps<"input">>;
   smartCaret?: boolean;
 }

@@ -41,8 +41,10 @@ function Virtualized({ render, ...props }: useRender.ComponentProps<"div">) {
   );
 }
 
-export interface VirtualizedListProps
-  extends Omit<React.ComponentProps<typeof VList>, "horizontal"> {
+export interface VirtualizedListProps extends Omit<
+  React.ComponentProps<typeof VList>,
+  "horizontal"
+> {
   orientation?: "vertical" | "horizontal";
 }
 

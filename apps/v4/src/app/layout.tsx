@@ -84,7 +84,7 @@ export default function RootLayout({
           <BProgressProvider>
             <div
               data-slot="layout"
-              className="group/layout relative z-10 flex min-h-svh flex-col bg-background"
+              className="group/layout bg-background relative z-10 flex min-h-svh flex-col"
             >
               <SiteHeader />
               <main className="flex min-h-0 flex-1 flex-col">{children}</main>

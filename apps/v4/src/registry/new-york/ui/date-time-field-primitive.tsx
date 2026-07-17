@@ -31,7 +31,8 @@ export function useDateTimeField() {
 }
 
 export interface DateTimeFieldProps
-  extends UseTimescapeOptions,
+  extends
+    UseTimescapeOptions,
     Omit<useRender.ComponentProps<"div">, "value" | "defaultValue"> {
   disabled?: boolean;
 }

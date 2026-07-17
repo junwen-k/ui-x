@@ -36,9 +36,9 @@ export async function ComponentPreview({
 
   if (!code) {
     return (
-      <p className="mt-6 text-sm text-muted-foreground">
+      <p className="text-muted-foreground mt-6 text-sm">
         Component{" "}
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
+        <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm">
           {name}
         </code>{" "}
         not found.

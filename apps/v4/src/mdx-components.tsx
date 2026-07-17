@@ -69,7 +69,7 @@ function HeadingAnchor({
       </span>
       <span
         aria-hidden="true"
-        className="ml-2 text-muted-foreground opacity-0 group-hover:opacity-100"
+        className="text-muted-foreground ml-2 opacity-0 group-hover:opacity-100"
       >
         #
       </span>
@@ -166,7 +166,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <figcaption
         className={cn(
-          "flex items-center gap-2 text-code-foreground [&_svg]:size-4 [&_svg]:text-code-foreground [&_svg]:opacity-70",
+          "text-code-foreground [&_svg]:text-code-foreground flex items-center gap-2 [&_svg]:size-4 [&_svg]:opacity-70",
           className,
         )}
         {...props}
@@ -221,7 +221,7 @@ export const mdxComponents: MDXComponents = {
   Steps: ({ className, ...props }: React.ComponentProps<"div">) => (
     <div
       className={cn(
-        "steps mb-12 [counter-reset:step] md:ml-4 md:border-l md:pl-8 [&>h3]:step",
+        "steps [&>h3]:step mb-12 [counter-reset:step] md:ml-4 md:border-l md:pl-8",
         className,
       )}
       {...props}
@@ -267,7 +267,7 @@ export const mdxComponents: MDXComponents = {
   }: React.ComponentProps<typeof TabsTrigger>) => (
     <TabsTrigger
       className={cn(
-        "not-typset rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base text-muted-foreground hover:text-primary data-active:border-primary data-active:bg-transparent data-active:text-foreground data-active:shadow-none! dark:data-active:border-primary dark:data-active:bg-transparent",
+        "not-typset text-muted-foreground hover:text-primary data-active:border-primary data-active:text-foreground dark:data-active:border-primary rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base data-active:bg-transparent data-active:shadow-none! dark:data-active:bg-transparent",
         className,
       )}
       {...props}

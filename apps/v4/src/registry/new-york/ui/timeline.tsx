@@ -70,8 +70,7 @@ function TimelineItem({ className, render, ...props }: TimelineItemProps) {
   });
 }
 
-export interface TimelineSeparatorProps
-  extends useRender.ComponentProps<"div"> {}
+export interface TimelineSeparatorProps extends useRender.ComponentProps<"div"> {}
 
 function TimelineSeparator({
   className,
@@ -131,8 +130,7 @@ function TimelineDot({
   });
 }
 
-export interface TimelineConnectorProps
-  extends useRender.ComponentProps<"div"> {}
+export interface TimelineConnectorProps extends useRender.ComponentProps<"div"> {}
 
 function TimelineConnector({
   className,
@@ -207,8 +205,7 @@ function TimelineTitle({ className, render, ...props }: TimelineTitleProps) {
   });
 }
 
-export interface TimelineDescriptionProps
-  extends useRender.ComponentProps<"div"> {}
+export interface TimelineDescriptionProps extends useRender.ComponentProps<"div"> {}
 
 function TimelineDescription({
   className,

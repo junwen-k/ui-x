@@ -26,10 +26,10 @@ function WheelPickerWrapper({
   );
 }
 
-function WheelPicker({
+function WheelPicker<T extends WheelPickerPrimitive.WheelPickerValue = string>({
   classNames,
   ...props
-}: React.ComponentProps<typeof WheelPickerPrimitive.WheelPicker>) {
+}: WheelPickerPrimitive.WheelPickerProps<T>) {
   return (
     <WheelPickerPrimitive.WheelPicker
       data-slot="wheel-picker"

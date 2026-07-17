@@ -50,9 +50,7 @@ function DatePickerInputGroup({
     >
       <div className="flex flex-1 items-center">{children}</div>
       <InputGroupAddon align="inline-end">
-        <DatePickerPrimitive.Clear
-          render={<InputGroupButton size="icon-xs" />}
-        >
+        <DatePickerPrimitive.Clear render={<InputGroupButton size="icon-xs" />}>
           <span className="sr-only">Clear date</span>
           <XIcon />
         </DatePickerPrimitive.Clear>
