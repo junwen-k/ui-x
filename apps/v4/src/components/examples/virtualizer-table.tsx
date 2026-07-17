@@ -21,6 +21,9 @@ import {
   VirtualizedVirtualizer,
 } from "@/registry/new-york/ui/virtualized";
 
+// Seed faker so the server and client generate identical data during hydration.
+faker.seed(42);
+
 const invoices = Array.from({ length: 1000 }, (_, index) => ({
   invoice: `INV${index.toString().padStart(3, "0")}`,
   paymentStatus: faker.helpers.arrayElement(["Unpaid", "Paid", "Overdue"]),
