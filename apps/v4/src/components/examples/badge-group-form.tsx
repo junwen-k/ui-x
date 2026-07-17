@@ -1,24 +1,18 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { codeToHtml } from "shiki";
-import { toast } from "sonner";
-import { z } from "zod";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { BadgeGroup, BadgeGroupItem } from "@/registry/new-york/ui/badge-group";
-
-const FormSchema = z.object({
-  options: z
-    .object({
-      label: z.string(),
-      value: z.string(),
-    })
-    .array(),
-  selected: z.string().array(),
-});
 
 const flavours = [
   {
@@ -40,70 +34,51 @@ const flavours = [
 ];
 
 export default function BadgeGroupForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      options: flavours,
-      selected: flavours.map((option) => option.value).slice(0, 2),
-    },
-  });
-
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const html = await codeToHtml(JSON.stringify(data, null, 2), {
-      lang: "json",
-      theme: "github-dark-dimmed",
-      colorReplacements: {
-        "#22272e": "var(--color-zinc-900)",
-      },
-    });
-
-    toast("You submitted the following values:", {
-      classNames: { content: "w-full" },
-      description: (
-        <div
-          className="mt-2 [&>pre]:rounded-md [&>pre]:p-4 [&>pre]:shadow-[0_1.5px_2px_0_theme(colors.black/32%),0_0_0_1px_theme(colors.white/10%),0_-1px_0_0_theme(colors.white/4%)]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      ),
-    });
-  }
-
-  const options = form.watch("options");
+  const [options, setOptions] = React.useState(flavours);
+  const [selected, setSelected] = React.useState(
+    flavours.map((option) => option.value).slice(0, 2),
+  );
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <Controller
-        control={form.control}
-        name="selected"
-        render={({ field, fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <FieldLabel>Ice cream flavor</FieldLabel>
-            <BadgeGroup
-              type="multiple"
-              value={field.value}
-              onValueChange={field.onChange}
-              onRemove={(value) => {
-                form.setValue(
-                  "options",
-                  options.filter((option) => !value.includes(option.value)),
-                );
-                field.onChange(
-                  field.value.filter((selected) => !value.includes(selected)),
-                );
-              }}
-              aria-invalid={fieldState.invalid}
-            >
-              {options.map((option) => (
-                <BadgeGroupItem key={option.value} value={option.value}>
-                  {option.label}
-                </BadgeGroupItem>
-              ))}
-            </BadgeGroup>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <Button type="submit">Submit</Button>
-    </form>
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle>Customize your order</CardTitle>
+        <CardDescription>
+          Tell us how you would like your ice cream.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Field>
+          <FieldLabel>Ice cream flavor</FieldLabel>
+          <BadgeGroup
+            type="multiple"
+            value={selected}
+            onValueChange={setSelected}
+            onRemove={(value) => {
+              setOptions((options) =>
+                options.filter((option) => !value.includes(option.value)),
+              );
+              setSelected((selected) =>
+                selected.filter((flavour) => !value.includes(flavour)),
+              );
+            }}
+          >
+            {options.map((option) => (
+              <BadgeGroupItem key={option.value} value={option.value}>
+                {option.label}
+              </BadgeGroupItem>
+            ))}
+          </BadgeGroup>
+          <FieldDescription>
+            Select your favorite flavors, or remove the ones you dislike.
+          </FieldDescription>
+        </Field>
+      </CardContent>
+      <CardFooter>
+        <Button type="submit" className="w-full">
+          Save
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

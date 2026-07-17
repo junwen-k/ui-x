@@ -27,10 +27,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { siteConfig } from "@/config/site";
 import { useMutationObserver } from "@/hooks/use-mutation-observer";
 import { REGISTRY_NAMES } from "@/lib/docs";
-import { getPagesFromFolder } from "@/lib/page-tree";
+import { getOwnSectionsFromFolder } from "@/lib/page-tree";
 import { cn } from "@/lib/utils";
 
 export function CommandMenu({
@@ -110,9 +109,7 @@ export function CommandMenu({
 
       if (REGISTRY_NAMES.has(componentName)) {
         setSelectedType("component");
-        setCopyPayload(
-          `npx shadcn@latest add ${siteConfig.url}/r/${componentName}.json`,
-        );
+        setCopyPayload(`npx shadcn@latest add junwen-k/ui-x/${componentName}`);
       } else {
         setSelectedType("page");
         setCopyPayload("");
@@ -166,7 +163,9 @@ export function CommandMenu({
         return null;
       }
 
-      const pages = getPagesFromFolder(group);
+      const pages = getOwnSectionsFromFolder(group).flatMap(
+        (section) => section.pages,
+      );
 
       if (pages.length === 0) {
         return null;
@@ -197,7 +196,7 @@ export function CommandMenu({
                 }}
               >
                 {isComponent ? (
-                  <div className="aspect-square size-4 rounded-full border border-dashed border-muted-foreground" />
+                  <div className="border-muted-foreground aspect-square size-4 rounded-full border border-dashed" />
                 ) : (
                   <ArrowRightIcon />
                 )}
@@ -244,7 +243,7 @@ export function CommandMenu({
           <Button
             variant="outline"
             className={cn(
-              "relative h-8 w-full justify-start rounded-lg border-none bg-muted pl-3 text-foreground shadow-none transition-colors hover:bg-muted/50 md:w-48 lg:w-40 xl:w-64 dark:bg-card",
+              "bg-muted text-foreground hover:bg-muted/50 dark:bg-card relative h-8 w-full justify-start rounded-lg border-none pl-3 shadow-none transition-colors md:w-48 lg:w-40 xl:w-64",
             )}
             {...props}
           >
@@ -271,24 +270,28 @@ export function CommandMenu({
             />
             {query.isLoading && (
               <div className="pointer-events-none absolute top-1/2 right-3 z-10 flex -translate-y-1/2 items-center justify-center">
-                <Icons.spinner className="size-4 animate-spin text-muted-foreground" />
+                <Icons.spinner className="text-muted-foreground size-4 animate-spin" />
               </div>
             )}
           </div>
           <CommandList className="no-scrollbar min-h-80 scroll-pt-2 scroll-pb-1.5">
-            <CommandEmpty className="py-12 text-center text-sm text-muted-foreground">
+            <CommandEmpty className="text-muted-foreground py-12 text-center text-sm">
               {query.isLoading ? "Searching..." : "No results found."}
             </CommandEmpty>
             {navItemsSection}
             {renderDelayedGroups ? (
               <>
                 {pageGroupsSection}
-                <SearchResults setOpen={setOpen} query={query} search={search} />
+                <SearchResults
+                  setOpen={setOpen}
+                  query={query}
+                  search={search}
+                />
               </>
             ) : null}
           </CommandList>
         </Command>
-        <div className="absolute inset-x-0 bottom-0 z-20 flex h-10 items-center gap-2 rounded-b-xl border-t border-t-neutral-100 bg-neutral-50 px-4 text-xs font-medium text-muted-foreground dark:border-t-neutral-700 dark:bg-neutral-800">
+        <div className="text-muted-foreground absolute inset-x-0 bottom-0 z-20 flex h-10 items-center gap-2 rounded-b-xl border-t border-t-neutral-100 bg-neutral-50 px-4 text-xs font-medium dark:border-t-neutral-700 dark:bg-neutral-800">
           <div className="flex items-center gap-2">
             <CommandMenuKbd>
               <CornerDownLeftIcon />
@@ -341,7 +344,7 @@ function CommandMenuItem({
     <CommandItem
       ref={ref}
       className={cn(
-        "h-9 rounded-md border border-transparent px-3! font-medium data-[selected=true]:border-input data-[selected=true]:bg-input/50",
+        "data-[selected=true]:border-input data-[selected=true]:bg-input/50 h-9 rounded-md border border-transparent px-3! font-medium",
         className,
       )}
       {...props}
@@ -355,7 +358,7 @@ function CommandMenuKbd({ className, ...props }: React.ComponentProps<"kbd">) {
   return (
     <kbd
       className={cn(
-        "pointer-events-none flex h-5 items-center justify-center gap-1 rounded border bg-background px-1 font-sans text-[0.7rem] font-medium text-muted-foreground select-none [&_svg:not([class*='size-'])]:size-3",
+        "bg-background text-muted-foreground pointer-events-none flex h-5 items-center justify-center gap-1 rounded border px-1 font-sans text-[0.7rem] font-medium select-none [&_svg:not([class*='size-'])]:size-3",
         className,
       )}
       {...props}
@@ -415,7 +418,7 @@ function SearchResults({
               router.push(item.url);
               setOpen(false);
             }}
-            className="h-9 rounded-md border border-transparent px-3! font-normal data-[selected=true]:border-input data-[selected=true]:bg-input/50"
+            className="data-[selected=true]:border-input data-[selected=true]:bg-input/50 h-9 rounded-md border border-transparent px-3! font-normal"
             keywords={[item.content]}
             value={`${item.content} ${item.type}`}
           >
@@ -439,7 +442,7 @@ function CommandMenuDialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 fixed top-[15%] left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 gap-4 bg-background duration-100 outline-none sm:max-w-lg",
+          "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 bg-background fixed top-[15%] left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 gap-4 duration-100 outline-none sm:max-w-lg",
           className,
         )}
         {...props}

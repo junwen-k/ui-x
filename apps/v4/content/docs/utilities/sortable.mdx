@@ -102,28 +102,6 @@ import {
 
 <ComponentPreview name="sortable-form" />
 
-<Callout className="mt-4">
-
-**Tip**: When working with database records, items typically include their own `id` field. To prevent conflicts with [`useFieldArray`](https://react-hook-form.com/docs/usefieldarray)'s generated IDs:
-
-1. Use `keyName` prop in `useFieldArray` to specify another name for the temporary ID (e.g., `_id`).
-
-   ```tsx
-   const { fields, move } = useFieldArray({
-     control: form.control,
-     name: "items",
-     keyName: "_id",
-   });
-   ```
-
-2. Pass the temporary IDs to `<SortableList />` or `<SortableGrid />`'s `items` prop to maintain the correct sort order during reordering.
-
-   ```tsx
-   <SortableList items={fields.map((field) => field._id)} />
-   ```
-
-</Callout>
-
 ### Virtualized
 
 <ComponentPreview name="virtualizer-sortable" />
