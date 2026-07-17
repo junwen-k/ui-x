@@ -87,8 +87,8 @@ importers:
         specifier: ^19.2.0
         version: 19.2.7
       react-call:
-        specifier: ^1.7.0
-        version: 1.7.0(react@19.2.7)
+        specifier: ^2.0.2
+        version: 2.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-day-picker:
         specifier: 9.7.0
         version: 9.7.0(react@19.2.7)
@@ -96,8 +96,8 @@ importers:
         specifier: ^19.2.0
         version: 19.2.7(react@19.2.7)
       react-dropzone:
-        specifier: ^14.3.8
-        version: 14.3.8(react@19.2.7)
+        specifier: ^17.0.0
+        version: 17.0.0(react@19.2.7)
       react-hook-form:
         specifier: ^7.81.0
         version: 7.81.0(react@19.2.7)
@@ -3708,10 +3708,17 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-call@1.7.0:
-    resolution: {integrity: sha512-HjWK7zzeooYkOlFulkmEd1PFKKPfx7oEHogtSvOCv+6LIh/zTSsTtM0hpAnC5Sm5QVadhSeYLCos86JkcXD0Ag==}
+  react-call@2.0.2:
+    resolution: {integrity: sha512-egXLdccpWeRq+6XmR+jm/4Lg0w5zLAe/2jMzYdWtQkfe5qgfUJReZWdLWyPIfzZt215FBF6wFOZPaqne6MhNNw==}
     peerDependencies:
       react: '>=18'
+      react-dom: '>=18'
+      vite: '>=8'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      vite:
+        optional: true
 
   react-day-picker@9.7.0:
     resolution: {integrity: sha512-urlK4C9XJZVpQ81tmVgd2O7lZ0VQldZeHzNejbwLWZSkzHH498KnArT0EHNfKBOWwKc935iMLGZdxXPRISzUxQ==}
@@ -3724,11 +3731,11 @@ packages:
     peerDependencies:
       react: ^19.2.7
 
-  react-dropzone@14.3.8:
-    resolution: {integrity: sha512-sBgODnq+lcA4P296DY4wacOZz3JFpD99fp+hb//iBO2HHnyeZU3FwWyXJ6salNpqQdsZrgMrotuko/BdJMV8Ug==}
-    engines: {node: '>= 10.13'}
+  react-dropzone@17.0.0:
+    resolution: {integrity: sha512-yedj9VzdC/boq15u0XfzWRGX0Mqpb8dxy/TRDqOIFlISl8nhh38R9QKbztyFqxqLMwLdViVtLbXkv6x/b8gP8A==}
+    engines: {node: '>= 20'}
     peerDependencies:
-      react: '>= 16.8 || 18.0.0'
+      react: '>= 18'
 
   react-hook-form@7.81.0:
     resolution: {integrity: sha512-ocbmr2p5KBMoAfj4WCUvped33lVi1Kd5DuDUvQDnB6VEAacOjPI/jMbtDdbhco4y9ct4xUuCmMY0b/C9L0QHjw==}
@@ -8330,9 +8337,11 @@ snapshots:
       iconv-lite: 0.7.3
       unpipe: 1.0.0
 
-  react-call@1.7.0(react@19.2.7):
+  react-call@2.0.2(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       react: 19.2.7
+    optionalDependencies:
+      react-dom: 19.2.7(react@19.2.7)
 
   react-day-picker@9.7.0(react@19.2.7):
     dependencies:
@@ -8346,11 +8355,10 @@ snapshots:
       react: 19.2.7
       scheduler: 0.27.0
 
-  react-dropzone@14.3.8(react@19.2.7):
+  react-dropzone@17.0.0(react@19.2.7):
     dependencies:
       attr-accept: 2.2.5
       file-selector: 2.1.2
-      prop-types: 15.8.1
       react: 19.2.7
 
   react-hook-form@7.81.0(react@19.2.7):
