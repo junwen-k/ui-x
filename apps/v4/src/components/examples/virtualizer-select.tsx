@@ -67,7 +67,6 @@ export default function VirtualizerSelect() {
         <VirtualizedVirtualizer
           ref={virtualizerRef}
           keepMounted={activeIndex !== -1 ? [activeIndex] : undefined}
-          overscan={2}
         >
           {items.map((item) => (
             <SelectItem key={item.value} value={item.value}>
