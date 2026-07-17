@@ -4,16 +4,19 @@ import {
   restrictToParentElement,
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { arrayMove } from "@dnd-kit/sortable";
 import { GripVertical, Pencil, PlusCircle, Trash2 } from "lucide-react";
 import * as React from "react";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { codeToHtml } from "shiki";
-import { toast } from "sonner";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -24,7 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -100,18 +103,13 @@ function Item({
   );
 }
 
-const EditItemFormDialogSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-});
-
 interface EditItemFormDialogProps {
   children: React.ReactNode;
   title: React.ReactNode;
   description: React.ReactNode;
   actionText: React.ReactNode;
-  onSubmit: (data: z.infer<typeof EditItemFormDialogSchema>) => void;
-  values?: z.infer<typeof EditItemFormDialogSchema>;
+  onSubmit: (data: { title: string; description: string }) => void;
+  values?: { title: string; description: string };
 }
 
 const EditItemFormDialog = ({
@@ -122,22 +120,8 @@ const EditItemFormDialog = ({
   onSubmit,
   values,
 }: EditItemFormDialogProps) => {
+  const id = React.useId();
   const [open, setOpen] = React.useState(false);
-
-  const form = useForm<z.infer<typeof EditItemFormDialogSchema>>({
-    resolver: zodResolver(EditItemFormDialogSchema),
-    values,
-    defaultValues: {
-      title: "",
-      description: "",
-    },
-  });
-
-  const handleSubmit = (data: z.infer<typeof EditItemFormDialogSchema>) => {
-    onSubmit(data);
-    setOpen(false);
-    form.reset();
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -148,7 +132,12 @@ const EditItemFormDialog = ({
             event.stopPropagation();
             event.preventDefault();
 
-            form.handleSubmit(handleSubmit)(event);
+            const formData = new FormData(event.currentTarget);
+            onSubmit({
+              title: formData.get("title") as string,
+              description: formData.get("description") as string,
+            });
+            setOpen(false);
           }}
         >
           <DialogHeader>
@@ -156,40 +145,24 @@ const EditItemFormDialog = ({
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <Controller
-              control={form.control}
-              name="title"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Title</FieldLabel>
-                  <Input
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                    {...field}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            <Controller
-              control={form.control}
-              name="description"
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor={field.name}>Description</FieldLabel>
-                  <Textarea
-                    id={field.name}
-                    aria-invalid={fieldState.invalid}
-                    {...field}
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
+            <Field>
+              <FieldLabel htmlFor={`${id}-title`}>Title</FieldLabel>
+              <Input
+                id={`${id}-title`}
+                name="title"
+                defaultValue={values?.title}
+                required
+              />
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`${id}-description`}>Description</FieldLabel>
+              <Textarea
+                id={`${id}-description`}
+                name="description"
+                defaultValue={values?.description}
+                required
+              />
+            </Field>
           </div>
           <DialogFooter>
             <DialogClose render={<Button type="button" variant="outline" />}>
@@ -205,7 +178,7 @@ const EditItemFormDialog = ({
 
 const EditItemFormDialogTrigger = DialogTrigger;
 
-const items = [
+const lessons = [
   {
     id: "item-1",
     title: "Introduction to React",
@@ -249,126 +222,104 @@ const items = [
   },
 ];
 
-const FormSchema = z.object({
-  items: EditItemFormDialogSchema.array().min(1, {
-    message: "Please add at least 1 item",
-  }),
-});
-
 export default function SortableForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      items,
-    },
-  });
-  const { fields, append, move, remove, update } = useFieldArray({
-    control: form.control,
-    name: "items",
-    keyName: "_id",
-  });
-
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const html = await codeToHtml(JSON.stringify(data, null, 2), {
-      lang: "json",
-      theme: "github-dark-dimmed",
-      colorReplacements: {
-        "#22272e": "var(--color-zinc-900)",
-      },
-    });
-
-    toast("You submitted the following values:", {
-      classNames: { content: "w-full" },
-      description: (
-        <div
-          className="mt-2 [&>pre]:rounded-md [&>pre]:p-4 [&>pre]:shadow-[0_1.5px_2px_0_theme(colors.black/32%),0_0_0_1px_theme(colors.white/10%),0_-1px_0_0_theme(colors.white/4%)]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      ),
-    });
-  }
+  const [items, setItems] = React.useState(lessons);
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <Controller
-        control={form.control}
-        name="items"
-        render={({ fieldState }) => (
-          <Field data-invalid={fieldState.invalid}>
-            <Sortable
-              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-              onDragEnd={(event) => {
-                const { active, over } = event;
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle>Course curriculum</CardTitle>
+        <CardDescription>
+          Drag and drop to reorder the lessons in your course.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Sortable
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          onDragEnd={(event) => {
+            const { active, over } = event;
 
-                if (over && active.id !== over.id) {
-                  const oldIndex = fields.findIndex(
-                    (field) => field._id === active.id,
-                  );
-                  const newIndex = fields.findIndex(
-                    (field) => field._id === over.id,
-                  );
+            if (over && active.id !== over.id) {
+              setItems((items) => {
+                const oldIndex = items.findIndex(
+                  (item) => item.id === active.id,
+                );
+                const newIndex = items.findIndex((item) => item.id === over.id);
 
-                  move(oldIndex, newIndex);
-                }
-              }}
-            >
-              <SortableList
-                items={fields.map((field) => field._id)}
-                className="flex flex-col gap-3"
-              >
-                {fields.length > 0 ? (
-                  fields.map((field, index) => (
-                    <SortableItem
-                      key={field._id}
-                      id={field._id}
-                      render={
-                        <Item
-                          title={field.title}
-                          description={field.description}
-                          tabIndex={undefined}
-                          onRemove={() => remove(index)}
-                          onEdit={(data) => update(index, data)}
-                          className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
-                        />
-                      }
-                    />
-                  ))
-                ) : (
-                  <div className="text-muted-foreground flex h-32 min-w-96 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
-                    No items added
-                  </div>
-                )}
-              </SortableList>
-              <SortableOverlay>
-                {(activeId) => {
-                  const activeItem = fields.find(
-                    (field) => field._id === activeId,
-                  );
-                  if (!activeItem) {
-                    return null;
-                  }
-
-                  return (
+                return arrayMove(items, oldIndex, newIndex);
+              });
+            }
+          }}
+        >
+          <SortableList
+            items={items.map((item) => item.id)}
+            className="flex flex-col gap-3"
+          >
+            {items.length > 0 ? (
+              items.map((item) => (
+                <SortableItem
+                  key={item.id}
+                  id={item.id}
+                  render={
                     <Item
-                      title={activeItem.title}
-                      description={activeItem.description}
-                      onEdit={() => {}}
-                      className="cursor-grabbing shadow-lg"
+                      title={item.title}
+                      description={item.description}
+                      tabIndex={undefined}
+                      onRemove={() =>
+                        setItems((items) =>
+                          items.filter(({ id }) => id !== item.id),
+                        )
+                      }
+                      onEdit={(data) =>
+                        setItems((items) =>
+                          items.map((current) =>
+                            current.id === item.id
+                              ? { ...current, ...data }
+                              : current,
+                          ),
+                        )
+                      }
+                      className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
                     />
-                  );
-                }}
-              </SortableOverlay>
-            </Sortable>
-            {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-          </Field>
-        )}
-      />
-      <div className="flex items-center justify-between gap-4">
+                  }
+                />
+              ))
+            ) : (
+              <div className="text-muted-foreground flex h-32 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
+                No items added
+              </div>
+            )}
+          </SortableList>
+          <SortableOverlay>
+            {(activeId) => {
+              const activeItem = items.find((item) => item.id === activeId);
+              if (!activeItem) {
+                return null;
+              }
+
+              return (
+                <Item
+                  title={activeItem.title}
+                  description={activeItem.description}
+                  onEdit={() => {}}
+                  className="cursor-grabbing shadow-lg"
+                />
+              );
+            }}
+          </SortableOverlay>
+        </Sortable>
+      </CardContent>
+      <CardFooter className="justify-between gap-4">
         <EditItemFormDialog
           title="Add item"
           description="Add a new item to your list. Click add item when you're done."
           actionText="Add item"
-          onSubmit={(data) => append(data)}
+          onSubmit={(data) =>
+            setItems((items) => [
+              ...items,
+              { id: crypto.randomUUID(), ...data },
+            ])
+          }
         >
           <EditItemFormDialogTrigger
             render={<Button type="button" variant="outline" />}
@@ -377,8 +328,8 @@ export default function SortableForm() {
             Add Item
           </EditItemFormDialogTrigger>
         </EditItemFormDialog>
-        <Button type="submit">Submit</Button>
-      </div>
-    </form>
+        <Button type="submit">Save</Button>
+      </CardFooter>
+    </Card>
   );
 }
