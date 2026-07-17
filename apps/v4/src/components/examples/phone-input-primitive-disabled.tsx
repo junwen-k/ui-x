@@ -1,10 +1,8 @@
 "use client";
 
-import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
+import en from "react-phone-number-input/locale/en";
 
-const regionNames = new Intl.DisplayNames(["en"], {
-  type: "region",
-});
+import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
 
 export default function PhoneInputPrimitiveDisabled() {
   return (
@@ -18,7 +16,7 @@ export default function PhoneInputPrimitiveDisabled() {
             key={option.countryCode}
             value={option.countryCode}
           >
-            {`${regionNames.of(option.countryCode)} +${option.countryCallingCode}`}
+            {`${en[option.countryCode]} +${option.countryCallingCode}`}
           </PhoneInputPrimitive.CountrySelectOption>
         ))}
       </PhoneInputPrimitive.CountrySelect>
