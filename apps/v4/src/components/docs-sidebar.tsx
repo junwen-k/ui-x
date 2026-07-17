@@ -29,9 +29,9 @@ export function DocsSidebar({
       collapsible="none"
       {...props}
     >
-      <SidebarContent className="scroll-fade scrollbar-none w-(--sidebar-menu-width) overflow-x-hidden pl-2.5">
+      <SidebarContent className="scroll-fade w-(--sidebar-menu-width) scrollbar-none overflow-x-hidden pl-2.5">
         <SidebarGroup className="pt-12">
-          <SidebarGroupLabel className="font-medium text-muted-foreground">
+          <SidebarGroupLabel className="text-muted-foreground font-medium">
             Sections
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -44,7 +44,7 @@ export function DocsSidebar({
                         ? pathname === section.url
                         : pathname.startsWith(section.url)
                     }
-                    className="relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48"
+                    className="data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md"
                     render={
                       <Link href={section.url}>
                         <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
@@ -70,7 +70,7 @@ export function DocsSidebar({
 
           return getOwnSectionsFromFolder(item).map((section, index) => (
             <SidebarGroup key={`${item.$id}-${index}`}>
-              <SidebarGroupLabel className="font-medium text-muted-foreground">
+              <SidebarGroupLabel className="text-muted-foreground font-medium">
                 {section.name ?? item.name}
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -79,7 +79,7 @@ export function DocsSidebar({
                     <SidebarMenuItem key={page.url}>
                       <SidebarMenuButton
                         isActive={page.url === pathname}
-                        className="relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48"
+                        className="data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md"
                         render={
                           <Link href={page.url}>
                             <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />

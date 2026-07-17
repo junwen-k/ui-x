@@ -38,7 +38,8 @@ export function useDateTimeRangeField() {
 }
 
 export interface DateTimeRangeFieldProps
-  extends UseTimescapeRangeOptions,
+  extends
+    UseTimescapeRangeOptions,
     Omit<useRender.ComponentProps<"div">, "value" | "defaultValue"> {
   disabled?: boolean;
 }

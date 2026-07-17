@@ -24,7 +24,7 @@ async function ComponentCanvasExample({
     <div {...props}>
       <React.Suspense
         fallback={
-          <div className="flex w-full items-center justify-center text-sm text-muted-foreground">
+          <div className="text-muted-foreground flex w-full items-center justify-center text-sm">
             <Loader2Icon className="mr-2 size-4 animate-spin" />
             Loading...
           </div>

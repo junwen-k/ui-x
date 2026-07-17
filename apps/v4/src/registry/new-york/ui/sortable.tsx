@@ -105,7 +105,8 @@ function Sortable({
 }
 
 export interface SortableListProps
-  extends Omit<SortableContextProps, "children">,
+  extends
+    Omit<SortableContextProps, "children">,
     useRender.ComponentProps<"ul"> {
   orientation?: "vertical" | "horizontal";
 }
@@ -282,8 +283,10 @@ function SortableItemTrigger({
   });
 }
 
-export interface SortableOverlayProps
-  extends Omit<React.ComponentProps<typeof DragOverlay>, "children"> {
+export interface SortableOverlayProps extends Omit<
+  React.ComponentProps<typeof DragOverlay>,
+  "children"
+> {
   children?: React.ReactNode | ((id: UniqueIdentifier) => React.ReactNode);
 }
 

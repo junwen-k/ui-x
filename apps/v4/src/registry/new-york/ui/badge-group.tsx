@@ -45,11 +45,10 @@ export type BadgeGroupValue<T extends BadgeGroupType = "single"> =
 
 export type BadgeGroupProps = BadgeGroupSingleProps | BadgeGroupMultipleProps;
 
-interface BadgeGroupBaseProps
-  extends Omit<
-    ToggleGroup.Props,
-    "value" | "defaultValue" | "onValueChange" | "multiple"
-  > {}
+interface BadgeGroupBaseProps extends Omit<
+  ToggleGroup.Props,
+  "value" | "defaultValue" | "onValueChange" | "multiple"
+> {}
 
 export interface BadgeGroupSingleProps extends BadgeGroupBaseProps {
   type: "single";

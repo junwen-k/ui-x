@@ -43,7 +43,7 @@ export default async function Page({ params }: DocPageProps) {
     >
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="h-(--top-spacing) shrink-0" />
-        <div className="mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 text-foreground md:px-0 lg:py-8">
+        <div className="text-foreground mx-auto flex w-full max-w-160 min-w-0 flex-1 flex-col gap-6 px-4 py-6 md:px-0 lg:py-8">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between md:items-start">
               <h1 className="scroll-m-24 text-3xl font-semibold tracking-tight">
@@ -83,7 +83,7 @@ export default async function Page({ params }: DocPageProps) {
               </div>
             </div>
             {doc.description && (
-              <p className="text-[1.05rem] text-muted-foreground sm:text-base sm:text-balance md:max-w-[80%]">
+              <p className="text-muted-foreground text-[1.05rem] sm:text-base sm:text-balance md:max-w-[80%]">
                 {doc.description}
               </p>
             )}
@@ -156,7 +156,7 @@ export default async function Page({ params }: DocPageProps) {
       <div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[90svh] w-(--sidebar-width) flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
         <div className="h-(--top-spacing) shrink-0" />
         {doc.toc?.length ? (
-          <div className="scroll-fade scrollbar-none flex flex-col gap-8 overflow-y-auto px-8">
+          <div className="scroll-fade flex scrollbar-none flex-col gap-8 overflow-y-auto px-8">
             <DocsTableOfContents toc={doc.toc} />
           </div>
         ) : null}

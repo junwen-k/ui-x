@@ -175,16 +175,12 @@ function DatePicker<T extends DatePickerMode = "single">({
     name: "DatePicker",
     state: "value",
   });
-  const setValue = useStableCallback(
-    (nextValue: DatePickerValue<T> | null) => {
-      setValueUnwrapped(nextValue);
-      (
-        onValueChange as
-          | ((value: DatePickerValue<T> | null) => void)
-          | undefined
-      )?.(nextValue);
-    },
-  );
+  const setValue = useStableCallback((nextValue: DatePickerValue<T> | null) => {
+    setValueUnwrapped(nextValue);
+    (
+      onValueChange as ((value: DatePickerValue<T> | null) => void) | undefined
+    )?.(nextValue);
+  });
   const { current: thisMonth } = React.useRef(new Date());
   const [month, setMonthUnwrapped] = useControlled({
     controlled: monthProp,
@@ -313,8 +309,7 @@ function DatePickerClear({
   });
 }
 
-export interface DatePickerValueProps
-  extends useRender.ComponentProps<"span"> {
+export interface DatePickerValueProps extends useRender.ComponentProps<"span"> {
   placeholder?: React.ReactNode;
 }
 
@@ -363,17 +358,16 @@ function DatePickerValue({
   });
 }
 
-export interface DatePickerCalendarProps
-  extends Omit<
-    DayPickerPrimitiveProps,
-    | "mode"
-    | "selected"
-    | "onSelect"
-    | "month"
-    | "onMonthChange"
-    | "disabled"
-    | "required"
-  > {
+export interface DatePickerCalendarProps extends Omit<
+  DayPickerPrimitiveProps,
+  | "mode"
+  | "selected"
+  | "onSelect"
+  | "month"
+  | "onMonthChange"
+  | "disabled"
+  | "required"
+> {
   render?: React.ReactElement<DayPickerPrimitiveProps>;
 }
 

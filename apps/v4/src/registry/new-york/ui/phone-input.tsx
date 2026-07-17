@@ -18,10 +18,9 @@ import {
 import { cn } from "@/lib/utils";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
 
-interface PhoneInputFlagProps
-  extends React.ComponentProps<
-    NonNullable<(typeof flags)[keyof typeof flags]>
-  > {
+interface PhoneInputFlagProps extends React.ComponentProps<
+  NonNullable<(typeof flags)[keyof typeof flags]>
+> {
   country: PhoneInputPrimitive.Country | null;
 }
 
@@ -166,8 +165,10 @@ function PhoneInputCountrySelectInternationalItem(
   );
 }
 
-interface PhoneInputCountrySelectItemProps
-  extends Omit<React.ComponentProps<typeof SelectPrimitive.Item>, "value"> {
+interface PhoneInputCountrySelectItemProps extends Omit<
+  React.ComponentProps<typeof SelectPrimitive.Item>,
+  "value"
+> {
   value: PhoneInputPrimitive.Country;
 }
 

@@ -33,7 +33,7 @@ async function StarsCount() {
   const stars = json.stargazers_count ?? 0;
 
   return (
-    <span className="w-fit text-xs text-muted-foreground tabular-nums">
+    <span className="text-muted-foreground w-fit text-xs tabular-nums">
       {stars >= 1000 ? `${Math.round(stars / 1000)}k` : stars.toLocaleString()}
     </span>
   );

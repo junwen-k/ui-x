@@ -16,8 +16,8 @@ only once the overhaul is finalized.
 - **v3 is frozen.** `apps/v3` (Tailwind v3) receives no new content. It gets a
   banner — "You are viewing docs for Tailwind v3. Switch to latest →" — and the
   Tailwind v4 site becomes canonical at `ui-x.junwen-k.dev`.
-- **Base UI only — Radix is dropped** *(2026-07-10, supersedes the earlier
-  dual-library plan; reconfirmed 2026-07-15)*. shadcn's default for new
+- **Base UI only — Radix is dropped** _(2026-07-10, supersedes the earlier
+  dual-library plan; reconfirmed 2026-07-15)_. shadcn's default for new
   projects is the `base-nova` preset (`shadcn init --defaults`); maintaining a
   Radix twin of every component doubles the surface for a single maintainer
   with no matching demand. Because the registry distributes copies (not a
@@ -25,7 +25,7 @@ only once the overhaul is finalized.
   already own their code.
 - **Radix legacy access via git tag, not a maintained variant.** The shadcn
   GitHub registry supports refs: `npx shadcn@latest add
-  junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
+junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
   the `next` → `main` merge; the changelog points Radix users at `#radix`.
   No dual registry, no legacy branch to maintain.
 - **One published style: nova.** ui-x targets shadcn's default preset
@@ -37,7 +37,7 @@ only once the overhaul is finalized.
   site is rebuilt following shadcn's own stack (`fumadocs-core`/`-mdx`/`-ui` +
   `fumadocs-docgen`, Next 16).
 - **Own the niche — superseded components are removed, not listed as-is**
-  *(2026-07-15, supersedes the earlier "callout + provided as-is" policy)*.
+  _(2026-07-15, supersedes the earlier "callout + provided as-is" policy)_.
   Components that shadcn has since added (Kbd, Button Group/Control Group,
   Input Group/Input Base, Combobox, Attachment/File List, Native Select,
   Calendar) are removed from the registry and docs entirely at ship time.
@@ -147,15 +147,15 @@ sidebar's "In shadcn/ui" group mirrors the superseded list exactly.
 **Superseded — removed entirely, never ported** (clean cut decided 2026-07-15;
 old sources remain reachable via the `#radix` tag):
 
-| ui-x component | Superseded by |
-| --- | --- |
-| `calendar` | shadcn `calendar` — ours is a verbatim `new-york-v4` copy; the preferred bordered dropdown look is a `classNames` snippet on the official one, not a fork. Retire by pointing `date-picker`'s registry dep at bare `"calendar"` during the port |
-| `combobox` / `combobox-primitive` | shadcn `combobox` (Base UI Combobox/Autocomplete does tags/async natively). Dropping this also removes ui-x's hardest Radix dependency (`roving-focus` + popover state machine) |
-| `control-group` | shadcn `button-group` |
-| `file-list` | shadcn `attachment` |
-| `input-base` | shadcn `input-group` — dependents migrated 2026-07-15 (PR #62) |
-| `kbd` | shadcn `kbd` |
-| `native-select` | shadcn `native-select` |
+| ui-x component                    | Superseded by                                                                                                                                                                                                                                   |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `calendar`                        | shadcn `calendar` — ours is a verbatim `new-york-v4` copy; the preferred bordered dropdown look is a `classNames` snippet on the official one, not a fork. Retire by pointing `date-picker`'s registry dep at bare `"calendar"` during the port |
+| `combobox` / `combobox-primitive` | shadcn `combobox` (Base UI Combobox/Autocomplete does tags/async natively). Dropping this also removes ui-x's hardest Radix dependency (`roving-focus` + popover state machine)                                                                 |
+| `control-group`                   | shadcn `button-group`                                                                                                                                                                                                                           |
+| `file-list`                       | shadcn `attachment`                                                                                                                                                                                                                             |
+| `input-base`                      | shadcn `input-group` — dependents migrated 2026-07-15 (PR #62)                                                                                                                                                                                  |
+| `kbd`                             | shadcn `kbd`                                                                                                                                                                                                                                    |
+| `native-select`                   | shadcn `native-select`                                                                                                                                                                                                                          |
 
 **Keep — truly ui-x, no shadcn/Base UI counterpart** (the port targets):
 date-field, date-time-field(+primitive), date-time-range-field(+primitive),
@@ -179,14 +179,12 @@ demos.
 - [x] Port each kept component: swap Radix building blocks for Base UI
       equivalents and apply classes from the `base-nova` sources — shipped
       2026-07-16 (PR #63). Concrete Radix → Base UI swaps (surveyed
-      2026-07-15):
-      - Full primitives: `date-picker-primitive` popover → Base UI Popover;
-        `badge-group` + `emoji-picker` toggle-group → Base UI Toggle Group;
-        `sortable` portal → React DOM `createPortal`.
-      - Utility packages everywhere else (`react-slot`, `react-primitive`,
-        `compose-refs`, `use-controllable-state`, `primitive`) → Base UI
-        `useRender`/`mergeProps` + React 19 ref handling. 16 registry files
-        affected; `phone-input.tsx` already uses Base UI.
+      2026-07-15): - Full primitives: `date-picker-primitive` popover → Base UI Popover;
+      `badge-group` + `emoji-picker` toggle-group → Base UI Toggle Group;
+      `sortable` portal → React DOM `createPortal`. - Utility packages everywhere else (`react-slot`, `react-primitive`,
+      `compose-refs`, `use-controllable-state`, `primitive`) → Base UI
+      `useRender`/`mergeProps` + React 19 ref handling. 16 registry files
+      affected; `phone-input.tsx` already uses Base UI.
 - [x] **Remove the 7 superseded components** (before or alongside the ports):
       delete their registry sources, examples, docs pages and registry.json
       entries; drop the "In shadcn/ui" sidebar group and the overlap callouts

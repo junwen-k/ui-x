@@ -28,8 +28,7 @@ function useDropzone() {
 
 export interface DropzoneProps extends DropzoneOptions {
   children:
-    | React.ReactNode
-    | ((state: DropzoneContextProps) => React.ReactNode);
+    React.ReactNode | ((state: DropzoneContextProps) => React.ReactNode);
 }
 
 function Dropzone({ children, ...props }: DropzoneProps) {
