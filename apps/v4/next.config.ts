@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/docs/primitives",
-        destination: "/docs/primitives/combobox",
+        destination: "/docs/primitives/date-time-field",
         permanent: false,
       },
       {
