@@ -110,3 +110,39 @@ import {
 ### Form
 
 <ComponentPreview name="dropzone-form" />
+
+## Accessibility
+
+The zone is focusable and opens the file dialog with <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>, so the drag-and-drop interaction always has a keyboard equivalent. Make sure the zone contains visible text describing what to upload (such as `<DropzoneTitle />` and `<DropzoneDescription />`) — the upload icon alone is not an accessible name. Drag states are conveyed with color and iconography via `<DropzoneUploadIcon />`; keep the title text meaningful so the state change is not communicated by color alone.
+
+## API Reference
+
+Styled wrappers around the [Dropzone primitive](/docs/primitives/dropzone#api-reference) — see the primitive page for the full prop tables.
+
+### Dropzone
+
+Wraps [Root](/docs/primitives/dropzone#root) and accepts all [react-dropzone options](https://react-dropzone.js.org/#src) (`accept`, `maxFiles`, `onDropAccepted`, …).
+
+### DropzoneZone
+
+Wraps [Zone](/docs/primitives/dropzone#zone) with dashed-border styling that reacts to the drag state data attributes.
+
+### DropzoneInput
+
+Wraps [Input](/docs/primitives/dropzone#input), the visually hidden file input.
+
+### DropzoneTrigger
+
+Wraps [Trigger](/docs/primitives/dropzone#trigger) for opening the file dialog from a button outside the zone.
+
+### DropzoneUploadIcon
+
+A convenience part that renders an upload, accepted or rejected icon based on the current drag state, using the [DragDefault](/docs/primitives/dropzone#dragdefault), [DragAccepted](/docs/primitives/dropzone#dragaccepted) and [DragRejected](/docs/primitives/dropzone#dragrejected) parts. Accepts `lucide-react` icon props.
+
+### DropzoneGroup, DropzoneTitle, DropzoneDescription
+
+Layout and typography parts for the zone's content. Render a `<div>`, `<h3>` and `<p>` respectively, and support the `render` prop.
+
+### DropzoneAccepted, DropzoneRejected
+
+Wrap [Accepted and Rejected](/docs/primitives/dropzone#accepted), render-prop parts receiving the accepted files or rejections.

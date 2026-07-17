@@ -92,3 +92,35 @@ import { PhoneInput } from "@/components/ui/phone-input";
 ### Form
 
 <ComponentPreview name="phone-input-form" />
+
+## Accessibility
+
+The country select trigger shows only a flag — give it an accessible name, e.g. `<PhoneInputCountrySelectTrigger aria-label="Country" />`, and label the phone input itself like any text input (via `<Field>` / `<FieldLabel>` in forms or `aria-label`). Flags are decorative; each option in the dropdown carries the country's name as text, so the selection is not communicated by the flag alone.
+
+## API Reference
+
+Styled wrappers around the [Phone Input primitive](/docs/primitives/phone-input#api-reference) — see the primitive page for the full prop tables.
+
+### PhoneInput
+
+Wraps [Root](/docs/primitives/phone-input#root) and accepts all of its props (`value`, `onValueChange`, `country`, `onCountryChange`, `preferredCountry`, `international`, …).
+
+### PhoneInputInput
+
+Wraps [Input](/docs/primitives/phone-input#input), rendered as the styled [Input](https://ui.shadcn.com/docs/components/input) with a stable `render` reference already applied.
+
+### PhoneInputCountrySelect
+
+The country selector, built on the styled [Select](https://ui.shadcn.com/docs/components/select) and wired to the country state — `value` and `onValueChange` are managed for you. Compose it with `PhoneInputCountrySelectTrigger`, `PhoneInputCountrySelectValue` and `PhoneInputCountrySelectContent`, which accept the corresponding Select part props.
+
+### PhoneInputCountrySelectOptions
+
+Renders the full options list: the "International" item followed by every supported country with its flag, name and calling code.
+
+### PhoneInputCountrySelectItem, PhoneInputCountrySelectInternationalItem
+
+Individual option items for composing a custom list. `PhoneInputCountrySelectItem` requires a `value: Country`; the international item selects `null`.
+
+### PhoneInputFlag
+
+Renders the flag for a `country`, falling back to a globe icon for `null` (International).

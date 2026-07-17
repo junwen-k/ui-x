@@ -113,3 +113,31 @@ import {
 ### Form
 
 <ComponentPreview name="date-time-range-field-form" />
+
+## Accessibility
+
+The field follows the segment keyboard model and labeling guidance described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section. Since the range spans two groups of segments, prefer one visible label for the whole field, or label the `From` and `To` groups individually with `aria-label` when they need distinct names.
+
+## API Reference
+
+Styled wrappers around the [Date Time Range Field primitive](/docs/primitives/date-time-range-field#api-reference) — see the primitive page for the full prop tables.
+
+### DateTimeRangeField
+
+Wraps [Root](/docs/primitives/date-time-range-field#root) and accepts all of its props (`value`, `onValueChange`, `hour12`, `from`, `to`, …), rendered as an [Input Group](https://ui.shadcn.com/docs/components/input-group).
+
+### DateTimeRangeFieldFrom, DateTimeRangeFieldTo
+
+Wrap [From and To](/docs/primitives/date-time-range-field#from-to). Segments must be placed inside one of the two.
+
+### DateTimeRangeFieldDays, DateTimeRangeFieldMonths, DateTimeRangeFieldYears, DateTimeRangeFieldHours, DateTimeRangeFieldMinutes, DateTimeRangeFieldSeconds
+
+Wrap the corresponding [segments](/docs/primitives/date-time-range-field#segments), rendered with the [Date Time Field](/docs/components/date-time-field#api-reference) segment styling and placeholders.
+
+### DateTimeRangeFieldAmPm
+
+Wraps [AmPm](/docs/primitives/date-time-range-field#ampm); renders only when its field has `hour12`.
+
+### DateTimeRangeFieldSeparator
+
+Wraps the styled [Date Time Field separator](/docs/components/date-time-field#datetimefieldseparator). Pass the separator character as `children` (e.g. `/`, `:` or `-` between the two fields).

@@ -57,7 +57,13 @@ export default () => (
     <DatePickerPrimitive.Trigger>
       <DatePickerPrimitive.Value />
     </DatePickerPrimitive.Trigger>
-    <DatePickerPrimitive.Input />
+    <DatePickerPrimitive.DateField>
+      <DatePickerPrimitive.DateFieldDays />
+      <DatePickerPrimitive.DateFieldSeparator />
+      <DatePickerPrimitive.DateFieldMonths />
+      <DatePickerPrimitive.DateFieldSeparator />
+      <DatePickerPrimitive.DateFieldYears />
+    </DatePickerPrimitive.DateField>
     <DatePickerPrimitive.Clear />
     <DatePickerPrimitive.Anchor />
 
@@ -85,3 +91,81 @@ export default () => (
 ### Range
 
 <ComponentPreview name="date-picker-primitive-range" />
+
+## API Reference
+
+### Root
+
+Manages the selected value, the visible month and the popover state. Built on top of [Base UI Popover](https://base-ui.com/react/components/popover).
+
+| Prop            | Type                                  | Default       | Description                                                                                                       |
+| --------------- | ------------------------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `mode`          | `"single" \| "multiple" \| "range"`   | `"single"`    | The selection mode. Determines the value type below.                                                              |
+| `required`      | `boolean`                             | `false`       | Prevents clearing the selection. When set, the value is no longer nullable.                                       |
+| `value`         | `Date \| Date[] \| DateRange \| null` | -             | The selected value, typed by `mode`. Use for controlled value; pass `null` for empty.                             |
+| `defaultValue`  | `Date \| Date[] \| DateRange`         | -             | The initial value when uncontrolled.                                                                              |
+| `onValueChange` | `(value) => void`                     | -             | Called when the selection changes. The value is typed by `mode`.                                                  |
+| `formatStr`     | `string`                              | `"PPP"`       | The [date-fns format](https://date-fns.org/docs/format) used by `Value` to display the selection.                 |
+| `month`         | `Date`                                | -             | The month shown in the calendar. Use for controlled month.                                                        |
+| `defaultMonth`  | `Date`                                | current month | The initial month when uncontrolled.                                                                              |
+| `onMonthChange` | `(month: Date) => void`               | -             | Called when the visible month changes.                                                                            |
+| `disabled`      | `boolean`                             | -             | Disables the trigger, the clear button and the calendar.                                                          |
+| `...props`      | `PopoverPrimitive.Root.Props`         | -             | Remaining props are spread to [Base UI Popover.Root](https://base-ui.com/react/components/popover#api-reference). |
+
+### Trigger
+
+Opens the popover. See the [Base UI Popover.Trigger](https://base-ui.com/react/components/popover#api-reference) documentation for more information.
+
+### Value
+
+Displays the current selection formatted with `formatStr`, joining multiple dates with `", "` and ranges as `from - to`. Has a `data-placeholder` attribute while empty. Renders a `<span>` by default.
+
+| Prop          | Type                           | Default | Description                        |
+| ------------- | ------------------------------ | ------- | ---------------------------------- |
+| `placeholder` | `ReactNode`                    | -       | Content shown while empty.         |
+| `render`      | `ReactElement \| function`     | -       | Render as a different element.     |
+| `...props`    | `React.ComponentProps<"span">` | -       | Props spread to the value element. |
+
+### Clear
+
+Clears the selection. Disabled while the value is empty or the root is `required`. Renders a `<button type="button">` by default.
+
+| Prop       | Type                             | Default | Description                        |
+| ---------- | -------------------------------- | ------- | ---------------------------------- |
+| `render`   | `ReactElement \| function`       | -       | Render as a different element.     |
+| `...props` | `React.ComponentProps<"button">` | -       | Props spread to the clear element. |
+
+### DateField
+
+An inline [Date Time Field](/docs/primitives/date-time-field) synced with the picker — typing a date updates the selection and the visible month. Only usable when `mode` is `"single"`. Accepts the [Date Time Field Root props](/docs/primitives/date-time-field#root) except `value` and `onValueChange`, which are managed by the picker. Compose it with the `DateFieldDays`, `DateFieldMonths`, `DateFieldYears` and `DateFieldSeparator` [segments](/docs/primitives/date-time-field#segments).
+
+### DateRangeField
+
+An inline [Date Time Range Field](/docs/primitives/date-time-range-field) synced with the picker. Only usable when `mode` is `"range"`. Accepts the [Date Time Range Field Root props](/docs/primitives/date-time-range-field#root) except `value` and `onValueChange`. Compose it with `DateRangeFieldFrom` and `DateRangeFieldTo` containers wrapping the `DateRangeFieldDays`, `DateRangeFieldMonths`, `DateRangeFieldYears` and `DateRangeFieldSeparator` [segments](/docs/primitives/date-time-range-field#segments).
+
+### Anchor
+
+An optional element the popover positions against instead of the trigger. Renders a `<div>` by default.
+
+| Prop       | Type                          | Default | Description                         |
+| ---------- | ----------------------------- | ------- | ----------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.      |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the anchor element. |
+
+### Portal, Positioner, Content
+
+Thin wrappers around the corresponding [Base UI Popover](https://base-ui.com/react/components/popover#api-reference) parts (`Portal`, `Positioner` and `Popup`). `Positioner` anchors to the `Anchor` element when one is rendered. See the Base UI documentation for more information.
+
+### Calendar
+
+The calendar inside the popover, rendered with [react-day-picker](https://daypicker.dev). Selection, month and disabled state are wired to the root.
+
+| Prop        | Type             | Default | Description                                                                                                                                                     |
+| ----------- | ---------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `autoFocus` | `boolean`        | `true`  | Focuses the calendar when the popover opens.                                                                                                                    |
+| `render`    | `ReactElement`   | -       | Render a custom `DayPicker` element, e.g. a styled calendar component.                                                                                          |
+| `...props`  | `DayPickerProps` | -       | Remaining [react-day-picker props](https://daypicker.dev/api/type-aliases/DayPickerProps) are spread, except the selection and month props managed by the root. |
+
+### useDatePicker
+
+Hook exposing the date picker context (`mode`, `value`, `onValueChange`, `month`, `onMonthChange`, `formatStr`, `required`, `disabled`, `anchor`, `onAnchorChange`) for building custom parts. Must be used within `<DatePickerPrimitive.Root>`.

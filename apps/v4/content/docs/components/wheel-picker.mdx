@@ -65,3 +65,15 @@ import { WheelPicker, WheelPickerWrapper } from "@/components/ui/wheel-picker";
 ### Form
 
 <ComponentPreview name="wheel-picker-form" />
+
+## API Reference
+
+Styled wrappers around [react-wheel-picker](https://react-wheel-picker.chanhdai.com/) — see its [API reference](https://react-wheel-picker.chanhdai.com/docs#api-reference) for the underlying props.
+
+### WheelPickerWrapper
+
+Wraps `WheelPickerWrapper` with border and highlight styling. Place one or more `<WheelPicker />` columns inside.
+
+### WheelPicker
+
+Wraps `WheelPicker` with themed option and highlight classes, and accepts all of its props (`options`, `value`, `onValueChange`, `infinite`, `visibleCount`, …). The exported `WheelPickerOption` type describes the `options` items.

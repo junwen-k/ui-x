@@ -92,3 +92,39 @@ import {
 ### Form
 
 <ComponentPreview name="date-time-field-form" />
+
+## Accessibility
+
+### Labeling
+
+Each segment is an individual `<input>`, so the field needs a group label: associate a visible label with the field (for example via `<Field>` and `<FieldLabel>` in forms), or label the group with `aria-labelledby`. Separators are decorative and hidden from assistive technology with `aria-hidden`.
+
+### Keyboard interactions
+
+| Key                                        | Description                                                          |
+| ------------------------------------------ | -------------------------------------------------------------------- |
+| <Kbd>ArrowLeft</Kbd> <Kbd>ArrowRight</Kbd> | Moves focus to the previous / next segment.                          |
+| <Kbd>ArrowUp</Kbd> <Kbd>ArrowDown</Kbd>    | Increments / decrements the focused segment.                         |
+| <Kbd>0</Kbd>–<Kbd>9</Kbd>                  | Types a value into the segment, advancing to the next when complete. |
+| <Kbd>A</Kbd> <Kbd>P</Kbd>                  | Sets the meridiem segment to AM / PM.                                |
+| <Kbd>Backspace</Kbd> <Kbd>Delete</Kbd>     | Clears the focused segment.                                          |
+
+## API Reference
+
+Styled wrappers around the [Date Time Field primitive](/docs/primitives/date-time-field#api-reference) — see the primitive page for the full prop tables.
+
+### DateTimeField
+
+Wraps [Root](/docs/primitives/date-time-field#root) and accepts all of its props (`value`, `onValueChange`, `hour12`, `minDate`, `maxDate`, …), rendered as an [Input Group](https://ui.shadcn.com/docs/components/input-group).
+
+### DateTimeFieldDays, DateTimeFieldMonths, DateTimeFieldYears, DateTimeFieldHours, DateTimeFieldMinutes, DateTimeFieldSeconds
+
+Wrap the corresponding [segments](/docs/primitives/date-time-field#segments) with input styling and default placeholders (`dd`, `mm`, `yyyy` and `--` for the time segments).
+
+### DateTimeFieldAmPm
+
+Wraps [AmPm](/docs/primitives/date-time-field#ampm); renders only when the field has `hour12`.
+
+### DateTimeFieldSeparator
+
+Wraps [Separator](/docs/primitives/date-time-field#separator) with muted styling. Pass the separator character as `children` (e.g. `/` or `:`).

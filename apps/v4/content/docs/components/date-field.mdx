@@ -81,3 +81,23 @@ import {
 ### Form
 
 <ComponentPreview name="date-field-form" />
+
+## Accessibility
+
+The field follows the segment keyboard model and labeling guidance described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section.
+
+## API Reference
+
+A date-only preset of the [Date Time Field](/docs/components/date-time-field#api-reference) — each part wraps its Date Time Field counterpart and accepts the same props.
+
+### DateField
+
+Wraps `DateTimeField` and accepts all of the [Root props](/docs/primitives/date-time-field#root) (`value`, `onValueChange`, `minDate`, `maxDate`, …).
+
+### DateFieldDays, DateFieldMonths, DateFieldYears
+
+Wrap the corresponding [segments](/docs/primitives/date-time-field#segments) with their default placeholders (`dd`, `mm`, `yyyy`).
+
+### DateFieldSeparator
+
+Wraps the [separator](/docs/components/date-time-field#datetimefieldseparator) with `/` as the default children.

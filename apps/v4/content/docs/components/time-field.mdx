@@ -87,3 +87,27 @@ import {
 ### Form
 
 <ComponentPreview name="time-field-form" />
+
+## Accessibility
+
+The field follows the segment keyboard model and labeling guidance described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section, including <Kbd>A</Kbd> / <Kbd>P</Kbd> for the meridiem segment.
+
+## API Reference
+
+A time-only preset of the [Date Time Field](/docs/components/date-time-field#api-reference) — each part wraps its Date Time Field counterpart and accepts the same props.
+
+### TimeField
+
+Wraps `DateTimeField` and accepts all of the [Root props](/docs/primitives/date-time-field#root) (`value`, `onValueChange`, `hour12`, …).
+
+### TimeFieldHours, TimeFieldMinutes, TimeFieldSeconds
+
+Wrap the corresponding [segments](/docs/primitives/date-time-field#segments) with `--` as the default placeholder.
+
+### TimeFieldAmPm
+
+Wraps [AmPm](/docs/primitives/date-time-field#ampm); renders only when the field has `hour12`.
+
+### TimeFieldSeparator
+
+Wraps the [separator](/docs/components/date-time-field#datetimefieldseparator) with `:` as the default children.
