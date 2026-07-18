@@ -200,9 +200,11 @@ demos.
       `Field`/`Form` for form plumbing, replacing `ui/form.tsx`); verify
       every page — shipped 2026-07-16 (PR #63); form demos stay controlled
       from first render (`field.value ?? null`).
-- [ ] Styling polish during the ports: date/time field segments render
-      taller than desired (noted 2026-07-16) — revisit segment height when
-      applying nova classes to the field components.
+- [x] Styling polish during the ports: date/time field segments rendered
+      taller than desired (noted 2026-07-16) — fixed 2026-07-18: segments
+      now use `py-0.5` instead of inheriting the input's `py-1`, so the
+      focus pill is 24px inside the 32px control, matching the height of
+      inline buttons in nova input groups.
 - [x] Update registry.json (single style) and install docs after the
       removals + ports — done 2026-07-16: internal `registryDependencies`
       switched from dead self-hosted `https://ui-x.junwen-k.dev/r/*.json`
