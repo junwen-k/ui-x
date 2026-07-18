@@ -30,22 +30,18 @@ only once the overhaul is finalized.
   with no matching demand. Because the registry distributes copies (not a
   package dependency), dropping Radix breaks no existing install — users
   already own their code.
-- **Radix legacy access via the frozen `v3-ui-x.junwen-k.dev` registry, not a
-  git tag** _(2026-07-18, supersedes the earlier "tag `main` as `radix`"
-  plan)_. Since `apps/v3` is now deleted outright rather than kept frozen in
-  the monorepo, there's no repo state left to tag anyway — but it turns out
-  there's nothing to tag _for_: the already-deployed `v3-ui-x` Vercel site is
-  a frozen static build whose registry JSON (`/r/styles/default/*.json`)
-  keeps serving indefinitely regardless of monorepo or git changes (verified
-  2026-07-18 — `date-field.json` still resolves correctly). The changelog
-  points Radix users straight at that live URL:
-  `npx shadcn@latest add https://v3-ui-x.junwen-k.dev/r/styles/default/<item>.json`.
-  No git tag to create, no dual registry, no legacy branch to maintain. (Note:
-  the frozen v3 docs pages' own self-advertised CLI command is stale — it
-  hardcodes the old `ui-x.junwen-k.dev` domain, which now points at the v4
-  site's registry and 404s for v3 items. That's an acceptable, uncorrectable
-  artifact of a frozen deployment; the fix lives on the v4 changelog, which we
-  control going forward.)
+- **No Radix legacy pointer at all — no git tag, no changelog callout**
+  _(2026-07-18, supersedes both the earlier "tag `main` as `radix`" plan and
+  the following same-day "point the changelog at the frozen v3-ui-x.junwen-k.dev
+  registry" plan)_. Since `apps/v3` is deleted outright, there's no repo state
+  to tag. And while the already-deployed `v3-ui-x` Vercel site's registry JSON
+  (`/r/styles/default/*.json`) does keep serving indefinitely on its own
+  (verified 2026-07-18 — `date-field.json` still resolves), the changelog
+  doesn't need to advertise it either: the "own the niche" clean-cut policy
+  already means we're not maintaining or promoting the old version, so the
+  changelog just announces Base UI and moves on. The old site remains
+  reachable to anyone who already has the URL bookmarked — it's simply not
+  linked from anywhere going forward.
 - **One published style: nova.** ui-x targets shadcn's default preset
   (nova: h-8 controls, rounded-lg, ring-3, Lucide, Geist) rather than the
   legacy `new-york-v4` or the full 8-style family (nova/vega/lyra/luma/maia/
@@ -63,9 +59,9 @@ only once the overhaul is finalized.
   off-style demos once the site goes nova, Radix packages pinned in `apps/v4`,
   and docs pages whose main message is "use the official one". The ship
   changelog announces Base UI as Radix's modern successor and points existing
-  users at the official shadcn/ui components and at the frozen
-  `v3-ui-x.junwen-k.dev` registry for the old sources. (The interim callouts +
-  "In shadcn/ui" sidebar group on `next` served until removal.)
+  users at the official shadcn/ui components — no pointer to the old sources
+  needed (see the Radix-legacy decision above). (The interim callouts + "In
+  shadcn/ui" sidebar group on `next` served until removal.)
 
 ---
 
@@ -105,10 +101,11 @@ only once the overhaul is finalized.
 - [x] Refresh `changelog.mdx` — shipped 2026-07-18 (PR #74, `docs/ship-changelog`):
       "July 2026 - Base UI" entry announces Base UI as Radix's modern
       successor, lists the 7 superseded components with links to their
-      shadcn/ui replacements. The "old sources" pointer was corrected
-      2026-07-18 (later) from a planned `#radix` git tag to a direct CLI
-      install command against the frozen `v3-ui-x.junwen-k.dev` registry (see
-      Guiding decisions).
+      shadcn/ui replacements. The "old sources" pointer went through two
+      revisions later the same day — first from a planned `#radix` git tag to
+      a direct CLI install command against the frozen `v3-ui-x.junwen-k.dev`
+      registry, then dropped outright — and the changelog now carries no
+      "old sources" callout at all (see Guiding decisions).
 - [x] Clear stale "New" labels in `src/config/docs.ts`.
 - [x] **Overlap callouts** added to kbd, control-group, input-base, combobox,
       file-list (→ Attachment) — placed above the preview, recommending the
@@ -172,7 +169,8 @@ twice. Reference sources: `https://ui.shadcn.com/r/styles/base-nova/<name>.json`
 sidebar's "In shadcn/ui" group mirrors the superseded list exactly.
 
 **Superseded — removed entirely, never ported** (clean cut decided 2026-07-15;
-old sources remain reachable via the frozen `v3-ui-x.junwen-k.dev` registry):
+old sources aren't linked from anywhere, but the frozen `v3-ui-x.junwen-k.dev`
+deployment keeps serving them to anyone who already has the URL):
 
 | ui-x component                    | Superseded by                                                                                                                                                                                                                                   |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -268,9 +266,10 @@ out, e.g. accordion → "See the Base UI documentation").
 - Deprecation policy — **decided (2026-07-15)**: clean cut. Superseded
   components are removed from the registry and docs entirely at ship time
   (see Guiding decisions); the ship changelog announces Base UI as the modern
-  successor and points at the frozen `v3-ui-x.junwen-k.dev` registry for the
-  old sources. The interim "provided as-is" callouts and "In shadcn/ui"
-  sidebar group go away with the removal.
+  successor and points users at the official shadcn/ui components, with no
+  callout for the old sources (see the Radix-legacy decision, 2026-07-18). The
+  interim "provided as-is" callouts and "In shadcn/ui" sidebar group go away
+  with the removal.
 - Monorepo: `packages/` is empty — flatten, or reserve for shared registry
   tooling in Phase 2?
 
@@ -353,3 +352,10 @@ out, e.g. accordion → "See the Base UI documentation").
   install command instead of a tag link. No tag to create before the
   `next` → `main` merge; ship choreography is just the merge itself (plus
   canonical-domain/SEO, still open).
+- **2026-07-18 (radix access, later)** — Went a step further: removed the
+  "Looking for the Radix version?" callout from `changelog.mdx` entirely
+  instead of keeping it pointed at the frozen registry (see Guiding
+  decisions). The clean-cut policy already means ui-x isn't maintaining or
+  promoting the old version, so the changelog just announces Base UI and
+  moves on — the `v3-ui-x.junwen-k.dev` registry keeps serving on its own for
+  anyone who already has the URL, but nothing links to it going forward.
