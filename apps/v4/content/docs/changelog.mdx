@@ -3,6 +3,36 @@ title: Changelog
 description: Latest updates and announcements.
 ---
 
+## July 2026 - Base UI
+
+ui-x is now built on [Base UI](https://base-ui.com). Following shadcn/ui's adoption of Base UI as the modern successor to Radix UI, every component has been rebuilt on Base UI primitives and restyled to match the latest shadcn/ui design.
+
+<ComponentPreview name="date-picker-demo" />
+
+### What's changed
+
+- **Base UI everywhere** — All Radix UI dependencies are gone. Components are built on Base UI primitives and utilities, with React 19 ref handling throughout.
+- **Restyled** — Every component, demo and docs page has been refreshed against the latest shadcn/ui styling.
+- **Simpler forms** — Demos use Base UI's `Field` and `Form` for form plumbing. For React Hook Form or TanStack Form wiring, see the shadcn/ui [forms guides](https://ui.shadcn.com/docs/forms).
+
+### Superseded components
+
+shadcn/ui now ships first-class versions of several components that ui-x originally existed to fill in. These have been removed in favor of the official ones:
+
+| ui-x component | Use instead                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| Calendar       | [Calendar](https://ui.shadcn.com/docs/components/calendar)           |
+| Combobox       | [Combobox](https://ui.shadcn.com/docs/components/combobox)           |
+| Control Group  | [Button Group](https://ui.shadcn.com/docs/components/button-group)   |
+| File List      | [Attachment](https://ui.shadcn.com/docs/components/attachment)       |
+| Input Base     | [Input Group](https://ui.shadcn.com/docs/components/input-group)     |
+| Kbd            | [Kbd](https://ui.shadcn.com/docs/components/kbd)                     |
+| Native Select  | [Native Select](https://ui.shadcn.com/docs/components/native-select) |
+
+### Looking for the Radix version?
+
+The final Radix-based sources remain available under the [`radix`](https://github.com/junwen-k/ui-x/tree/radix) tag.
+
 ## June 2025 - Phone Input and Emoji Picker
 
 We've added a new `<PhoneInput />` component and a new `<EmojiPicker />` component.
