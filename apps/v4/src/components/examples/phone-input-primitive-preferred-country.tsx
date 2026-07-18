@@ -2,8 +2,12 @@
 
 import * as React from "react";
 
-import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
+
+function Input({ className, ...props }: React.ComponentProps<"input">) {
+  return <input className={cn("border-input border", className)} {...props} />;
+}
 
 export default function PhoneInputPrimitivePreferredCountry() {
   const [value, setValue] = React.useState<PhoneInputPrimitive.Value>(
