@@ -114,11 +114,16 @@ function PhoneInputCountrySelectTrigger(
   );
 }
 
-function PhoneInputCountrySelectContent(
-  props: React.ComponentProps<typeof SelectContent>,
-) {
+function PhoneInputCountrySelectContent({
+  className,
+  ...props
+}: React.ComponentProps<typeof SelectContent>) {
   return (
-    <SelectContent data-slot="phone-input-country-select-content" {...props} />
+    <SelectContent
+      data-slot="phone-input-country-select-content"
+      className={cn("w-auto", className)}
+      {...props}
+    />
   );
 }
 
