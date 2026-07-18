@@ -325,6 +325,7 @@ out, e.g. accordion → "See the Base UI documentation").
   superseded components. `apps/v3` deleted, `pnpm-workspace.yaml`'s
   `onlyBuiltDependencies` trimmed of the v3-only `contentlayer2`/`protobufjs`
   entries, `installation.mdx`'s v3 pointer reworded to "archived, no longer
-  maintained." The live `v3-ui-x` Vercel deployment is unaffected (frozen
-  build artifacts keep serving); its git integration gets disconnected via
-  Vercel CLI once this PR merges and the removal is confirmed settled.
+  maintained." Shipped 2026-07-18 (PR #75), merged into `next`. The live
+  `v3-ui-x` Vercel deployment is unaffected (frozen build artifacts keep
+  serving); its git integration was disconnected via `vercel git disconnect`
+  right after merge, so it no longer attempts rebuilds against this repo.
