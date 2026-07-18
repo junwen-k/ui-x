@@ -27,6 +27,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/docs/:path*.md",
+        destination: "/llms.mdx/docs/:path*",
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
