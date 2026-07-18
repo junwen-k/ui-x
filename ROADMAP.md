@@ -60,9 +60,11 @@ junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
       the CLI reads `registry.json` straight from the repo
       (`npx shadcn@latest add junwen-k/ui-x/<item>`), validated in CI via
       `shadcn registry validate`.
-- [ ] Dependency pass on `apps/v4`: zod (pinned at 3.21.4), lucide-react,
-      react-day-picker, tailwindcss. (Radix packages get removed in Phase 4
-      rather than upgraded.)
+- [x] Dependency pass on `apps/v4` — done 2026-07-17 (PRs #66, #68): zod
+      unpinned to `^3.25.76`, react-dropzone 17, react-call 2, virtua 0.49
+      (`overscan` → `bufferSize`), timescape 0.8, frimousse 0.3,
+      use-local-storage-state 20, plus dev tooling. (Radix packages were
+      removed in Phase 4 rather than upgraded.)
 - [x] Confirm both sites still build and deploy (`turbo build`) — verified via
       PR #55 Vercel deploys (2026-07-10); also fixed the `app-sidebar` type
       error and calendar import order that blocked the v4 build.
@@ -208,22 +210,23 @@ demos.
       validated (`shadcn registry validate`, 26 items); `installation.mdx`
       already documents the `junwen-k/ui-x/<item>` install form.
 
-### 4d. Docs content — API Reference & Accessibility sections (after ports)
+### 4d. Docs content — API Reference & Accessibility sections (after ports) ✅
 
 Follow shadcn's hand-authored format (surveyed 2026-07-15: 51 of their base
 docs have `## API Reference`, 8 newer ones have `## Accessibility`; no docgen
 tooling anywhere — tables are written by hand, thin Base UI wrappers just link
 out, e.g. accordion → "See the Base UI documentation").
 
-- [ ] Add **API Reference** to every doc: markdown tables per sub-component
+- [x] Add **API Reference** to every doc — shipped 2026-07-17 (PR #69, all
+      25 docs pages): markdown tables per sub-component
       (`Prop | Type | Default | Description`). Primitives get full tables;
       wrapper components link to their primitive's section instead —
-      mirroring how shadcn defers to Base UI. Tables become part of the
+      mirroring how shadcn defers to Base UI. Tables remain part of the
       definition-of-done when a component's props change.
-- [ ] Add **Accessibility** where there's real guidance to give (icon-only
-      button labeling, keyboard interaction, meaning beyond color): prose
-      with `###` sub-headings and short aria snippets, per shadcn's
-      attachment/message/field docs.
+- [x] Add **Accessibility** where there's real guidance to give — shipped
+      2026-07-17 (PR #69): prose guidance (keyboard interaction, icon-only
+      labeling, meaning beyond color) on the pages where it applies, per
+      shadcn's attachment/message/field docs.
 
 ## Phase 5 — New components & catch-up (stretch)
 
@@ -275,6 +278,16 @@ out, e.g. accordion → "See the Base UI documentation").
   covers legacy installs; all `@radix-ui/*` packages leave `apps/v4`. Also
   removed the stale Tailwind v4 docs page and the homepage announcement badge
   linking to it (plus the now-unused `@icons-pack/react-simple-icons` dep).
+- **2026-07-17** — Four PRs merged into `next`: #66 (dependency pass — safe
+  bumps, react-dropzone 17, react-call 2), #67 (lint cleanup + pnpm 10
+  migration), #69 (4d docs: API Reference on all 25 pages + Accessibility
+  where warranted), #68 (virtua 0.49 / timescape 0.8 / frimousse 0.3 /
+  use-local-storage-state 20). Vercel deploys of `next` un-broke by setting
+  `ENABLE_EXPERIMENTAL_COREPACK=1` on both Vercel projects — Vercel was
+  auto-selecting pnpm 9 against the repo's pnpm 10 pin and tripping over a
+  stale pnpm-9 build-cache store. Remaining before `next` → `main`:
+  canonical-domain/SEO work (Phase 1), date/time segment-height polish (4c),
+  and the ship choreography (changelog entry, `radix` tag, merge).
 - **2026-07-16** — Superseded-component removal executed on `next`: 8 registry
   sources, 29 examples, 8 docs pages and the "In shadcn/ui" sidebar group
   deleted; registry.json down to 26 items. shadcn's Base UI `kbd`,
