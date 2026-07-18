@@ -7,9 +7,17 @@ links:
   api: https://react-dropzone.js.org/#!/Dropzone
 ---
 
+<ComponentPreview name="dropzone-primitive-demo" />
+
 ## About
 
 The `<DropzonePrimitive />` component is built on top of [react-dropzone](https://react-dropzone.js.org), wrapping the library to deliver a more consistent API that aligns with Base UI conventions.
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
+
+**Unstyled**: This is an unstyled primitive. For a ready-to-use, shadcn-styled version, see the [Dropzone](/docs/components/dropzone) component.
+
+</Callout>
 
 ## Installation
 
@@ -67,6 +75,12 @@ export default () => (
   </DropzonePrimitive.Root>
 );
 ```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="dropzone-primitive-demo" />
 
 ## API Reference
 
