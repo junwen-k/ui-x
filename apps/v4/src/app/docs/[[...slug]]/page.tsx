@@ -5,9 +5,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { DocsTableOfContents } from "@/components/docs-toc";
+import { PageActions } from "@/components/page-actions";
 import { badgeVariants } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import { getLLMText } from "@/lib/get-llm-text";
 import { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
 import { mdxComponents } from "@/mdx-components";
@@ -35,6 +37,9 @@ export default async function Page({ params }: DocPageProps) {
   const neighbours = isChangelog
     ? { previous: null, next: null }
     : findNeighbour(source.pageTree, page.url);
+  const markdown = await getLLMText(page);
+  const markdownUrl = `${siteConfig.url}${page.url}.md`;
+  const githubUrl = `${siteConfig.links.github}/blob/main/apps/v4/content/docs/${page.path}`;
 
   return (
     <div
@@ -50,6 +55,11 @@ export default async function Page({ params }: DocPageProps) {
                 {doc.title}
               </h1>
               <div className="docs-nav flex items-center gap-2">
+                <PageActions
+                  markdown={markdown}
+                  markdownUrl={markdownUrl}
+                  githubUrl={githubUrl}
+                />
                 <div className="ml-auto flex gap-2">
                   {neighbours.previous && (
                     <Button

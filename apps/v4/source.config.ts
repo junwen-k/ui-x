@@ -27,6 +27,9 @@ export default defineConfig({
 export const docs = defineDocs({
   dir: "content/docs",
   docs: {
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
     schema: z.object({
       title: z.string().max(99),
       description: z.string().max(999).optional(),

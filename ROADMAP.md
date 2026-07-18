@@ -359,3 +359,19 @@ out, e.g. accordion → "See the Base UI documentation").
   promoting the old version, so the changelog just announces Base UI and
   moves on — the `v3-ui-x.junwen-k.dev` registry keeps serving on its own for
   anyone who already has the URL, but nothing links to it going forward.
+- **2026-07-18 (llms.txt)** — Replaced the orphaned static `public/llms.txt`
+  with shadcn-style LLM docs support, following shadcn's own site: a
+  dynamically generated `/llms.txt` index (via fumadocs-core's `llms()`
+  helper, walking the page tree so it can never drift from the sidebar
+  again), `/llms-full.txt` (every page concatenated), and a per-page raw
+  markdown export at `/docs/<slug>.md` (a `next.config.ts` rewrite to a
+  `llms.mdx/docs/[[...slug]]` route), using `getText("processed")` off
+  fumadocs-mdx's `postprocess.includeProcessedMarkdown` config. Since
+  `apps/v4` only depends on fumadocs-core/-mdx (headless, no `fumadocs-ui`),
+  the "Copy Page" / "Open in ChatGPT/Claude/GitHub" control shadcn shows on
+  each doc page (`page-actions.tsx`) was rebuilt from ui-x's own
+  `Button`/`ButtonGroup`/`DropdownMenu` and the existing `copyToClipboard`
+  util in `copy-button.tsx`, rather than pulling in `fumadocs-ui`. Wired into
+  `docs/[[...slug]]/page.tsx` next to the title. Verified in-browser: all
+  three routes resolve, the dropdown's four links (ChatGPT/Claude/Markdown/
+  GitHub) point at the right URLs, copy re-uses the already-proven util.
