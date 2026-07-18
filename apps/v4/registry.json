@@ -51,7 +51,7 @@
       "title": "Emoji Picker",
       "description": "A emoji picker is a component that allows users to select an emoji from a list of emojis.",
       "dependencies": ["@base-ui/react", "frimousse"],
-      "registryDependencies": ["button", "popover"],
+      "registryDependencies": ["button", "input-group", "popover"],
       "files": [
         {
           "path": "src/registry/new-york/ui/emoji-picker.tsx",

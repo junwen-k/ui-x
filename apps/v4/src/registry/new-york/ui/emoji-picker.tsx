@@ -15,6 +15,7 @@ import { LoaderIcon, SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
+import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import {
   Popover,
   PopoverContent,
@@ -30,7 +31,7 @@ function EmojiPicker({
     <EmojiPickerPrimitive.Root
       data-slot="emoji-picker"
       className={cn(
-        "bg-popover text-popover-foreground isolate flex h-full w-fit flex-col overflow-hidden rounded-md",
+        "bg-popover text-popover-foreground isolate flex h-full w-fit flex-col overflow-hidden rounded-lg",
         className,
       )}
       {...props}
@@ -45,14 +46,18 @@ function EmojiPickerSearch({
   return (
     <div
       data-slot="emoji-picker-search-wrapper"
-      className={cn("flex h-9 items-center gap-2 border-b px-3", className)}
+      className={cn("p-1 pb-0", className)}
     >
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
-      <EmojiPickerPrimitive.Search
-        data-slot="emoji-picker-search"
-        className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
-        {...props}
-      />
+      <InputGroup className="border-input/30 bg-input/30 h-8! rounded-lg! shadow-none! *:data-[slot=input-group-addon]:pl-2!">
+        <EmojiPickerPrimitive.Search
+          data-slot="emoji-picker-search"
+          className="placeholder:text-muted-foreground w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
+          {...props}
+        />
+        <InputGroupAddon>
+          <SearchIcon className="size-4 shrink-0 opacity-50" />
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   );
 }
