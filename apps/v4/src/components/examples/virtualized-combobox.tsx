@@ -20,7 +20,7 @@ const items = Array.from({ length: 10000 }, (_, index) => ({
   value: index.toString(),
 }));
 
-export default function VirtualizerCombobox() {
+export default function VirtualizedCombobox() {
   const [inputValue, setInputValue] = React.useState("");
 
   const filtered = React.useMemo(() => {

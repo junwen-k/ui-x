@@ -49,7 +49,7 @@ function Item({
   );
 }
 
-export default function VirtualizerSortable() {
+export default function VirtualizedSortable() {
   const [items, setItems] = React.useState(
     Array.from({ length: 1000 }, (_, index) => ({
       id: `item-${index}`,

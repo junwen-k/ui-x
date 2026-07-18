@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { VirtualizedGrid } from "@/registry/new-york/ui/virtualized";
 
-export default function VirtualizerGrid() {
+export default function VirtualizedGridDemo() {
   return (
     <div className="size-80">
       <VirtualizedGrid row={500} col={500}>

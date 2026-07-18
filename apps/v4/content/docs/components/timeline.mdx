@@ -182,38 +182,3 @@ The event's content, heading text and supporting text. Each renders a `<div>` an
 ### useTimeline
 
 Hook exposing the timeline context (`orientation`) for building custom parts. Must be used within `<Timeline />`.
-
-## Changelog
-
-### 10 Febuary 2025 - a11y for title and description
-
-- Changed the `TimelineTitle` and `TimelineDescription` components to use `div` instead of `h3` and `p` to improve accessibility.
-
-```tsx showLineNumbers title="timeline.tsx"
-export const TimelineTitle = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->((props, ref) => {
-  const { orientation } = useTimeline();
-
-  return <div ref={ref} data-orientation={orientation} {...props} />;
-});
-TimelineTitle.displayName = "TimelineTitle";
-
-export const TimelineDescription = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => {
-  const { orientation } = useTimeline();
-
-  return (
-    <div
-      ref={ref}
-      data-orientation={orientation}
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
-});
-TimelineDescription.displayName = "TimelineDescription";
-```

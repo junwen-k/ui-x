@@ -23,7 +23,7 @@ const items = Array.from({ length: 1000 }, (_, index) => ({
   value: index.toString(),
 }));
 
-export default function VirtualizerCommand() {
+export default function VirtualizedCommand() {
   const [inputValue, setInputValue] = React.useState("");
 
   const filtered = React.useMemo(() => {

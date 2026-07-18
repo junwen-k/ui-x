@@ -5,7 +5,7 @@ import { VirtualizedList } from "@/registry/new-york/ui/virtualized";
 
 const items = Array.from({ length: 10000 }, (_, index) => index);
 
-export default function VirtualizerHorizontal() {
+export default function VirtualizedHorizontal() {
   return (
     <div className="size-80">
       <VirtualizedList orientation="horizontal">

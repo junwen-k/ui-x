@@ -47,7 +47,7 @@ function VirtualizedTableBody(props: CustomContainerComponentProps) {
   return <TableBody className="max-h-96" {...props} />;
 }
 
-export default function VirtualizerTable() {
+export default function VirtualizedTable() {
   return (
     <Virtualized className="h-96 overflow-y-auto">
       <table className="w-full table-fixed caption-bottom border-separate border-spacing-0 text-sm">

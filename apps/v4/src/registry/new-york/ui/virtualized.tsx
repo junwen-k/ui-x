@@ -14,11 +14,7 @@ const VirtualizedContext = React.createContext<{
 });
 
 function useVirtualized() {
-  const context = React.useContext(VirtualizedContext);
-  if (!context) {
-    throw new Error("useVirtualized must be used within a <Virtualized />.");
-  }
-  return context;
+  return React.useContext(VirtualizedContext);
 }
 
 function Virtualized({ render, ...props }: useRender.ComponentProps<"div">) {
