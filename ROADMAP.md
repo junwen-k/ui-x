@@ -13,9 +13,16 @@ only once the overhaul is finalized.
 
 ## Guiding decisions
 
-- **v3 is frozen.** `apps/v3` (Tailwind v3) receives no new content. It gets a
-  banner — "You are viewing docs for Tailwind v3. Switch to latest →" — and the
-  Tailwind v4 site becomes canonical at `ui-x.junwen-k.dev`.
+- **`apps/v3` removed entirely** _(2026-07-18, supersedes the earlier
+  "frozen + banner" plan)_. The Tailwind v3 app is deleted from the monorepo
+  rather than kept as a dead weight app: same clean-cut reasoning as the
+  superseded components — this is a single-maintainer project and there's no
+  ongoing v3 work to justify carrying the build/CI/dependency surface
+  indefinitely. The already-deployed `v3-ui-x` Vercel site is a frozen build
+  artifact that keeps serving as-is regardless of monorepo changes, so
+  existing links/bookmarks to it don't break; its git integration is
+  disconnected once this ships so it stops attempting (harmless, failing)
+  rebuilds. `ui-x.junwen-k.dev` (the v4 site) is canonical going forward.
 - **Base UI only — Radix is dropped** _(2026-07-10, supersedes the earlier
   dual-library plan; reconfirmed 2026-07-15)_. shadcn's default for new
   projects is the `base-nova` preset (`shadcn init --defaults`); maintaining a
@@ -72,18 +79,22 @@ junwen-k/ui-x/<item>#<ref>`. Tag `main` (e.g. `radix`) immediately before
 ## Phase 1 — Documentation up to date (user-visible, low risk)
 
 - [x] Add v3 "you are viewing old docs" banner in `apps/v3` linking to the v4
-      site (keep the existing `version-dropdown-menu` as secondary navigation).
+      site — **superseded 2026-07-18**: `apps/v3` removed entirely rather than
+      kept frozen with a banner (see Guiding decisions); the banner went with
+      it. The already-deployed `v3-ui-x` site is unaffected and keeps serving
+      its last build.
 - [ ] Point canonical domain / SEO (sitemap, robots, `metadataBase`, og) at the
-      v4 site; v3 moves to a `v3.` subdomain or subpath.
+      v4 site. Simplified by the v3 removal: `v3-ui-x.junwen-k.dev` is already
+      a separate domain/Vercel project, so no subdomain migration is needed —
+      just confirm `ui-x.junwen-k.dev` (v4) is the canonical/indexed one.
 - [x] Update `installation.mdx` with registry install instructions and
       requirements. (`tailwind-v4.mdx` and the homepage "Introducing Tailwind
       v4" announcement badge removed 2026-07-15 — old news; the v3 pointer
       lives in `installation.mdx`.)
-- [ ] Refresh `changelog.mdx` — deferred: write a single entry once the
-      overhaul actually ships, not piecemeal. Must announce Base UI as Radix's
-      modern successor, the removal of the superseded components, and the
-      `#radix` tag for old sources. Consider a new homepage announcement badge
-      pointing at it.
+- [x] Refresh `changelog.mdx` — shipped 2026-07-18 (PR #74, `docs/ship-changelog`):
+      "July 2026 - Base UI" entry announces Base UI as Radix's modern
+      successor, lists the 7 superseded components with links to their
+      shadcn/ui replacements, and points at the `#radix` tag for old sources.
 - [x] Clear stale "New" labels in `src/config/docs.ts`.
 - [x] **Overlap callouts** added to kbd, control-group, input-base, combobox,
       file-list (→ Attachment) — placed above the preview, recommending the
@@ -297,3 +308,23 @@ out, e.g. accordion → "See the Base UI documentation").
   `components/ui/` to rewrite the entangled keeper examples (phone-input,
   dropzone, emoji-picker, virtualizer). Verified with typecheck, `pnpm build`
   (28 docs paths) and in-browser smoke tests of every rewritten page.
+- **2026-07-18** — Date/time field segment-height polish shipped (PR #70).
+  Nova style-drift fixes shipped (PR #73): date-picker popover ring/duration,
+  emoji-picker search boxed into `InputGroup`. Version switcher removed from
+  the docs header (PR #72). Ship changelog shipped (PR #74, see Phase 1).
+  Deployed `next` to a Vercel preview and ran a full smoke test (all docs
+  routes, header nav, changelog content, phone-input/emoji-picker/date-picker
+  interactive behavior, zero console errors) — clean. Only remaining item
+  ahead of `next` → `main` is canonical-domain/SEO (Phase 1); everything else
+  called out in the 2026-07-17 entry is done. Ship choreography itself (tag
+  pre-merge `main` as `radix`, merge `next` → `main`) has not been executed
+  yet.
+- **2026-07-18 (later)** — Decided to remove `apps/v3` entirely rather than
+  keep it frozen with a banner (see Guiding decisions); bundled into this ship
+  cycle since it's the same clean-cut reasoning already applied to the
+  superseded components. `apps/v3` deleted, `pnpm-workspace.yaml`'s
+  `onlyBuiltDependencies` trimmed of the v3-only `contentlayer2`/`protobufjs`
+  entries, `installation.mdx`'s v3 pointer reworded to "archived, no longer
+  maintained." The live `v3-ui-x` Vercel deployment is unaffected (frozen
+  build artifacts keep serving); its git integration gets disconnected via
+  Vercel CLI once this PR merges and the removal is confirmed settled.
