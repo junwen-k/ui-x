@@ -3,6 +3,7 @@
     "index",
     "installation",
     "changelog",
+    "[llms.txt](/llms.txt)",
     "primitives",
     "utilities",
     "components"
