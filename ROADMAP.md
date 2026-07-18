@@ -90,10 +90,17 @@ only once the overhaul is finalized.
       kept frozen with a banner (see Guiding decisions); the banner went with
       it. The already-deployed `v3-ui-x` site is unaffected and keeps serving
       its last build.
-- [ ] Point canonical domain / SEO (sitemap, robots, `metadataBase`, og) at the
+- [x] Point canonical domain / SEO (sitemap, robots, `metadataBase`, og) at the
       v4 site. Simplified by the v3 removal: `v3-ui-x.junwen-k.dev` is already
       a separate domain/Vercel project, so no subdomain migration is needed —
-      just confirm `ui-x.junwen-k.dev` (v4) is the canonical/indexed one.
+      `ui-x.junwen-k.dev` (v4) was already the canonical/indexed one via
+      `metadataBase`/OG tags. Added the missing `sitemap.ts`/`robots.ts` pair —
+      shipped 2026-07-19. shadcn's own `apps/v4` has no precedent for these
+      (checked their repo and live site: neither `/robots.txt` nor
+      `/sitemap.xml` resolve), so built idiomatically instead: Next.js
+      `MetadataRoute.Sitemap`/`MetadataRoute.Robots`, with the sitemap walking
+      `source.getPages()` (same fumadocs page-tree approach as `llms.txt`) so
+      it can't drift from the sidebar.
 - [x] Update `installation.mdx` with registry install instructions and
       requirements. (`tailwind-v4.mdx` and the homepage "Introducing Tailwind
       v4" announcement badge removed 2026-07-15 — old news; the v3 pointer
@@ -375,3 +382,13 @@ out, e.g. accordion → "See the Base UI documentation").
   `docs/[[...slug]]/page.tsx` next to the title. Verified in-browser: all
   three routes resolve, the dropdown's four links (ChatGPT/Claude/Markdown/
   GitHub) point at the right URLs, copy re-uses the already-proven util.
+- **2026-07-19** — Closed the last open Phase 1 item: added `sitemap.ts` and
+  `robots.ts` (`apps/v4/src/app`). shadcn's own `apps/v4` has no equivalent
+  (verified against their repo and live site), so these were built idiomatic
+  Next.js-style instead — `MetadataRoute.Sitemap`/`MetadataRoute.Robots`, the
+  sitemap driven by `source.getPages()` so it walks the same fumadocs page
+  tree as `llms.txt` and can't drift from the sidebar. Verified locally: both
+  routes return 200, 29 URLs in the sitemap (home + 28 doc pages), no
+  duplicates. Phase 1 is now fully closed. Remaining before `next` → `main`:
+  just the merge itself (plus the 14 open Dependabot alerts on `main`, all
+  transitive/dev-tooling, triaged as non-blocking).
