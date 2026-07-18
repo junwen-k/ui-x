@@ -7,7 +7,6 @@ import { MobileNav } from "@/components/mobile-nav";
 import { ModeSwitcher } from "@/components/mode-switcher";
 import { Separator } from "@/components/ui/separator";
 import { UiXLogo } from "@/components/ui-x-logo";
-import { VersionDropdownMenu } from "@/components/version-dropdown-menu";
 import { siteConfig } from "@/config/site";
 import { source } from "@/lib/source";
 
@@ -29,7 +28,6 @@ export function SiteHeader() {
               {siteConfig.name}
             </span>
           </Link>
-          <VersionDropdownMenu className="hidden lg:flex" />
           <MainNav items={siteConfig.navItems} className="hidden lg:flex" />
           <div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
             <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
