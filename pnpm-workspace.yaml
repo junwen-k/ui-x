@@ -3,10 +3,7 @@ packages:
   - "packages/*"
 
 # pnpm 10 blocks dependency build scripts unless allowlisted.
-# contentlayer2 and protobufjs are needed by the frozen v3 app only.
 onlyBuiltDependencies:
-  - contentlayer2
   - esbuild
-  - protobufjs
   - sharp
   - unrs-resolver
