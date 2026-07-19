@@ -1,13 +1,13 @@
 ---
-title: Virtualizer
-description: A virtualizer component that allows you to efficiently render large lists and tabular data.
+title: Virtualized
+description: A virtualized component that allows you to efficiently render large lists and tabular data.
 component: true
 links:
   doc: https://github.com/inokawa/virtua
   api: https://github.com/inokawa/virtua/blob/main/docs/react/API.md
 ---
 
-<ComponentPreview name="virtualizer-demo" />
+<ComponentPreview name="virtualized-demo" />
 
 ## Introduction
 
@@ -87,19 +87,19 @@ npm install @base-ui/react virtua
 
 ### Default
 
-<ComponentPreview name="virtualizer-demo" />
+<ComponentPreview name="virtualized-demo" />
 
 ### Horizontal
 
-<ComponentPreview name="virtualizer-horizontal" />
+<ComponentPreview name="virtualized-horizontal" />
 
 ### Grid
 
-<ComponentPreview name="virtualizer-grid" />
+<ComponentPreview name="virtualized-grid" />
 
 ### Table
 
-<ComponentPreview name="virtualizer-table" />
+<ComponentPreview name="virtualized-table" />
 
 <Callout className="mt-6">
 
@@ -109,23 +109,23 @@ npm install @base-ui/react virtua
 
 ### Command
 
-<ComponentPreview name="virtualizer-command" />
+<ComponentPreview name="virtualized-command" />
 
 ### Combobox
 
-<ComponentPreview name="virtualizer-combobox" />
+<ComponentPreview name="virtualized-combobox" />
 
 ### Select
 
-<ComponentPreview name="virtualizer-select" />
+<ComponentPreview name="virtualized-select" />
 
 ### Scroll Area
 
-<ComponentPreview name="virtualizer-scroll-area" />
+<ComponentPreview name="virtualized-scroll-area" />
 
 ### Sortable
 
-<ComponentPreview name="virtualizer-sortable" />
+<ComponentPreview name="virtualized-sortable" />
 
 ## Combobox
 
@@ -193,7 +193,7 @@ export function VirtualizedComboboxDemo() {
 
 </Steps>
 
-<ComponentPreview name="virtualizer-combobox" />
+<ComponentPreview name="virtualized-combobox" />
 
 <Callout className="mt-4">
 
@@ -232,7 +232,7 @@ export function VirtualizedScrollAreaDemo() {
 
 </Steps>
 
-<ComponentPreview name="virtualizer-scroll-area" />
+<ComponentPreview name="virtualized-scroll-area" />
 
 <Callout className="mt-4">
 
@@ -346,7 +346,7 @@ export function VirtualizedSelectDemo() {
 
 </Steps>
 
-<ComponentPreview name="virtualizer-select" />
+<ComponentPreview name="virtualized-select" />
 
 ## Reusable Components
 
@@ -357,6 +357,12 @@ export function VirtualizedSelectDemo() {
 This section is empty for now.
 
 </Callout>
+
+## Accessibility
+
+Virtualization only affects what's mounted in the DOM, not the semantics of the component being virtualized — a virtualized `<Select />` or `<Combobox />` keeps the same roles, states and keyboard behavior as its non-virtualized counterpart, since `<VirtualizedVirtualizer />` renders its children directly inside the existing listbox/popover markup.
+
+Because off-screen items aren't in the DOM, avoid relying on browser "find in page" or assistive technology virtual cursor navigation to reach items outside the rendered window — users should navigate with the component's own keyboard interactions (arrow keys, typeahead) instead, which keep the active item mounted and in view via `keepMounted` and `scrollToIndex`.
 
 ## API Reference
 

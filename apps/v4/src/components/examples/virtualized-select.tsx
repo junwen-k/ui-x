@@ -20,7 +20,7 @@ const items = Array.from({ length: 10000 }, (_, index) => ({
   value: index.toString(),
 }));
 
-export default function VirtualizerSelect() {
+export default function VirtualizedSelect() {
   const [value, setValue] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
 

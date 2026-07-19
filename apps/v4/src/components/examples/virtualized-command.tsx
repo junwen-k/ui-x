@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   Combobox,
   ComboboxContent,
@@ -9,18 +10,20 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
+  ComboboxTrigger,
+  ComboboxValue,
 } from "@/components/ui/combobox";
 import {
   Virtualized,
   VirtualizedVirtualizer,
 } from "@/registry/new-york/ui/virtualized";
 
-const items = Array.from({ length: 10000 }, (_, index) => ({
+const items = Array.from({ length: 1000 }, (_, index) => ({
   label: `Item ${index + 1}`,
   value: index.toString(),
 }));
 
-export default function VirtualizerCombobox() {
+export default function VirtualizedCommand() {
   const [inputValue, setInputValue] = React.useState("");
 
   const filtered = React.useMemo(() => {
@@ -37,11 +40,24 @@ export default function VirtualizerCombobox() {
     <Combobox
       inputValue={inputValue}
       onInputValueChange={setInputValue}
+      itemToStringLabel={(value: string) =>
+        items.find((item) => item.value === value)?.label ?? ""
+      }
       filteredItems={filtered}
       virtualized
     >
-      <ComboboxInput placeholder="Search item..." />
+      <ComboboxTrigger
+        render={
+          <Button
+            variant="outline"
+            className="w-[200px] justify-between font-normal"
+          />
+        }
+      >
+        <ComboboxValue placeholder="Select item..." />
+      </ComboboxTrigger>
       <ComboboxContent>
+        <ComboboxInput placeholder="Search item..." showTrigger={false} />
         <ComboboxEmpty>No item found.</ComboboxEmpty>
         <Virtualized render={<ComboboxList />}>
           <VirtualizedVirtualizer>

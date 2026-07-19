@@ -6,7 +6,7 @@ import { VirtualizedList } from "@/registry/new-york/ui/virtualized";
 
 const items = Array.from({ length: 10000 }, (_, index) => index);
 
-export default function VirtualizerDemo() {
+export default function VirtualizedDemo() {
   return (
     <div className="size-80">
       <VirtualizedList>

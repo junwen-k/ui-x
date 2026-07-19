@@ -14,7 +14,7 @@ const tags = Array.from({ length: 10000 }).map(
   (_, i, a) => `v1.2.0-beta.${a.length - i}`,
 );
 
-export default function VirtualizerScrollArea() {
+export default function VirtualizedScrollArea() {
   return (
     <ScrollAreaPrimitive.Root className="relative h-72 w-48 overflow-hidden rounded-md border">
       <ScrollAreaPrimitive.Viewport

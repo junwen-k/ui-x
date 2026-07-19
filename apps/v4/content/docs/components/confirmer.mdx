@@ -71,7 +71,7 @@ Add the `<AlertDialog />` and `<Button />` component to your project.
 
 The `<Confirmer />` component uses `<AlertDialog />` and `<Button />` components. Make sure you have it installed in your project.
 
-See installation instructions for the [AlertDialog](/docs/components/alert-dialog#installation) and the [Button](/docs/components/button#installation) components.
+See installation instructions for the [AlertDialog](https://ui.shadcn.com/docs/components/alert-dialog) and the [Button](https://ui.shadcn.com/docs/components/button) components.
 
 <Step>Copy and paste the following code into your project.</Step>
 
@@ -126,6 +126,12 @@ confirm({
 ### Default
 
 <ComponentPreview name="confirmer-demo" />
+
+## Accessibility
+
+`<Confirmer />` renders an `<AlertDialog />`, so it inherits Base UI's alert dialog semantics: the dialog traps focus while open, labels itself from `<AlertDialogTitle>` and `<AlertDialogDescription>` (the `title` and `description` options), and returns focus to the triggering element when it closes.
+
+Pressing <Kbd>Escape</Kbd> or activating the cancel button resolves `confirm()` with `false`, mirroring a dismissed dialog. Always pass a `title` (and a `description` for anything non-obvious) so screen reader users hear what they're confirming, and set `ActionProps={{ variant: "destructive" }}` rather than color alone to distinguish destructive actions.
 
 ## API Reference
 

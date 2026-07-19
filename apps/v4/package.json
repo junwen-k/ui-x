@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "registry:validate": "shadcn registry validate ./registry.json",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {

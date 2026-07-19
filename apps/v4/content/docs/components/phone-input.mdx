@@ -41,7 +41,7 @@ Add the `<PhoneInputPrimitive />`, `<Input />` and `<Select />` component to you
 
 The `<PhoneInput />` component uses `<PhoneInputPrimitive />`, `<Input />` and `<Select />` components. Make sure you have it installed in your project.
 
-See installation instructions for the [PhoneInputPrimitive](/docs/primitives/phone-input#installation), [Input](/docs/primitives/input#installation) and [Select](/docs/primitives/select#installation) components.
+See installation instructions for the [PhoneInputPrimitive](/docs/primitives/phone-input#installation), [Input](https://ui.shadcn.com/docs/components/input) and [Select](https://ui.shadcn.com/docs/components/select) components.
 
 <Step>Copy and paste the following code into your project.</Step>
 
@@ -58,15 +58,16 @@ See installation instructions for the [PhoneInputPrimitive](/docs/primitives/pho
 ## Usage
 
 ```tsx
+import { SelectTrigger } from "@/components/ui/select";
 import { PhoneInput } from "@/components/ui/phone-input";
 ```
 
 ```tsx
 <PhoneInput>
   <PhoneInputCountrySelect>
-    <PhoneInputCountrySelectTrigger>
+    <SelectTrigger>
       <PhoneInputCountrySelectValue />
-    </PhoneInputCountrySelectTrigger>
+    </SelectTrigger>
     <PhoneInputCountrySelectContent>
       <PhoneInputCountrySelectOptions />
     </PhoneInputCountrySelectContent>
@@ -95,7 +96,7 @@ import { PhoneInput } from "@/components/ui/phone-input";
 
 ## Accessibility
 
-The country select trigger shows only a flag — give it an accessible name, e.g. `<PhoneInputCountrySelectTrigger aria-label="Country" />`, and label the phone input itself like any text input (via `<Field>` / `<FieldLabel>` in forms or `aria-label`). Flags are decorative; each option in the dropdown carries the country's name as text, so the selection is not communicated by the flag alone.
+The country select trigger shows only a flag — give it an accessible name, e.g. `<SelectTrigger aria-label="Country" />`, and label the phone input itself like any text input (via `<Field>` / `<FieldLabel>` in forms or `aria-label`). Flags are decorative; each option in the dropdown carries the country's name as text, so the selection is not communicated by the flag alone.
 
 ## API Reference
 
@@ -111,7 +112,7 @@ Wraps [Input](/docs/primitives/phone-input#input), rendered as the styled [Input
 
 ### PhoneInputCountrySelect
 
-The country selector, built on the styled [Select](https://ui.shadcn.com/docs/components/select) and wired to the country state — `value` and `onValueChange` are managed for you. Compose it with `PhoneInputCountrySelectTrigger`, `PhoneInputCountrySelectValue` and `PhoneInputCountrySelectContent`, which accept the corresponding Select part props.
+The country selector, built on the styled [Select](https://ui.shadcn.com/docs/components/select) and wired to the country state — `value` and `onValueChange` are managed for you. Compose it with Select's own `SelectTrigger` plus `PhoneInputCountrySelectValue` and `PhoneInputCountrySelectContent`, which layer country-aware behavior over the corresponding Select parts.
 
 ### PhoneInputCountrySelectOptions
 

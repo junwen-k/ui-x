@@ -39,13 +39,23 @@ npm install @base-ui/react
 
 <Step>
 
+Add the `<Empty />` component to your project.
+
+</Step>
+
+The `<Dropzone />` component uses the `<Empty />` component for its visual content. Make sure you have it installed in your project.
+
+See installation instructions for the [Empty](https://ui.shadcn.com/docs/components/empty) component.
+
+<Step>
+
 Add the `<DropzonePrimitive />` component to your project.
 
 </Step>
 
 The `<Dropzone />` component uses `<DropzonePrimitive />` component. Make sure you have it installed in your project.
 
-See installation instructions for the [DropzonePrimitive](/docs/components/dropzone-primitive#installation) component.
+See installation instructions for the [DropzonePrimitive](/docs/primitives/dropzone#installation) component.
 
 <Step>Copy and paste the following code into your project.</Step>
 
@@ -63,11 +73,15 @@ See installation instructions for the [DropzonePrimitive](/docs/components/dropz
 
 ```tsx
 import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
   Dropzone,
-  DropzoneDescription,
-  DropzoneGroup,
   DropzoneInput,
-  DropzoneTitle,
   DropzoneUploadIcon,
   DropzoneZone,
 } from "@/components/ui/dropzone";
@@ -83,16 +97,18 @@ import {
 >
   <DropzoneZone>
     <DropzoneInput />
-    <DropzoneGroup className="gap-4">
-      <DropzoneUploadIcon />
-      <DropzoneGroup>
-        <DropzoneTitle>Drop files here or click to upload</DropzoneTitle>
-        <DropzoneDescription>
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="icon">
+          <DropzoneUploadIcon />
+        </EmptyMedia>
+        <EmptyTitle>Drop files here or click to upload</EmptyTitle>
+        <EmptyDescription>
           You can upload files up to 10MB in size. Supported formats: JPG, PNG,
           PDF.
-        </DropzoneDescription>
-      </DropzoneGroup>
-    </DropzoneGroup>
+        </EmptyDescription>
+      </EmptyHeader>
+    </Empty>
   </DropzoneZone>
 </Dropzone>
 ```
@@ -113,11 +129,11 @@ import {
 
 ## Accessibility
 
-The zone is focusable and opens the file dialog with <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>, so the drag-and-drop interaction always has a keyboard equivalent. Make sure the zone contains visible text describing what to upload (such as `<DropzoneTitle />` and `<DropzoneDescription />`) — the upload icon alone is not an accessible name. Drag states are conveyed with color and iconography via `<DropzoneUploadIcon />`; keep the title text meaningful so the state change is not communicated by color alone.
+The zone is focusable and opens the file dialog with <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>, so the drag-and-drop interaction always has a keyboard equivalent. Make sure the zone contains visible text describing what to upload (such as `<EmptyTitle />` and `<EmptyDescription />`) — the upload icon alone is not an accessible name. Drag states are conveyed with color and iconography via the `<DropzoneUploadIcon />` swap; keep the title text meaningful so the state change is not communicated by color alone.
 
 ## API Reference
 
-Styled wrappers around the [Dropzone primitive](/docs/primitives/dropzone#api-reference) — see the primitive page for the full prop tables.
+Styled wrappers around the [Dropzone primitive](/docs/primitives/dropzone#api-reference) — see the primitive page for the full prop tables. The zone's title and description are composed with shadcn/ui's [Empty](https://ui.shadcn.com/docs/components/empty) component rather than a Dropzone-specific part.
 
 ### Dropzone
 
@@ -131,17 +147,13 @@ Wraps [Zone](/docs/primitives/dropzone#zone) with dashed-border styling that rea
 
 Wraps [Input](/docs/primitives/dropzone#input), the visually hidden file input.
 
+### DropzoneUploadIcon
+
+Swaps the icon based on the drag state — an upload icon by default, a check when the drag is accepted and a ban icon when rejected. Render it inside `<EmptyMedia variant="icon" />`. Accepts the same props as a [Lucide](https://lucide.dev) icon.
+
 ### DropzoneTrigger
 
 Wraps [Trigger](/docs/primitives/dropzone#trigger) for opening the file dialog from a button outside the zone.
-
-### DropzoneUploadIcon
-
-A convenience part that renders an upload, accepted or rejected icon based on the current drag state, using the [DragDefault](/docs/primitives/dropzone#dragdefault), [DragAccepted](/docs/primitives/dropzone#dragaccepted) and [DragRejected](/docs/primitives/dropzone#dragrejected) parts. Accepts `lucide-react` icon props.
-
-### DropzoneGroup, DropzoneTitle, DropzoneDescription
-
-Layout and typography parts for the zone's content. Render a `<div>`, `<h3>` and `<p>` respectively, and support the `render` prop.
 
 ### DropzoneAccepted, DropzoneRejected
 

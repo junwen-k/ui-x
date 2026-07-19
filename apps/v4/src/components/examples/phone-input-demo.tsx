@@ -4,12 +4,12 @@ import * as React from "react";
 
 import { ButtonGroup } from "@/components/ui/button-group";
 import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
+import { SelectTrigger } from "@/components/ui/select";
 import {
   PhoneInput,
   PhoneInputCountrySelect,
   PhoneInputCountrySelectContent,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 } from "@/registry/new-york/ui/phone-input";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
@@ -19,9 +19,9 @@ export default function PhoneInputDemo() {
     <PhoneInput>
       <ButtonGroup>
         <PhoneInputCountrySelect>
-          <PhoneInputCountrySelectTrigger>
+          <SelectTrigger>
             <PhoneInputCountrySelectValue />
-          </PhoneInputCountrySelectTrigger>
+          </SelectTrigger>
           <PhoneInputCountrySelectContent>
             <PhoneInputCountrySelectOptions />
           </PhoneInputCountrySelectContent>

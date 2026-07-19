@@ -12,7 +12,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -106,14 +105,6 @@ function PhoneInputCountrySelectValue({
   );
 }
 
-function PhoneInputCountrySelectTrigger(
-  props: React.ComponentProps<typeof SelectTrigger>,
-) {
-  return (
-    <SelectTrigger data-slot="phone-input-country-select-trigger" {...props} />
-  );
-}
-
 function PhoneInputCountrySelectContent({
   className,
   ...props
@@ -150,7 +141,7 @@ function PhoneInputCountrySelectInternationalItem(
     <SelectPrimitive.Item
       data-slot="phone-input-country-select-international-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center justify-between gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center justify-between gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
       )}
       value={PhoneInputPrimitive.INTERNATIONAL_COUNTRY_CODE}
       {...props}
@@ -186,7 +177,7 @@ function PhoneInputCountrySelectItem({
     <SelectPrimitive.Item
       data-slot="phone-input-country-select-item"
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center justify-between gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
+        "focus:bg-accent focus:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex w-full cursor-default items-center justify-between gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
         className,
       )}
       value={value}
@@ -224,6 +215,5 @@ export {
   PhoneInputCountrySelectInternationalItem,
   PhoneInputCountrySelectItem,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 };

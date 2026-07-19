@@ -1,7 +1,5 @@
 "use client";
 
-import { mergeProps } from "@base-ui/react/merge-props";
-import { useRender } from "@base-ui/react/use-render";
 import { BanIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
 import * as React from "react";
 
@@ -26,7 +24,7 @@ function DropzoneZone({
     <DropzonePrimitive.Zone
       data-slot="dropzone-zone"
       className={cn(
-        "border-input hover:border-accent-foreground/50 hover:bg-accent focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive data-[drag-active]:border-accent-foreground/50 data-[drag-reject]:border-destructive data-[drag-active]:bg-accent data-[drag-reject]:bg-destructive/30 cursor-pointer rounded-md border-2 border-dashed p-6 shadow-xs transition-colors outline-none focus-visible:ring-[3px] data-[disabled]:cursor-not-allowed data-[disabled]:border-inherit data-[disabled]:bg-inherit data-[disabled]:opacity-50 data-[drag-reject]:cursor-no-drop data-[no-click]:cursor-default",
+        "border-input hover:border-accent-foreground/50 hover:bg-accent focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive data-[drag-active]:border-accent-foreground/50 data-[drag-reject]:border-destructive data-[drag-active]:bg-accent data-[drag-reject]:bg-destructive/30 cursor-pointer rounded-lg border-2 border-dashed p-6 shadow-xs transition-colors outline-none focus-visible:ring-3 data-[disabled]:cursor-not-allowed data-[disabled]:border-inherit data-[disabled]:bg-inherit data-[disabled]:opacity-50 data-[drag-reject]:cursor-no-drop data-[no-click]:cursor-default",
         className,
       )}
       {...props}
@@ -34,89 +32,20 @@ function DropzoneZone({
   );
 }
 
-function DropzoneUploadIcon({
-  className,
-  ...props
-}: React.ComponentProps<typeof UploadIcon>) {
+function DropzoneUploadIcon(props: React.ComponentProps<typeof UploadIcon>) {
   return (
     <>
       <DropzonePrimitive.DragAccepted>
-        <CheckCircle2Icon
-          data-slot="dropzone-upload-icon-accepted"
-          className={cn("size-8", className)}
-          {...props}
-        />
+        <CheckCircle2Icon data-slot="dropzone-upload-icon" {...props} />
       </DropzonePrimitive.DragAccepted>
       <DropzonePrimitive.DragRejected>
-        <BanIcon
-          data-slot="dropzone-upload-icon-rejected"
-          className={cn("size-8", className)}
-          {...props}
-        />
+        <BanIcon data-slot="dropzone-upload-icon" {...props} />
       </DropzonePrimitive.DragRejected>
       <DropzonePrimitive.DragDefault>
-        <UploadIcon
-          data-slot="dropzone-upload-icon-default"
-          className={cn("size-8", className)}
-          {...props}
-        />
+        <UploadIcon data-slot="dropzone-upload-icon" {...props} />
       </DropzonePrimitive.DragDefault>
     </>
   );
-}
-
-function DropzoneGroup({
-  className,
-  render,
-  ...props
-}: useRender.ComponentProps<"div">) {
-  return useRender({
-    render,
-    defaultTagName: "div",
-    props: mergeProps<"div">(
-      {
-        "data-slot": "dropzone-group",
-        className: cn("grid place-items-center gap-1.5", className),
-      } as React.ComponentProps<"div">,
-      props,
-    ),
-  });
-}
-
-function DropzoneTitle({
-  className,
-  render,
-  ...props
-}: useRender.ComponentProps<"h3">) {
-  return useRender({
-    render,
-    defaultTagName: "h3",
-    props: mergeProps<"h3">(
-      {
-        "data-slot": "dropzone-title",
-        className: cn("leading-none font-medium tracking-tight", className),
-      } as React.ComponentProps<"h3">,
-      props,
-    ),
-  });
-}
-
-function DropzoneDescription({
-  className,
-  render,
-  ...props
-}: useRender.ComponentProps<"p">) {
-  return useRender({
-    render,
-    defaultTagName: "p",
-    props: mergeProps<"p">(
-      {
-        "data-slot": "dropzone-description",
-        className: cn("text-muted-foreground text-sm", className),
-      } as React.ComponentProps<"p">,
-      props,
-    ),
-  });
 }
 
 function DropzoneTrigger(
@@ -146,9 +75,6 @@ export {
   DropzoneInput,
   DropzoneZone,
   DropzoneUploadIcon,
-  DropzoneGroup,
-  DropzoneTitle,
-  DropzoneDescription,
   DropzoneTrigger,
   DropzoneAccepted,
   DropzoneRejected,
