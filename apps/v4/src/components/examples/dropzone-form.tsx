@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  BanIcon,
-  CheckCircle2Icon,
-  FileIcon,
-  UploadIcon,
-  XIcon,
-} from "lucide-react";
+import { FileIcon, XIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import * as React from "react";
 import { ErrorCode } from "react-dropzone";
@@ -41,9 +35,9 @@ import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   Dropzone,
   DropzoneInput,
+  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import * as DropzonePrimitive from "@/registry/new-york/ui/dropzone-primitive";
 
 // 1 MB
 const MAX_FILE_SIZE = 1e6;
@@ -87,15 +81,7 @@ export default function DropzoneForm() {
                 <Empty>
                   <EmptyHeader className="flex-row items-center gap-6 text-left">
                     <EmptyMedia variant="icon">
-                      <DropzonePrimitive.DragAccepted>
-                        <CheckCircle2Icon />
-                      </DropzonePrimitive.DragAccepted>
-                      <DropzonePrimitive.DragRejected>
-                        <BanIcon />
-                      </DropzonePrimitive.DragRejected>
-                      <DropzonePrimitive.DragDefault>
-                        <UploadIcon />
-                      </DropzonePrimitive.DragDefault>
+                      <DropzoneUploadIcon />
                     </EmptyMedia>
                     <div className="grid gap-0.5">
                       <EmptyTitle>Browse to upload your file</EmptyTitle>

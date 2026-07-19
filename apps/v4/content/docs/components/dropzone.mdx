@@ -82,9 +82,9 @@ import {
 import {
   Dropzone,
   DropzoneInput,
+  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/components/ui/dropzone";
-import * as DropzonePrimitive from "@/components/ui/dropzone-primitive";
 ```
 
 ```tsx
@@ -100,15 +100,7 @@ import * as DropzonePrimitive from "@/components/ui/dropzone-primitive";
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <DropzonePrimitive.DragAccepted>
-            <CheckCircle2Icon />
-          </DropzonePrimitive.DragAccepted>
-          <DropzonePrimitive.DragRejected>
-            <BanIcon />
-          </DropzonePrimitive.DragRejected>
-          <DropzonePrimitive.DragDefault>
-            <UploadIcon />
-          </DropzonePrimitive.DragDefault>
+          <DropzoneUploadIcon />
         </EmptyMedia>
         <EmptyTitle>Drop files here or click to upload</EmptyTitle>
         <EmptyDescription>
@@ -137,11 +129,11 @@ import * as DropzonePrimitive from "@/components/ui/dropzone-primitive";
 
 ## Accessibility
 
-The zone is focusable and opens the file dialog with <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>, so the drag-and-drop interaction always has a keyboard equivalent. Make sure the zone contains visible text describing what to upload (such as `<EmptyTitle />` and `<EmptyDescription />`) — the upload icon alone is not an accessible name. Drag states are conveyed with color and iconography via the `<DragDefault />`/`<DragAccepted />`/`<DragRejected />` icon swap; keep the title text meaningful so the state change is not communicated by color alone.
+The zone is focusable and opens the file dialog with <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>, so the drag-and-drop interaction always has a keyboard equivalent. Make sure the zone contains visible text describing what to upload (such as `<EmptyTitle />` and `<EmptyDescription />`) — the upload icon alone is not an accessible name. Drag states are conveyed with color and iconography via the `<DropzoneUploadIcon />` swap; keep the title text meaningful so the state change is not communicated by color alone.
 
 ## API Reference
 
-Styled wrappers around the [Dropzone primitive](/docs/primitives/dropzone#api-reference) — see the primitive page for the full prop tables. Visual content (icon, title, description) is composed with shadcn/ui's [Empty](https://ui.shadcn.com/docs/components/empty) component rather than a Dropzone-specific part.
+Styled wrappers around the [Dropzone primitive](/docs/primitives/dropzone#api-reference) — see the primitive page for the full prop tables. The zone's title and description are composed with shadcn/ui's [Empty](https://ui.shadcn.com/docs/components/empty) component rather than a Dropzone-specific part.
 
 ### Dropzone
 
@@ -154,6 +146,10 @@ Wraps [Zone](/docs/primitives/dropzone#zone) with dashed-border styling that rea
 ### DropzoneInput
 
 Wraps [Input](/docs/primitives/dropzone#input), the visually hidden file input.
+
+### DropzoneUploadIcon
+
+Swaps the icon based on the drag state — an upload icon by default, a check when the drag is accepted and a ban icon when rejected. Render it inside `<EmptyMedia variant="icon" />`. Accepts the same props as a [Lucide](https://lucide.dev) icon.
 
 ### DropzoneTrigger
 

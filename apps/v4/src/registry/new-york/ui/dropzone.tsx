@@ -1,5 +1,6 @@
 "use client";
 
+import { BanIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -31,6 +32,22 @@ function DropzoneZone({
   );
 }
 
+function DropzoneUploadIcon(props: React.ComponentProps<typeof UploadIcon>) {
+  return (
+    <>
+      <DropzonePrimitive.DragAccepted>
+        <CheckCircle2Icon data-slot="dropzone-upload-icon" {...props} />
+      </DropzonePrimitive.DragAccepted>
+      <DropzonePrimitive.DragRejected>
+        <BanIcon data-slot="dropzone-upload-icon" {...props} />
+      </DropzonePrimitive.DragRejected>
+      <DropzonePrimitive.DragDefault>
+        <UploadIcon data-slot="dropzone-upload-icon" {...props} />
+      </DropzonePrimitive.DragDefault>
+    </>
+  );
+}
+
 function DropzoneTrigger(
   props: React.ComponentProps<typeof DropzonePrimitive.Trigger>,
 ) {
@@ -57,6 +74,7 @@ export {
   Dropzone,
   DropzoneInput,
   DropzoneZone,
+  DropzoneUploadIcon,
   DropzoneTrigger,
   DropzoneAccepted,
   DropzoneRejected,

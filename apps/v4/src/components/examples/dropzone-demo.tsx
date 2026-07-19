@@ -1,6 +1,6 @@
 "use client";
 
-import { BanIcon, CheckCircle2Icon, FileIcon, UploadIcon } from "lucide-react";
+import { FileIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import * as React from "react";
 
@@ -21,9 +21,9 @@ import {
 import {
   Dropzone,
   DropzoneInput,
+  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import * as DropzonePrimitive from "@/registry/new-york/ui/dropzone-primitive";
 
 export default function DropzoneDemo() {
   const [files, setFiles] = React.useState<File[]>([]);
@@ -42,15 +42,7 @@ export default function DropzoneDemo() {
           <Empty>
             <EmptyHeader>
               <EmptyMedia variant="icon">
-                <DropzonePrimitive.DragAccepted>
-                  <CheckCircle2Icon />
-                </DropzonePrimitive.DragAccepted>
-                <DropzonePrimitive.DragRejected>
-                  <BanIcon />
-                </DropzonePrimitive.DragRejected>
-                <DropzonePrimitive.DragDefault>
-                  <UploadIcon />
-                </DropzonePrimitive.DragDefault>
+                <DropzoneUploadIcon />
               </EmptyMedia>
               <EmptyTitle>Drop files here or click to upload</EmptyTitle>
               <EmptyDescription>

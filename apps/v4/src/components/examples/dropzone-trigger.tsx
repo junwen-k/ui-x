@@ -1,5 +1,3 @@
-import { BanIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
   Empty,
@@ -13,9 +11,9 @@ import {
   Dropzone,
   DropzoneInput,
   DropzoneTrigger,
+  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import * as DropzonePrimitive from "@/registry/new-york/ui/dropzone-primitive";
 
 export default function DropzoneTriggerDemo() {
   return (
@@ -25,15 +23,7 @@ export default function DropzoneTriggerDemo() {
         <Empty>
           <EmptyHeader>
             <EmptyMedia variant="icon">
-              <DropzonePrimitive.DragAccepted>
-                <CheckCircle2Icon />
-              </DropzonePrimitive.DragAccepted>
-              <DropzonePrimitive.DragRejected>
-                <BanIcon />
-              </DropzonePrimitive.DragRejected>
-              <DropzonePrimitive.DragDefault>
-                <UploadIcon />
-              </DropzonePrimitive.DragDefault>
+              <DropzoneUploadIcon />
             </EmptyMedia>
             <EmptyTitle>Drop files here</EmptyTitle>
             <EmptyDescription>
