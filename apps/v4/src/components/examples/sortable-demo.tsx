@@ -103,15 +103,21 @@ export default function SortableDemo() {
     >
       <SortableGrid items={items} className="grid grid-cols-2 gap-3">
         {items.map((item) => (
-          <SortableItem asChild key={item.id} id={item.id}>
-            <SortableItemTrigger asChild>
-              <Item
-                title={item.title}
-                description={item.description}
-                className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
+          <SortableItem
+            key={item.id}
+            id={item.id}
+            render={
+              <SortableItemTrigger
+                render={
+                  <Item
+                    title={item.title}
+                    description={item.description}
+                    className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
+                  />
+                }
               />
-            </SortableItemTrigger>
-          </SortableItem>
+            }
+          />
         ))}
       </SortableGrid>
       <SortableOverlay>

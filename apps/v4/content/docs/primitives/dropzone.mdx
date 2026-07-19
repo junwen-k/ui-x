@@ -1,0 +1,163 @@
+---
+title: Dropzone
+description: A dropzone is an area into which one or multiple objects can be dragged and dropped.
+component: true
+links:
+  doc: https://react-dropzone.js.org
+  api: https://react-dropzone.js.org/#!/Dropzone
+---
+
+<ComponentPreview name="dropzone-primitive-demo" />
+
+## About
+
+The `<DropzonePrimitive />` component is built on top of [react-dropzone](https://react-dropzone.js.org), wrapping the library to deliver a more consistent API that aligns with Base UI conventions.
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
+
+**Unstyled**: This is an unstyled primitive. For a ready-to-use, shadcn-styled version, see the [Dropzone](/docs/components/dropzone) component.
+
+</Callout>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/dropzone-primitive
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @base-ui/react react-dropzone
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="dropzone-primitive" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+```tsx
+import * as DropzonePrimitive from "@/components/ui/dropzone-primitive";
+
+export default () => (
+  <DropzonePrimitive.Root>
+    <DropzonePrimitive.Input />
+    <DropzonePrimitive.Zone />
+    <DropzonePrimitive.Trigger />
+    <DropzonePrimitive.DragAccepted />
+    <DropzonePrimitive.DragRejected />
+    <DropzonePrimitive.DragDefault />
+    <DropzonePrimitive.Accepted />
+    <DropzonePrimitive.Rejected />
+  </DropzonePrimitive.Root>
+);
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="dropzone-primitive-demo" />
+
+## API Reference
+
+### Root
+
+The dropzone provider. Runs [react-dropzone](https://react-dropzone.js.org)'s `useDropzone` and shares its state with the parts below. Renders no element of its own.
+
+| Prop         | Type                                                      | Default | Description                                                                                                                                                                             |
+| ------------ | --------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children`   | `ReactNode \| (state: DropzoneContextProps) => ReactNode` | -       | The dropzone parts, or a render function that receives the full dropzone state and options.                                                                                             |
+| `...options` | `DropzoneOptions`                                         | -       | All [react-dropzone options](https://react-dropzone.js.org/#!/Dropzone) — `accept`, `maxFiles`, `maxSize`, `multiple`, `disabled`, `noClick`, `noKeyboard`, `onDrop`, `validator`, etc. |
+
+### Input
+
+The visually hidden file input. Merges react-dropzone's `getInputProps`. Renders an `<input type="file">` by default.
+
+| Prop       | Type                            | Default | Description                                     |
+| ---------- | ------------------------------- | ------- | ----------------------------------------------- |
+| `render`   | `ReactElement \| function`      | -       | Render as a different element.                  |
+| `...props` | `React.ComponentProps<"input">` | -       | Props merged into react-dropzone's input props. |
+
+### Zone
+
+The droppable area. Merges react-dropzone's `getRootProps`, so by default it is focusable and opens the file dialog on click, <Kbd>Enter</Kbd> or <Kbd>Space</Kbd>. Renders a `<div>` by default.
+
+| Prop       | Type                          | Default | Description                                    |
+| ---------- | ----------------------------- | ------- | ---------------------------------------------- |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.                 |
+| `...props` | `React.ComponentProps<"div">` | -       | Props merged into react-dropzone's root props. |
+
+The zone exposes its state for styling via data attributes: `data-drag-active`, `data-drag-accept`, `data-drag-reject`, `data-focused`, `data-file-dialog-active` and `data-disabled`, plus the option flags `data-no-click`, `data-no-keyboard`, `data-no-drag`, `data-no-drag-events-bubbling` and `data-prevent-drop-on-document`.
+
+### Trigger
+
+A button that opens the file dialog. Useful when the zone itself has `noClick`. Renders a `<button>` by default.
+
+| Prop       | Type                             | Default | Description                          |
+| ---------- | -------------------------------- | ------- | ------------------------------------ |
+| `render`   | `ReactElement \| function`       | -       | Render as a different element.       |
+| `...props` | `React.ComponentProps<"button">` | -       | Props spread to the trigger element. |
+
+### DragAccepted
+
+Renders its children only while a drag over the zone would be accepted.
+
+| Prop       | Type        | Default | Description                                 |
+| ---------- | ----------- | ------- | ------------------------------------------- |
+| `children` | `ReactNode` | -       | Content shown while the drag is acceptable. |
+
+### DragRejected
+
+Renders its children only while a drag over the zone would be rejected.
+
+| Prop       | Type        | Default | Description                               |
+| ---------- | ----------- | ------- | ----------------------------------------- |
+| `children` | `ReactNode` | -       | Content shown while the drag is rejected. |
+
+### DragDefault
+
+Renders its children only while no drag is in progress.
+
+| Prop       | Type        | Default | Description                            |
+| ---------- | ----------- | ------- | -------------------------------------- |
+| `children` | `ReactNode` | -       | Content shown when nothing is dragged. |
+
+### Accepted
+
+Render-prop container for the accepted files.
+
+| Prop       | Type                                                    | Default | Description                                       |
+| ---------- | ------------------------------------------------------- | ------- | ------------------------------------------------- |
+| `children` | `(acceptedFiles: readonly FileWithPath[]) => ReactNode` | -       | Render function that receives the accepted files. |
+
+### Rejected
+
+Render-prop container for the rejected files.
+
+| Prop       | Type                                                      | Default | Description                                        |
+| ---------- | --------------------------------------------------------- | ------- | -------------------------------------------------- |
+| `children` | `(fileRejections: readonly FileRejection[]) => ReactNode` | -       | Render function that receives the file rejections. |

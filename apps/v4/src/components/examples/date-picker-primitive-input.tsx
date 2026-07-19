@@ -19,9 +19,11 @@ export default function DatePickerPrimitiveInput() {
         <DatePickerPrimitive.Trigger>&#8595;</DatePickerPrimitive.Trigger>
       </DatePickerPrimitive.Anchor>
       <DatePickerPrimitive.Portal>
-        <DatePickerPrimitive.Content>
-          <DatePickerPrimitive.Calendar />
-        </DatePickerPrimitive.Content>
+        <DatePickerPrimitive.Positioner>
+          <DatePickerPrimitive.Content>
+            <DatePickerPrimitive.Calendar />
+          </DatePickerPrimitive.Content>
+        </DatePickerPrimitive.Positioner>
       </DatePickerPrimitive.Portal>
     </DatePickerPrimitive.Root>
   );

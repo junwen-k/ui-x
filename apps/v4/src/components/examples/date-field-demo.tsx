@@ -8,7 +8,7 @@ import {
 
 export default function DateFieldDemo() {
   return (
-    <DateField>
+    <DateField className="max-w-xs">
       <DateFieldDays />
       <DateFieldSeparator />
       <DateFieldMonths />

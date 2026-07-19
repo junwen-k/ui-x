@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
   Dropzone,
-  DropzoneDescription,
   DropzoneInput,
-  DropzoneTitle,
   DropzoneTrigger,
   DropzoneUploadIcon,
   DropzoneZone,
@@ -14,20 +20,24 @@ export default function DropzoneTriggerDemo() {
     <Dropzone noClick>
       <DropzoneZone>
         <DropzoneInput />
-        <div className="flex flex-col items-center gap-4 text-center">
-          <DropzoneUploadIcon />
-          <div className="flex flex-col gap-1.5">
-            <DropzoneTitle>Drop files here</DropzoneTitle>
-            <DropzoneDescription>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <DropzoneUploadIcon />
+            </EmptyMedia>
+            <EmptyTitle>Drop files here</EmptyTitle>
+            <EmptyDescription>
               Please upload file with less than 4MB.
-            </DropzoneDescription>
-          </div>
-          <DropzoneTrigger asChild>
-            <Button variant="outline" className="w-full">
+            </EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <DropzoneTrigger
+              render={<Button variant="outline" className="w-full" />}
+            >
               Open
-            </Button>
-          </DropzoneTrigger>
-        </div>
+            </DropzoneTrigger>
+          </EmptyContent>
+        </Empty>
       </DropzoneZone>
     </Dropzone>
   );

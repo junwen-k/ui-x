@@ -1,0 +1,101 @@
+---
+title: Badge Group
+description: A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.
+links:
+  doc: https://base-ui.com/react/components/toggle-group
+  api: https://base-ui.com/react/components/toggle-group#api-reference
+---
+
+<ComponentPreview name="badge-group-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/badge-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @base-ui/react @base-ui/utils
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="badge-group" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { BadgeGroup, BadgeGroupItem } from "@/components/ui/badge-group";
+```
+
+```tsx
+<BadgeGroup type="single">
+  <BadgeGroupItem value="chocolate">Chocolate</BadgeGroupItem>
+  <BadgeGroupItem value="mint">Mint</BadgeGroupItem>
+  <BadgeGroupItem value="strawberry">Strawberry</BadgeGroupItem>
+  <BadgeGroupItem value="vanilla">Vanilla</BadgeGroupItem>
+</BadgeGroup>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="badge-group-demo" />
+
+### Form
+
+<ComponentPreview name="badge-group-form" />
+
+## Accessibility
+
+The group is built on [Base UI Toggle Group](https://base-ui.com/react/components/toggle-group): one item is tabbable at a time, the arrow keys move focus between items, and <Kbd>Space</Kbd> or <Kbd>Enter</Kbd> toggles the focused item. When removal is enabled, <Kbd>Backspace</Kbd> and <Kbd>Delete</Kbd> remove the focused item — the close icon is a pointer-only affordance hidden from assistive technology, so keyboard and screen-reader users are not dependent on it.
+
+## API Reference
+
+### BadgeGroup
+
+The group container. Renders a [Base UI Toggle Group](https://base-ui.com/react/components/toggle-group).
+
+| Prop            | Type                     | Default    | Description                                                                                                                                    |
+| --------------- | ------------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`          | `"single" \| "multiple"` | `"single"` | Whether one or several items can be pressed at a time. Determines the value type below.                                                        |
+| `value`         | `string \| string[]`     | -          | The pressed item(s), typed by `type`. Use for controlled value.                                                                                |
+| `defaultValue`  | `string \| string[]`     | -          | The initial value when uncontrolled.                                                                                                           |
+| `onValueChange` | `(value) => void`        | -          | Called when the pressed item(s) change. The value is typed by `type`.                                                                          |
+| `onRemove`      | `(value) => void`        | -          | Enables removal. Called with the removed value(s) when an item's close icon is clicked or <Kbd>Backspace</Kbd> / <Kbd>Delete</Kbd> is pressed. |
+| `...props`      | `ToggleGroup.Props`      | -          | Remaining props are spread to [Base UI Toggle Group](https://base-ui.com/react/components/toggle-group#api-reference).                         |
+
+### BadgeGroupItem
+
+A single badge. Renders a [Base UI Toggle](https://base-ui.com/react/components/toggle) styled as an outline [Badge](https://ui.shadcn.com/docs/components/badge). Shows a close icon when the group has `onRemove`.
+
+| Prop       | Type           | Default | Description                                                                                                |
+| ---------- | -------------- | ------- | ---------------------------------------------------------------------------------------------------------- |
+| `value`    | `string`       | -       | The item's value within the group. Required.                                                               |
+| `...props` | `Toggle.Props` | -       | Remaining props are spread to [Base UI Toggle](https://base-ui.com/react/components/toggle#api-reference). |

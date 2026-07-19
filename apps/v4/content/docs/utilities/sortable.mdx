@@ -1,0 +1,183 @@
+---
+title: Sortable
+description: Sortable provides a way to sort items in a list or grid.
+component: true
+links:
+  doc: https://docs.dndkit.com/presets/sortable
+---
+
+<ComponentPreview name="sortable-demo" />
+
+## About
+
+The `<Sortable />` component is built on top of [@dnd-kit](https://dndkit.com)'s [sortable](https://docs.dndkit.com/presets/sortable) preset.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/sortable
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities @base-ui/react
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="sortable" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  Sortable,
+  SortableGrid,
+  SortableItem,
+  SortableItemTrigger,
+  SortableList,
+  SortableOverlay,
+} from "@/components/ui/sortable";
+```
+
+```tsx
+<Sortable>
+  <SortableList>
+    <SortableItem>
+      <SortableItemTrigger />
+    </SortableItem>
+  </SortableList>
+  <SortableGrid>
+    <SortableItem>
+      <SortableItemTrigger />
+    </SortableItem>
+  </SortableGrid>
+  <SortableOverlay />
+</Sortable>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="sortable-demo" />
+
+### Trigger
+
+<ComponentPreview name="sortable-trigger" />
+
+### Disabled
+
+<ComponentPreview name="sortable-disabled" />
+
+### Swap
+
+<ComponentPreview name="sortable-swap" />
+
+### Form
+
+<ComponentPreview name="sortable-form" />
+
+### Virtualized
+
+<ComponentPreview name="virtualized-sortable" />
+
+## Accessibility
+
+Keyboard sorting is preconfigured through @dnd-kit's [KeyboardSensor](https://docs.dndkit.com/api-documentation/sensors/keyboard): focus an item (or its `<SortableItemTrigger />` handle), press <Kbd>Enter</Kbd> or <Kbd>Space</Kbd> to pick it up, move it with the arrow keys, then press <Kbd>Enter</Kbd> or <Kbd>Space</Kbd> again to drop it or <Kbd>Escape</Kbd> to cancel.
+
+Screen reader announcements ("Picked up sortable item…") are provided by @dnd-kit and can be customized via the `accessibility` prop on `<Sortable />` — see the [@dnd-kit accessibility guide](https://docs.dndkit.com/guides/accessibility).
+
+When items are only draggable via a handle, keep the `<SortableItemTrigger />` a real `<button>` (the default) so it is focusable, and give icon-only handles an accessible name, e.g. `aria-label="Reorder"`.
+
+## API Reference
+
+### Sortable
+
+The root context. Wraps @dnd-kit's [DndContext](https://docs.dndkit.com/api-documentation/context-provider) with pointer and keyboard sensors and `closestCenter` collision detection preconfigured. Handle reordering in `onDragEnd`.
+
+| Prop                 | Type                                                    | Default                  | Description                                                                                      |
+| -------------------- | ------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
+| `getNewIndex`        | `NewIndexGetter`                                        | -                        | Computes the index an item moves to when sorting with the keyboard, e.g. for swap-based sorting. |
+| `getTransformStyle`  | `(transform: Transform \| null) => string \| undefined` | `CSS.Transform.toString` | Converts an item's transform into its CSS `transform` style.                                     |
+| `collisionDetection` | `CollisionDetection`                                    | `closestCenter`          | The collision detection algorithm.                                                               |
+| `...props`           | `DndContextProps`                                       | -                        | Props spread to [DndContext](https://docs.dndkit.com/api-documentation/context-provider#props).  |
+
+### SortableList
+
+A sortable list. Wraps @dnd-kit's [SortableContext](https://docs.dndkit.com/presets/sortable/sortable-context) and renders a `<ul>`.
+
+| Prop          | Type                             | Default                    | Description                                                                                                                                |
+| ------------- | -------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `items`       | `(UniqueIdentifier \| { id })[]` | -                          | The sorted item identifiers, in render order.                                                                                              |
+| `orientation` | `"vertical" \| "horizontal"`     | `"vertical"`               | The layout direction of the list.                                                                                                          |
+| `strategy`    | `SortingStrategy`                | Derived from `orientation` | The [sorting strategy](https://docs.dndkit.com/presets/sortable#sorting-strategies); defaults to the vertical or horizontal list strategy. |
+| `disabled`    | `boolean \| Disabled`            | -                          | Disables sorting for the whole list.                                                                                                       |
+| `render`      | `ReactElement \| function`       | -                          | Render as a different element.                                                                                                             |
+| `...props`    | `React.ComponentProps<"ul">`     | -                          | Props spread to the list element.                                                                                                          |
+
+### SortableGrid
+
+A sortable grid. Same as `<SortableList />` but renders a `<div>` and defaults to @dnd-kit's `rectSortingStrategy`, which suits grid layouts.
+
+| Prop       | Type                             | Default               | Description                                   |
+| ---------- | -------------------------------- | --------------------- | --------------------------------------------- |
+| `items`    | `(UniqueIdentifier \| { id })[]` | -                     | The sorted item identifiers, in render order. |
+| `strategy` | `SortingStrategy`                | `rectSortingStrategy` | The sorting strategy.                         |
+| `disabled` | `boolean \| Disabled`            | -                     | Disables sorting for the whole grid.          |
+| `render`   | `ReactElement \| function`       | -                     | Render as a different element.                |
+| `...props` | `React.ComponentProps<"div">`    | -                     | Props spread to the grid element.             |
+
+### SortableItem
+
+A sortable item. Renders a `<div>` that is draggable as a whole unless a `<SortableItemTrigger />` handle is present. Exposes `data-dragging`, `data-over` and `data-sorting` attributes for styling.
+
+| Prop       | Type                          | Default | Description                                                                |
+| ---------- | ----------------------------- | ------- | -------------------------------------------------------------------------- |
+| `id`       | `UniqueIdentifier`            | -       | The item's unique identifier. Must match an entry in the parent's `items`. |
+| `disabled` | `boolean \| Disabled`         | -       | Disables sorting for this item.                                            |
+| `render`   | `ReactElement \| function`    | -       | Render as a different element.                                             |
+| `...props` | `React.ComponentProps<"div">` | -       | Props spread to the item element.                                          |
+
+### SortableItemTrigger
+
+A drag handle. Renders a `<button>`; when present, dragging (pointer and keyboard) starts from the handle instead of the whole item. Exposes the same `data-dragging`, `data-over` and `data-sorting` attributes.
+
+| Prop       | Type                             | Default | Description                         |
+| ---------- | -------------------------------- | ------- | ----------------------------------- |
+| `disabled` | `boolean`                        | -       | Disables the handle.                |
+| `render`   | `ReactElement \| function`       | -       | Render as a different element.      |
+| `...props` | `React.ComponentProps<"button">` | -       | Props spread to the handle element. |
+
+### SortableOverlay
+
+The drag preview. Wraps @dnd-kit's [DragOverlay](https://docs.dndkit.com/api-documentation/draggable/drag-overlay) in a portal to `document.body` and renders its children only while an item is being dragged.
+
+| Prop       | Type                                               | Default | Description                                                                                            |
+| ---------- | -------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------ |
+| `children` | `ReactNode \| (id: UniqueIdentifier) => ReactNode` | -       | The preview content; the function form receives the active item's identifier.                          |
+| `...props` | `React.ComponentProps<typeof DragOverlay>`         | -       | Props spread to [DragOverlay](https://docs.dndkit.com/api-documentation/draggable/drag-overlay#props). |

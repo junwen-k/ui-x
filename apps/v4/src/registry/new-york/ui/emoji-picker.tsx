@@ -1,6 +1,7 @@
 "use client";
 
-import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group";
+import { Toggle } from "@base-ui/react/toggle";
+import { ToggleGroup } from "@base-ui/react/toggle-group";
 import {
   type EmojiPickerListCategoryHeaderProps,
   type EmojiPickerListEmojiProps,
@@ -14,6 +15,7 @@ import { LoaderIcon, SearchIcon } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
+import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
 import {
   Popover,
   PopoverContent,
@@ -29,7 +31,7 @@ function EmojiPicker({
     <EmojiPickerPrimitive.Root
       data-slot="emoji-picker"
       className={cn(
-        "bg-popover text-popover-foreground isolate flex h-full w-fit flex-col overflow-hidden rounded-md",
+        "bg-popover text-popover-foreground isolate flex h-full w-fit flex-col overflow-hidden rounded-lg",
         className,
       )}
       {...props}
@@ -44,14 +46,18 @@ function EmojiPickerSearch({
   return (
     <div
       data-slot="emoji-picker-search-wrapper"
-      className={cn("flex h-9 items-center gap-2 border-b px-3", className)}
+      className={cn("p-1 pb-0", className)}
     >
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
-      <EmojiPickerPrimitive.Search
-        data-slot="emoji-picker-search"
-        className="placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
-        {...props}
-      />
+      <InputGroup className="border-input/30 bg-input/30 h-8! rounded-lg! shadow-none! *:data-[slot=input-group-addon]:pl-2!">
+        <EmojiPickerPrimitive.Search
+          data-slot="emoji-picker-search"
+          className="placeholder:text-muted-foreground w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
+          {...props}
+        />
+        <InputGroupAddon>
+          <SearchIcon className="size-4 shrink-0 opacity-50" />
+        </InputGroupAddon>
+      </InputGroup>
     </div>
   );
 }
@@ -188,38 +194,37 @@ function EmojiPickerSkinToneSelector() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="size-7">
-          {
-            skinToneVariations.find(
-              (variation) => variation.skinTone === skinTone,
-            )?.emoji
-          }
-        </Button>
+      <PopoverTrigger
+        render={<Button variant="outline" size="icon" className="size-7" />}
+      >
+        {
+          skinToneVariations.find(
+            (variation) => variation.skinTone === skinTone,
+          )?.emoji
+        }
       </PopoverTrigger>
       <PopoverContent
         side="left"
         align="center"
         className="w-fit overflow-hidden p-0"
       >
-        <ToggleGroupPrimitive.Root
-          type="single"
-          value={skinTone}
-          onValueChange={(value) => value && setSkinTone(value as SkinTone)}
+        <ToggleGroup
+          value={[skinTone]}
+          onValueChange={([value]) => value && setSkinTone(value as SkinTone)}
           aria-label="Select skin tone"
           orientation="horizontal"
         >
           {skinToneVariations.map((variation) => (
-            <ToggleGroupPrimitive.Item
+            <Toggle
               key={variation.skinTone}
               aria-label={`${variation.skinTone} skin tone`}
               value={variation.skinTone}
-              className="data-[state=on]:bg-accent data-[state=on]:text-accent-foreground hover:bg-muted focus-visible:ring-ring size-7"
+              className="data-[pressed]:bg-accent data-[pressed]:text-accent-foreground hover:bg-muted focus-visible:ring-ring size-7"
             >
               {variation.emoji}
-            </ToggleGroupPrimitive.Item>
+            </Toggle>
           ))}
-        </ToggleGroupPrimitive.Root>
+        </ToggleGroup>
       </PopoverContent>
     </Popover>
   );

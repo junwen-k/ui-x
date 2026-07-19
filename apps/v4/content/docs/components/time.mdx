@@ -1,0 +1,77 @@
+---
+title: Time
+description: Displays a specific time (or datetime).
+---
+
+<ComponentPreview name="time-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/time
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install date-fns
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="time" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { Time } from "@/components/ui/time";
+```
+
+```tsx
+<Time />
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="time-demo" />
+
+### Format
+
+<ComponentPreview name="time-format" />
+
+## API Reference
+
+### Time
+
+Renders a semantic `<time>` element with a machine-readable `dateTime` attribute, formatting both with [date-fns format](https://date-fns.org/docs/format).
+
+| Prop                | Type                           | Default        | Description                                       |
+| ------------------- | ------------------------------ | -------------- | ------------------------------------------------- |
+| `children`          | `Date \| string \| number`     | -              | The date to display. Required.                    |
+| `formatStr`         | `string`                       | `"PPP"`        | The date-fns format for the visible text.         |
+| `dateTimeFormatStr` | `string`                       | `"yyyy-MM-dd"` | The date-fns format for the `dateTime` attribute. |
+| `...props`          | `React.ComponentProps<"time">` | -              | Props spread to the `<time>` element.             |

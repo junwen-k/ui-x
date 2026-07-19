@@ -1,7 +1,7 @@
 "use client";
 
-import { composeEventHandlers } from "@radix-ui/primitive";
-import { Primitive } from "@radix-ui/react-primitive";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 import {
   type DropzoneOptions,
@@ -28,8 +28,7 @@ function useDropzone() {
 
 export interface DropzoneProps extends DropzoneOptions {
   children:
-    | React.ReactNode
-    | ((state: DropzoneContextProps) => React.ReactNode);
+    React.ReactNode | ((state: DropzoneContextProps) => React.ReactNode);
 }
 
 function Dropzone({ children, ...props }: DropzoneProps) {
@@ -43,18 +42,23 @@ function Dropzone({ children, ...props }: DropzoneProps) {
   );
 }
 
-function DropzoneInput(props: React.ComponentProps<typeof Primitive.input>) {
+function DropzoneInput({
+  render,
+  ...props
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDropzone();
 
-  return (
-    <Primitive.input
-      data-slot="dropzone-input"
-      {...getInputProps({ disabled, ...props })}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "dropzone-input",
+      ...getInputProps({ disabled, ...props }),
+    },
+  });
 }
 
-function DropzoneZone(props: React.ComponentProps<typeof Primitive.div>) {
+function DropzoneZone({ render, ...props }: useRender.ComponentProps<"div">) {
   const {
     getRootProps,
     isFocused,
@@ -70,38 +74,44 @@ function DropzoneZone(props: React.ComponentProps<typeof Primitive.div>) {
     disabled,
   } = useDropzone();
 
-  return (
-    <Primitive.div
-      data-slot="dropzone-zone"
-      data-prevent-drop-on-document={preventDropOnDocument || undefined}
-      data-no-click={noClick || undefined}
-      data-no-keyboard={noKeyboard || undefined}
-      data-no-drag={noDrag || undefined}
-      data-no-drag-events-bubbling={noDragEventsBubbling || undefined}
-      data-disabled={disabled || undefined}
-      data-focused={isFocused || undefined}
-      data-drag-active={isDragActive || undefined}
-      data-drag-accept={isDragAccept || undefined}
-      data-drag-reject={isDragReject || undefined}
-      data-file-dialog-active={isFileDialogActive || undefined}
-      {...getRootProps(props)}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "div",
+    props: {
+      "data-slot": "dropzone-zone",
+      "data-prevent-drop-on-document": preventDropOnDocument || undefined,
+      "data-no-click": noClick || undefined,
+      "data-no-keyboard": noKeyboard || undefined,
+      "data-no-drag": noDrag || undefined,
+      "data-no-drag-events-bubbling": noDragEventsBubbling || undefined,
+      "data-disabled": disabled || undefined,
+      "data-focused": isFocused || undefined,
+      "data-drag-active": isDragActive || undefined,
+      "data-drag-accept": isDragAccept || undefined,
+      "data-drag-reject": isDragReject || undefined,
+      "data-file-dialog-active": isFileDialogActive || undefined,
+      ...getRootProps(props),
+    },
+  });
 }
 
 function DropzoneTrigger({
-  onClick,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.button>) {
+}: useRender.ComponentProps<"button">) {
   const { open } = useDropzone();
 
-  return (
-    <Primitive.button
-      data-slot="dropzone-trigger"
-      onClick={composeEventHandlers(onClick, open)}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "button",
+    props: mergeProps<"button">(
+      {
+        "data-slot": "dropzone-trigger",
+        onClick: () => open(),
+      } as React.ComponentProps<"button">,
+      props,
+    ),
+  });
 }
 
 export interface DropzoneDragAcceptedProps {

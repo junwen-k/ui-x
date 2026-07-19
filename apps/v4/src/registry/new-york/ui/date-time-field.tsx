@@ -2,23 +2,20 @@
 
 import * as React from "react";
 
+import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 import * as DateTimeFieldPrimitive from "@/registry/new-york/ui/date-time-field-primitive";
-import {
-  InputBase,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
 
 function DateTimeField({
-  children,
   className,
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Root>) {
   return (
-    <DateTimeFieldPrimitive.Root data-slot="date-time-field" asChild {...props}>
-      <InputBase className={cn("gap-0", className)}>{children}</InputBase>
-    </DateTimeFieldPrimitive.Root>
+    <DateTimeFieldPrimitive.Root
+      data-slot="date-time-field"
+      render={<InputGroup className={cn("px-2", className)} />}
+      {...props}
+    />
   );
 }
 
@@ -36,7 +33,7 @@ function DateTimeFieldSeparator({
 }
 
 const dateTimeFieldInputStyle =
-  "focus:bg-primary focus:text-primary-foreground focus:placeholder:text-primary-foreground box-content h-fit flex-initial rounded-sm px-0.5 tabular-nums";
+  "focus:bg-primary dark:focus:bg-primary focus:text-primary-foreground focus:placeholder:text-primary-foreground box-content h-fit flex-initial rounded-sm px-0.5 py-0.5 tabular-nums";
 
 function DateTimeFieldYears({
   placeholder = "yyyy",
@@ -44,22 +41,20 @@ function DateTimeFieldYears({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Years>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Years
-        data-slot="date-time-field-years"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Years
+      data-slot="date-time-field-years"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(4ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Years>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -69,22 +64,20 @@ function DateTimeFieldMonths({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Months>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Months
-        data-slot="date-time-field-months"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Months
+      data-slot="date-time-field-months"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Months>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -94,22 +87,20 @@ function DateTimeFieldDays({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Days>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Days
-        data-slot="date-time-field-days"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Days
+      data-slot="date-time-field-days"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Days>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -119,22 +110,20 @@ function DateTimeFieldHours({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Hours>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Hours
-        data-slot="date-time-field-hours"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Hours
+      data-slot="date-time-field-hours"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Hours>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -144,22 +133,20 @@ function DateTimeFieldMinutes({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Minutes>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Minutes
-        data-slot="date-time-field-minutes"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Minutes
+      data-slot="date-time-field-minutes"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Minutes>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -169,22 +156,20 @@ function DateTimeFieldSeconds({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.Seconds>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.Seconds
-        data-slot="date-time-field-seconds"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.Seconds
+      data-slot="date-time-field-seconds"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)]",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.Seconds>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 
@@ -194,22 +179,20 @@ function DateTimeFieldAmPm({
   ...props
 }: React.ComponentProps<typeof DateTimeFieldPrimitive.AmPm>) {
   return (
-    <InputBaseControl>
-      <DateTimeFieldPrimitive.AmPm
-        data-slot="date-time-field-am-pm"
-        asChild
-        placeholder={placeholder}
-        {...props}
-      >
-        <InputBaseInput
+    <DateTimeFieldPrimitive.AmPm
+      data-slot="date-time-field-am-pm"
+      placeholder={placeholder}
+      render={
+        <InputGroupInput
           className={cn(
             dateTimeFieldInputStyle,
             "max-w-[calc(2ch_+_0.5rem)] text-center",
             className,
           )}
         />
-      </DateTimeFieldPrimitive.AmPm>
-    </InputBaseControl>
+      }
+      {...props}
+    />
   );
 }
 

@@ -1,0 +1,113 @@
+---
+title: Time Field
+description: Time Field allows user to enter time value.
+links:
+  doc: /docs/primitives/date-time-field
+---
+
+<ComponentPreview name="time-field-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/time-field
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add `<DateTimeField />` component to your project.
+
+</Step>
+
+The `<TimeField />` component uses the `<DateTimeField />` component. Make sure you have it installed in your project.
+
+See installation instructions for the [DateTimeField](/docs/components/date-time-field#installation) component.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="time-field" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  TimeField,
+  TimeFieldAmPm,
+  TimeFieldHours,
+  TimeFieldMinutes,
+  TimeFieldSeconds,
+  TimeFieldSeparator,
+} from "@/components/ui/time-field";
+```
+
+```tsx
+<TimeField>
+  <TimeFieldHours />
+  <TimeFieldSeparator />
+  <TimeFieldMinutes />
+  <TimeFieldSeparator />
+  <TimeFieldSeconds />
+  <TimeFieldAmPm />
+</TimeField>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="time-field-demo" />
+
+### With AM/PM
+
+<ComponentPreview name="time-field-hour-12" />
+
+### Form
+
+<ComponentPreview name="time-field-form" />
+
+## Accessibility
+
+The field follows the segment keyboard model and labeling guidance described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section, including <Kbd>A</Kbd> / <Kbd>P</Kbd> for the meridiem segment.
+
+## API Reference
+
+A time-only preset of the [Date Time Field](/docs/components/date-time-field#api-reference) — each part wraps its Date Time Field counterpart and accepts the same props.
+
+### TimeField
+
+Wraps `DateTimeField` and accepts all of the [Root props](/docs/primitives/date-time-field#root) (`value`, `onValueChange`, `hour12`, …).
+
+### TimeFieldHours, TimeFieldMinutes, TimeFieldSeconds
+
+Wrap the corresponding [segments](/docs/primitives/date-time-field#segments) with `--` as the default placeholder.
+
+### TimeFieldAmPm
+
+Wraps [AmPm](/docs/primitives/date-time-field#ampm); renders only when the field has `hour12`.
+
+### TimeFieldSeparator
+
+Wraps the [separator](/docs/components/date-time-field#datetimefieldseparator) with `:` as the default children.

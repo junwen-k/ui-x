@@ -1,16 +1,40 @@
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowRightIcon, Loader2Icon } from "lucide-react";
 import Link from "next/link";
+import * as React from "react";
 
-import {
-  ComponentCanvas,
-  ComponentCanvasExample,
-} from "@/components/component-preview";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
+
+function ComponentCanvas({ className, ...props }: React.ComponentProps<"div">) {
+  return <div className={cn("rounded-md border", className)} {...props} />;
+}
+
+async function ComponentCanvasExample({
+  name,
+  ...props
+}: React.ComponentProps<"div"> & { name: string }) {
+  const Component = (await import(`@/components/examples/${name}`)).default;
+
+  return (
+    <div {...props}>
+      <React.Suspense
+        fallback={
+          <div className="text-muted-foreground flex w-full items-center justify-center text-sm">
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
+            Loading...
+          </div>
+        }
+      >
+        <Component />
+      </React.Suspense>
+    </div>
+  );
+}
 
 export function ComponentDemoCarouselSection() {
   return (
@@ -29,27 +53,9 @@ export function ComponentDemoCarouselSection() {
                   "A badge group is a focusable list of labels, categories, keywords, filters, or other items, with support for keyboard navigation, selection, and removal.",
               },
               {
-                name: "calendar-dropdown-layout",
-                title: "Calendar",
-                description:
-                  "A calendar component lets users select a date without any input or popper / modal.",
-              },
-              {
-                name: "combobox-demo",
-                title: "Combobox",
-                description:
-                  "Input field with autocomplete & autosuggest functionalities.",
-              },
-              {
                 name: "confirmer-demo",
                 title: "Confirmer",
                 description: "Imperative confirm dialog implementation.",
-              },
-              {
-                name: "control-group-demo",
-                title: "Control Group",
-                description:
-                  "A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit.",
               },
               {
                 name: "date-field-demo",
@@ -82,11 +88,13 @@ export function ComponentDemoCarouselSection() {
                 <p className="text-muted-foreground text-sm">
                   Explore more components
                 </p>
-                <Button asChild variant="outline">
-                  <Link href="/docs/components">
-                    Browse components
-                    <ArrowRightIcon className="size-4" />
-                  </Link>
+                <Button
+                  variant="outline"
+                  nativeButton={false}
+                  render={<Link href="/docs/components" />}
+                >
+                  Browse components
+                  <ArrowRightIcon className="size-4" />
                 </Button>
               </div>
             </CarouselItem>

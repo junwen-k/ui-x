@@ -10,9 +10,11 @@ export default function DatePickerPrimitiveDemo() {
         <DatePickerPrimitive.Clear>&#215;</DatePickerPrimitive.Clear>
       </DatePickerPrimitive.Anchor>
       <DatePickerPrimitive.Portal>
-        <DatePickerPrimitive.Content>
-          <DatePickerPrimitive.Calendar />
-        </DatePickerPrimitive.Content>
+        <DatePickerPrimitive.Positioner>
+          <DatePickerPrimitive.Content>
+            <DatePickerPrimitive.Calendar />
+          </DatePickerPrimitive.Content>
+        </DatePickerPrimitive.Positioner>
       </DatePickerPrimitive.Portal>
     </DatePickerPrimitive.Root>
   );

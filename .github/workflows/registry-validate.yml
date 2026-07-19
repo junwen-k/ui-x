@@ -1,0 +1,19 @@
+name: Registry Validate
+
+on:
+  push:
+    branches: [main, next]
+    paths:
+      - "registry.json"
+      - "apps/v4/registry.json"
+  pull_request:
+    paths:
+      - "registry.json"
+      - "apps/v4/registry.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate registry
+        run: npx shadcn@latest registry validate ${{ github.repository }}#${{ github.sha }}

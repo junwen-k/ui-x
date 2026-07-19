@@ -1,7 +1,6 @@
 "use client";
 
-import { useComposedRefs } from "@radix-ui/react-compose-refs";
-import { Primitive } from "@radix-ui/react-primitive";
+import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 
 import {
@@ -16,6 +15,12 @@ export type DateTimeFieldContextProps = {
 const DateTimeFieldContext = React.createContext<DateTimeFieldContextProps>({
   getInputProps: () => ({ ref: () => null }),
   getRootProps: () => ({ ref: () => null }),
+  ampm: {
+    value: undefined,
+    set: () => {},
+    toggle: () => {},
+    getSelectProps: () => ({ value: undefined, onChange: () => {} }),
+  },
   options: {},
   disabled: false,
 });
@@ -32,8 +37,9 @@ export function useDateTimeField() {
 }
 
 export interface DateTimeFieldProps
-  extends UseTimescapeOptions,
-    Omit<React.ComponentProps<typeof Primitive.div>, "value" | "defaultValue"> {
+  extends
+    UseTimescapeOptions,
+    Omit<useRender.ComponentProps<"div">, "value" | "defaultValue"> {
   disabled?: boolean;
 }
 
@@ -49,7 +55,7 @@ export function DateTimeField({
   snapToStep,
   wheelControl,
   wrapAround,
-  ref,
+  render,
   ...props
 }: DateTimeFieldProps) {
   const timescape = useTimescape({
@@ -66,180 +72,192 @@ export function DateTimeField({
   });
 
   const { ref: rootRef, ...rootProps } = timescape.getRootProps();
-  const composedRefs = useComposedRefs(ref, (node) => rootRef(node)!);
+
+  const element = useRender({
+    render,
+    ref: (node: HTMLDivElement | null) => {
+      rootRef(node);
+    },
+    defaultTagName: "div",
+    props: {
+      "data-slot": "date-time-field",
+      "data-disabled": disabled,
+      ...rootProps,
+      ...props,
+    },
+  });
 
   return (
     <DateTimeFieldContext.Provider value={{ ...timescape, disabled }}>
-      <Primitive.div
-        data-slot="date-time-field"
-        ref={composedRefs}
-        data-disabled={disabled}
-        {...rootProps}
-        {...props}
-      />
+      {element}
     </DateTimeFieldContext.Provider>
   );
 }
 
 export function DateTimeFieldSeparator({
-  ref,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.span>) {
+}: useRender.ComponentProps<"span">) {
   const { disabled } = useDateTimeField();
 
-  return (
-    <Primitive.span
-      data-slot="date-time-field-separator"
-      ref={ref}
-      aria-hidden="true"
-      data-disabled={disabled}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "span",
+    props: {
+      "data-slot": "date-time-field-separator",
+      "aria-hidden": "true",
+      "data-disabled": disabled,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldYears({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("years");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-years"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-years",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldMonths({
   disabled: disabledProp,
-  ref,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("months");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-months"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-months",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldDays({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("days");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-days"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-days",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldHours({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("hours");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-hours"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-hours",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldMinutes({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("minutes");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-minutes"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-minutes",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldSeconds({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("seconds");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  return (
-    <Primitive.input
-      data-slot="date-time-field-seconds"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-seconds",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export function DateTimeFieldAmPm({
-  ref,
   disabled: disabledProp,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.input>) {
+}: useRender.ComponentProps<"input">) {
   const { getInputProps, disabled, options } = useDateTimeField();
   const { ref: inputRef, ...inputProps } = getInputProps("am/pm");
-  const composedRefs = useComposedRefs(ref, inputRef);
 
-  if (!options?.hour12) {
-    return null;
-  }
-
-  return (
-    <Primitive.input
-      data-slot="date-time-field-am-pm"
-      ref={composedRefs}
-      {...inputProps}
-      disabled={disabled || disabledProp}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    ref: inputRef,
+    enabled: Boolean(options?.hour12),
+    defaultTagName: "input",
+    props: {
+      "data-slot": "date-time-field-am-pm",
+      ...inputProps,
+      disabled: disabled || disabledProp,
+      ...props,
+    },
+  });
 }
 
 export {

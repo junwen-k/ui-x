@@ -1,0 +1,95 @@
+---
+title: Changelog
+description: Latest updates and announcements.
+---
+
+## July 2026 - Base UI
+
+ui-x is now built on [Base UI](https://base-ui.com). Following shadcn/ui's adoption of Base UI as the modern successor to Radix UI, every component has been rebuilt on Base UI primitives and restyled to match the latest shadcn/ui design.
+
+<ComponentPreview name="date-picker-demo" />
+
+### What's changed
+
+- **Base UI everywhere** — All Radix UI dependencies are gone. Components are built on Base UI primitives and utilities, with React 19 ref handling throughout.
+- **Restyled** — Every component, demo and docs page has been refreshed against the latest shadcn/ui styling.
+- **Simpler forms** — Demos use Base UI's `Field` and `Form` for form plumbing. For React Hook Form or TanStack Form wiring, see the shadcn/ui [forms guides](https://ui.shadcn.com/docs/forms).
+- **Dropzone composes with Empty** — `DropzoneGroup`, `DropzoneTitle` and `DropzoneDescription` are gone. Build the zone's title and description with shadcn/ui's [Empty](https://ui.shadcn.com/docs/components/empty) component instead; `DropzoneUploadIcon` stays for the drag-state icon swap.
+
+### Superseded components
+
+shadcn/ui now ships first-class versions of several components that ui-x originally existed to fill in. These have been removed in favor of the official ones:
+
+| ui-x component | Use instead                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| Calendar       | [Calendar](https://ui.shadcn.com/docs/components/calendar)           |
+| Combobox       | [Combobox](https://ui.shadcn.com/docs/components/combobox)           |
+| Control Group  | [Button Group](https://ui.shadcn.com/docs/components/button-group)   |
+| File List      | [Attachment](https://ui.shadcn.com/docs/components/attachment)       |
+| Input Base     | [Input Group](https://ui.shadcn.com/docs/components/input-group)     |
+| Kbd            | [Kbd](https://ui.shadcn.com/docs/components/kbd)                     |
+| Native Select  | [Native Select](https://ui.shadcn.com/docs/components/native-select) |
+
+## June 2025 - Phone Input and Emoji Picker
+
+We've added a new `<PhoneInput />` component and a new `<EmojiPicker />` component.
+
+### Phone Input
+
+A component for phone number input field with country selection and formatting. Built on top of [react-phone-number-input](https://github.com/catamphetamine/react-phone-number-input).
+
+<ComponentPreview name="phone-input-demo" />
+
+[Read the docs](/docs/components/phone-input)
+
+### Emoji Picker
+
+A component that allows users to select an emoji from a list of emojis. Built on top of [frimousse](https://frimousse.liveblocks.io/).
+
+<ComponentPreview name="emoji-picker-demo" />
+
+[Read the docs](/docs/components/emoji-picker)
+
+## May 2025 - Tailwind v4 and React 19
+
+We're excited to announce support for Tailwind v4 and React 19! This major update brings significant improvements and new features to the UI components library. Please refer to shadcn/ui's [Tailwind v4](https://ui.shadcn.com/docs/tailwind-v4) documentation for more details on migrating your project and taking advantage of the new capabilities.
+
+### Wheel Picker
+
+Along with this major update, we've also added a new `<WheelPicker />` component, built on top of [react-wheel-picker](https://github.com/ncdai/react-wheel-picker). This component provides an iOS-like interface for selecting options from a scrollable wheel.
+
+<ComponentPreview name="wheel-picker-demo" />
+
+[Read the docs](/docs/components/wheel-picker)
+
+## February 2025 - Virtualizer
+
+We've added a new Virtualizer documentation page.
+
+### Virtualizer
+
+Learn how to use the `virtua` library to efficiently render large lists and grids by virtualizing your components. This documentation provides practical examples and guidance on integrating `virtua` with your existing components.
+
+<ComponentPreview name="virtualized-demo" />
+
+[Read the docs](/docs/utilities/virtualized)
+
+## February 2025 - Sortable and Control Group
+
+We've added a new `<Sortable />` component and a new `<ControlGroup />` component.
+
+### Sortable
+
+A drag and drop component for reordering items in a list or grid. `<Sortable />` is built on top of [@dnd-kit](https://dndkit.com)'s [sortable](https://docs.dndkit.com/presets/sortable) preset.
+
+<ComponentPreview name="sortable-demo" />
+
+[See more examples](/docs/utilities/sortable)
+
+### Control Group
+
+A component for grouping form controls like text inputs, buttons, selects and other elements into a single cohesive unit. When used together with Input Base, you can create highly customizable and flexible input layouts for a variety of use cases. Control Group has since been superseded by shadcn/ui's [Button Group](https://ui.shadcn.com/docs/components/button-group).
+
+### Thank you
+
+I'd like to thank everyone who has been using this project, providing feedback and contributing to it. I really appreciate it. Thank you 🙏

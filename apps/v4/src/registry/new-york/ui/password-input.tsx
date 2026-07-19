@@ -1,20 +1,19 @@
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import {
-  InputBase,
-  InputBaseAdornment,
-  InputBaseAdornmentButton,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { cn } from "@/lib/utils";
 import * as PasswordInputPrimitive from "@/registry/new-york/ui/password-input-primitive";
 
 type PasswordInputProps = React.ComponentProps<
   typeof PasswordInputPrimitive.Root
 > &
-  React.ComponentProps<typeof InputBase>;
+  React.ComponentProps<typeof InputGroup>;
 
 function PasswordInput({
   visible,
@@ -28,25 +27,8 @@ function PasswordInput({
       defaultVisible={defaultVisible}
       onVisibleChange={onVisibleChange}
     >
-      <InputBase data-slot="password-input" {...props} />
+      <InputGroup data-slot="password-input" {...props} />
     </PasswordInputPrimitive.Root>
-  );
-}
-
-function PasswordInputAdornment(
-  props: React.ComponentProps<typeof InputBaseAdornment>,
-) {
-  return <InputBaseAdornment data-slot="password-input-adornment" {...props} />;
-}
-
-function PasswordInputAdornmentButton(
-  props: React.ComponentProps<typeof InputBaseAdornmentButton>,
-) {
-  return (
-    <InputBaseAdornmentButton
-      data-slot="password-input-adornment-button"
-      {...props}
-    />
   );
 }
 
@@ -54,15 +36,11 @@ function PasswordInputInput(
   props: React.ComponentProps<typeof PasswordInputPrimitive.Input>,
 ) {
   return (
-    <InputBaseControl>
-      <PasswordInputPrimitive.Input
-        data-slot="password-input-input"
-        asChild
-        {...props}
-      >
-        <InputBaseInput />
-      </PasswordInputPrimitive.Input>
-    </InputBaseControl>
+    <PasswordInputPrimitive.Input
+      data-slot="password-input-input"
+      render={<InputGroupInput />}
+      {...props}
+    />
   );
 }
 
@@ -71,25 +49,20 @@ function PasswordInputAdornmentToggle({
   ...props
 }: React.ComponentProps<typeof PasswordInputPrimitive.Toggle>) {
   return (
-    <InputBaseAdornment>
-      <InputBaseAdornmentButton asChild>
-        <PasswordInputPrimitive.Toggle
-          data-slot="password-input-adornment-toggle"
-          className={cn("group", className)}
-          {...props}
-        >
-          <EyeIcon className="hidden size-4 group-data-[state=visible]:block" />
-          <EyeOffIcon className="block size-4 group-data-[state=visible]:hidden" />
-        </PasswordInputPrimitive.Toggle>
-      </InputBaseAdornmentButton>
-    </InputBaseAdornment>
+    <InputGroupAddon align="inline-end">
+      <PasswordInputPrimitive.Toggle
+        data-slot="password-input-adornment-toggle"
+        render={
+          <InputGroupButton size="icon-xs">
+            <EyeIcon className="hidden size-4 group-data-visible:block" />
+            <EyeOffIcon className="block size-4 group-data-visible:hidden" />
+          </InputGroupButton>
+        }
+        className={cn("group", className)}
+        {...props}
+      />
+    </InputGroupAddon>
   );
 }
 
-export {
-  PasswordInput,
-  PasswordInputAdornment,
-  PasswordInputAdornmentButton,
-  PasswordInputInput,
-  PasswordInputAdornmentToggle,
-};
+export { PasswordInput, PasswordInputInput, PasswordInputAdornmentToggle };

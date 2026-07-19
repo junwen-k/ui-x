@@ -1,0 +1,6 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "junwen-k/ui-x",
+  "homepage": "https://ui-x.junwen-k.dev/",
+  "include": ["apps/v4/registry.json"]
+}

@@ -1,26 +1,29 @@
 "use client";
 
+import { FileIcon } from "lucide-react";
+import prettyBytes from "pretty-bytes";
 import * as React from "react";
 
 import {
+  Attachment,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
   Dropzone,
-  DropzoneDescription,
-  DropzoneGroup,
   DropzoneInput,
-  DropzoneTitle,
   DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import {
-  FileList,
-  FileListDescription,
-  FileListHeader,
-  FileListIcon,
-  FileListInfo,
-  FileListItem,
-  FileListName,
-  FileListSize,
-} from "@/registry/new-york/ui/file-list";
 
 export default function DropzoneDemo() {
   const [files, setFiles] = React.useState<File[]>([]);
@@ -36,32 +39,36 @@ export default function DropzoneDemo() {
       <div className="grid gap-4">
         <DropzoneZone>
           <DropzoneInput />
-          <DropzoneGroup className="gap-4">
-            <DropzoneUploadIcon />
-            <DropzoneGroup>
-              <DropzoneTitle>Drop files here or click to upload</DropzoneTitle>
-              <DropzoneDescription>
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <DropzoneUploadIcon />
+              </EmptyMedia>
+              <EmptyTitle>Drop files here or click to upload</EmptyTitle>
+              <EmptyDescription>
                 You can upload files up to 10MB in size. Supported formats: JPG,
                 PNG, PDF.
-              </DropzoneDescription>
-            </DropzoneGroup>
-          </DropzoneGroup>
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         </DropzoneZone>
-        <FileList>
-          {files.map((file) => (
-            <FileListItem key={file.name}>
-              <FileListHeader>
-                <FileListIcon />
-                <FileListInfo>
-                  <FileListName>{file.name}</FileListName>
-                  <FileListDescription>
-                    <FileListSize>{file.size}</FileListSize>
-                  </FileListDescription>
-                </FileListInfo>
-              </FileListHeader>
-            </FileListItem>
-          ))}
-        </FileList>
+        {files.length > 0 && (
+          <div className="grid gap-2">
+            {files.map((file) => (
+              <Attachment key={file.name} className="w-full">
+                <AttachmentMedia>
+                  <FileIcon />
+                </AttachmentMedia>
+                <AttachmentContent>
+                  <AttachmentTitle>{file.name}</AttachmentTitle>
+                  <AttachmentDescription>
+                    {prettyBytes(file.size)}
+                  </AttachmentDescription>
+                </AttachmentContent>
+              </Attachment>
+            ))}
+          </div>
+        )}
       </div>
     </Dropzone>
   );

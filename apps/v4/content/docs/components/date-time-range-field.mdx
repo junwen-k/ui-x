@@ -1,0 +1,143 @@
+---
+title: Date Time Range Field
+description: Date Time Range Field allows user to enter date and time value for a range of dates.
+links:
+  doc: /docs/primitives/date-time-range-field
+---
+
+<ComponentPreview name="date-time-range-field-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/date-time-range-field
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add `<DateTimeField />`, `<DateTimeRangeFieldPrimitive />` and `<InputGroup />` component to your project.
+
+</Step>
+
+The `<DateTimeRangeField />` component uses `<DateTimeField />`, `<DateTimeRangeFieldPrimitive />` and `<InputGroup />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [DateTimeField](/docs/components/date-time-field#installation), [DateTimeRangeFieldPrimitive](/docs/primitives/date-time-range-field#installation), [Input Group](https://ui.shadcn.com/docs/components/input-group) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-time-range-field" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  DateTimeRangeField,
+  DateTimeRangeFieldAmPm,
+  DateTimeRangeFieldDays,
+  DateTimeRangeFieldFrom,
+  DateTimeRangeFieldHours,
+  DateTimeRangeFieldMinutes,
+  DateTimeRangeFieldMonths,
+  DateTimeRangeFieldSeconds,
+  DateTimeRangeFieldSeparator,
+  DateTimeRangeFieldTo,
+  DateTimeRangeFieldYears,
+} from "@/components/ui/date-time-range-field";
+```
+
+```tsx
+<DateTimeRangeField>
+  <DateTimeRangeFieldFrom>
+    <DateTimeRangeFieldDays />
+    <DateTimeRangeFieldSeparator>/</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldMonths />
+    <DateTimeRangeFieldSeparator>/</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldYears />
+    <DateTimeRangeFieldSeparator>·</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldHours />
+    <DateTimeRangeFieldSeparator>:</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldMinutes />
+    <DateTimeRangeFieldSeparator>:</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldSeconds />
+    <DateTimeRangeFieldAmPm />
+  </DateTimeRangeFieldFrom>
+
+  <DateTimeRangeFieldSeparator>-</DateTimeRangeFieldSeparator>
+
+  <DateTimeRangeFieldTo>
+    <DateTimeRangeFieldDays />
+    <DateTimeRangeFieldSeparator>/</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldMonths />
+    <DateTimeRangeFieldSeparator>/</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldYears />
+    <DateTimeRangeFieldSeparator>·</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldHours />
+    <DateTimeRangeFieldSeparator>:</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldMinutes />
+    <DateTimeRangeFieldSeparator>:</DateTimeRangeFieldSeparator>
+    <DateTimeRangeFieldSeconds />
+    <DateTimeRangeFieldAmPm />
+  </DateTimeRangeFieldTo>
+</DateTimeRangeField>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="date-time-range-field-demo" />
+
+### Form
+
+<ComponentPreview name="date-time-range-field-form" />
+
+## Accessibility
+
+The field follows the segment keyboard model and labeling guidance described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section. Since the range spans two groups of segments, prefer one visible label for the whole field, or label the `From` and `To` groups individually with `aria-label` when they need distinct names.
+
+## API Reference
+
+Styled wrappers around the [Date Time Range Field primitive](/docs/primitives/date-time-range-field#api-reference) — see the primitive page for the full prop tables.
+
+### DateTimeRangeField
+
+Wraps [Root](/docs/primitives/date-time-range-field#root) and accepts all of its props (`value`, `onValueChange`, `hour12`, `from`, `to`, …), rendered as an [Input Group](https://ui.shadcn.com/docs/components/input-group).
+
+### DateTimeRangeFieldFrom, DateTimeRangeFieldTo
+
+Wrap [From and To](/docs/primitives/date-time-range-field#from-to). Segments must be placed inside one of the two.
+
+### DateTimeRangeFieldDays, DateTimeRangeFieldMonths, DateTimeRangeFieldYears, DateTimeRangeFieldHours, DateTimeRangeFieldMinutes, DateTimeRangeFieldSeconds
+
+Wrap the corresponding [segments](/docs/primitives/date-time-range-field#segments), rendered with the [Date Time Field](/docs/components/date-time-field#api-reference) segment styling and placeholders.
+
+### DateTimeRangeFieldAmPm
+
+Wraps [AmPm](/docs/primitives/date-time-range-field#ampm); renders only when its field has `hour12`.
+
+### DateTimeRangeFieldSeparator
+
+Wraps the styled [Date Time Field separator](/docs/components/date-time-field#datetimefieldseparator). Pass the separator character as `children` (e.g. `/`, `:` or `-` between the two fields).

@@ -1,6 +1,8 @@
 "use client";
 
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useControlled } from "@base-ui/utils/useControlled";
+import { useStableCallback } from "@base-ui/utils/useStableCallback";
 import * as React from "react";
 import {
   Country,
@@ -21,8 +23,7 @@ export interface PhoneInputBaseProps {
   disabled?: boolean;
 }
 
-export interface PhoneInputWithoutInternationalProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithoutInternationalProps extends PhoneInputBaseProps {
   international?: false;
   withCountryCallingCode?: never;
 }
@@ -50,14 +51,12 @@ export interface PhoneInputWithInternationalProps extends PhoneInputBaseProps {
   withCountryCallingCode?: boolean;
 }
 
-export interface PhoneInputWithoutPreferredCountryProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithoutPreferredCountryProps extends PhoneInputBaseProps {
   preferredCountry?: never;
   defaultInternationalForPreferredCountry?: never;
 }
 
-export interface PhoneInputWithPreferredCountryProps
-  extends PhoneInputBaseProps {
+export interface PhoneInputWithPreferredCountryProps extends PhoneInputBaseProps {
   /**
    * Suggests a default country while maintaining flexibility for international numbers.
    * This prop acts as a smart fallback when no country is selected.
@@ -81,12 +80,10 @@ export interface PhoneInputWithPreferredCountryProps
 }
 
 export type PhoneInputProps = (
-  | PhoneInputWithoutInternationalProps
-  | PhoneInputWithInternationalProps
+  PhoneInputWithoutInternationalProps | PhoneInputWithInternationalProps
 ) &
   (
-    | PhoneInputWithoutPreferredCountryProps
-    | PhoneInputWithPreferredCountryProps
+    PhoneInputWithoutPreferredCountryProps | PhoneInputWithPreferredCountryProps
   );
 
 interface PhoneInputContextProps {
@@ -136,15 +133,26 @@ function PhoneInput({
   disabled = false,
   children,
 }: PhoneInputProps) {
-  const [value, setValue] = useControllableState({
-    prop: valueProp,
-    defaultProp: (defaultValue ?? "") as Value,
-    onChange: onValueChange,
+  const [value, setValueUnwrapped] = useControlled({
+    controlled: valueProp,
+    default: (defaultValue ?? "") as Value,
+    name: "PhoneInput",
+    state: "value",
   });
-  const [country, setCountry] = useControllableState({
-    prop: countryProp,
-    defaultProp: defaultCountry ?? null,
-    onChange: onCountryChange,
+  const setValue = useStableCallback((nextValue: Value) => {
+    setValueUnwrapped(nextValue);
+    onValueChange?.(nextValue);
+  });
+
+  const [country, setCountryUnwrapped] = useControlled({
+    controlled: countryProp,
+    default: defaultCountry ?? null,
+    name: "PhoneInput",
+    state: "country",
+  });
+  const setCountry = useStableCallback((nextCountry: Country | null) => {
+    setCountryUnwrapped(nextCountry);
+    onCountryChange?.(nextCountry);
   });
 
   return (
@@ -167,37 +175,29 @@ function PhoneInput({
   );
 }
 
-interface PhoneInputInputProps
-  extends Omit<
-    React.ComponentProps<typeof ReactPhoneInput>,
-    | "value"
-    | "onChange"
-    | "inputComponent"
-    | "international"
-    | "withCountryCallingCode"
-    | "useNationalFormatForDefaultCountryValue"
-  > {
-  asChild?: boolean;
-  children?: React.ReactNode;
+interface PhoneInputInputProps extends Omit<
+  React.ComponentProps<typeof ReactPhoneInput>,
+  | "value"
+  | "onChange"
+  | "inputComponent"
+  | "international"
+  | "withCountryCallingCode"
+  | "useNationalFormatForDefaultCountryValue"
+> {
+  render?: React.ReactElement<React.ComponentProps<"input">>;
   smartCaret?: boolean;
 }
 
-function getInputComponent(children: React.ReactNode) {
-  const child = React.Children.only(children);
-  if (!React.isValidElement(child)) {
-    return undefined;
-  }
-
-  return (props: React.ComponentProps<"input">) =>
-    React.cloneElement(child, {
-      ...props,
-      ...(child.props as React.ComponentProps<"input">),
-    });
+function getInputComponent(
+  render: React.ReactElement<React.ComponentProps<"input">>,
+) {
+  return function InputComponent(props: React.ComponentProps<"input">) {
+    return React.cloneElement(render, mergeProps(props, render.props));
+  };
 }
 
 function PhoneInputInput({
-  asChild,
-  children,
+  render,
   disabled: disabledProp,
   ...props
 }: PhoneInputInputProps) {
@@ -213,18 +213,15 @@ function PhoneInputInput({
   } = usePhoneInput();
 
   const inputComponent = React.useMemo(
-    () => (asChild ? getInputComponent(children) : undefined),
-    [asChild, children],
+    () => (render ? getInputComponent(render) : undefined),
+    [render],
   );
 
   // This is a workaround to prevent infinite rerenders. For more information, see:
   // https://github.com/catamphetamine/react-phone-number-input/issues/441.
-  const handleChange = React.useCallback(
-    (v: Value) => {
-      setTimeout(() => onValueChange?.(v ?? ("" as Value)));
-    },
-    [onValueChange],
-  );
+  const handleChange = useStableCallback((nextValue: Value) => {
+    setTimeout(() => onValueChange(nextValue ?? ("" as Value)));
+  });
 
   return (
     <ReactPhoneInput

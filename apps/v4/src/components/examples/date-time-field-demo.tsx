@@ -12,7 +12,7 @@ import {
 
 export default function DateTimeFieldDemo() {
   return (
-    <DateTimeField>
+    <DateTimeField className="max-w-xs">
       <DateTimeFieldDays />
       <DateTimeFieldSeparator>/</DateTimeFieldSeparator>
       <DateTimeFieldMonths />

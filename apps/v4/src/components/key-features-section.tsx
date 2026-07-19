@@ -32,7 +32,7 @@ export function KeyFeaturesSection() {
                 icon: SparklesIcon,
                 title: "Intuitive Developer Experience",
                 description:
-                  "Each component's API mirrors Radix UI conventions and shadcn/ui patterns, creating an intuitive and familiar experience.",
+                  "Each component's API mirrors Base UI conventions and shadcn/ui patterns, creating an intuitive and familiar experience.",
               },
               {
                 icon: PuzzleIcon,

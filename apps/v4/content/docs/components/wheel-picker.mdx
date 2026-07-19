@@ -1,0 +1,85 @@
+---
+title: Wheel Picker
+description: iOS-like wheel picker for React with smooth inertia scrolling and infinite loop support.
+links:
+  doc: https://react-wheel-picker.chanhdai.com/
+---
+
+<ComponentPreview name="wheel-picker-demo" />
+
+## About
+
+The `<WheelPicker />` component is built on top of [react-wheel-picker](https://react-wheel-picker.chanhdai.com/).
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/wheel-picker
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="wheel-picker" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { WheelPicker, WheelPickerWrapper } from "@/components/ui/wheel-picker";
+```
+
+```tsx
+<WheelPickerWrapper>
+  <WheelPicker />
+</WheelPickerWrapper>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="wheel-picker-demo" />
+
+### Form
+
+<ComponentPreview name="wheel-picker-form" />
+
+## Accessibility
+
+Each `<WheelPicker />` column is keyboard-operable: focus it and use <Kbd>Up</Kbd>/<Kbd>Down</Kbd> (or <Kbd>Left</Kbd>/<Kbd>Right</Kbd> when laid out horizontally) to move one option at a time, matching the pointer/touch scroll behavior. See react-wheel-picker's [accessibility notes](https://react-wheel-picker.chanhdai.com/docs#api-reference) for the full set of keyboard and ARIA behavior it provides.
+
+Give each `<WheelPicker />` an accessible name (e.g. wrap it with a `<label>` or pass `aria-label`) when a column's purpose isn't obvious from surrounding text, such as separate hour/minute columns in a time picker.
+
+## API Reference
+
+Styled wrappers around [react-wheel-picker](https://react-wheel-picker.chanhdai.com/) — see its [API reference](https://react-wheel-picker.chanhdai.com/docs#api-reference) for the underlying props.
+
+### WheelPickerWrapper
+
+Wraps `WheelPickerWrapper` with border and highlight styling. Place one or more `<WheelPicker />` columns inside.
+
+### WheelPicker
+
+Wraps `WheelPicker` with themed option and highlight classes, and accepts all of its props (`options`, `value`, `onValueChange`, `infinite`, `visibleCount`, …). The exported `WheelPickerOption` type describes the `options` items.

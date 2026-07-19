@@ -1,0 +1,105 @@
+---
+title: Emoji Picker
+description: A emoji picker is a component that allows users to select an emoji from a list of emojis.
+links:
+  doc: https://frimousse.liveblocks.io/
+---
+
+<ComponentPreview name="emoji-picker-demo" />
+
+## About
+
+The `<EmojiPicker />` component is built on top of [frimousse](https://frimousse.liveblocks.io/).
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/emoji-picker
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @base-ui/react frimousse
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="emoji-picker" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import {
+  EmojiPicker,
+  EmojiPickerSearch,
+  EmojiPickerContent,
+  EmojiPickerFooter,
+} from "@/components/ui/emoji-picker";
+```
+
+```tsx
+<EmojiPicker>
+  <EmojiPickerSearch />
+  <EmojiPickerContent />
+  <EmojiPickerFooter />
+</EmojiPicker>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="emoji-picker-demo" />
+
+### Form
+
+<ComponentPreview name="emoji-picker-form" />
+
+<Callout className="mt-4">
+
+**Tip**: If you're looking to build a robust input field that supports emoji insertion, you're likely looking for a rich text editor. Some interesting solutions worth exploring include [Novel](https://novel.sh/) (powered by [Tiptap](https://tiptap.dev/)), [Plate](https://platejs.org/) (powered by [Slate](https://slatejs.org)), or [shadcn-editor](https://shadcn-editor.vercel.app/) (powered by [Lexical](https://lexical.dev/)). For lower-level control, you can also look into their underlying frameworks.
+
+</Callout>
+
+## API Reference
+
+Styled wrappers around [frimousse](https://frimousse.liveblocks.io/) — see the [frimousse API reference](https://frimousse.liveblocks.io/#api-reference) for the underlying props.
+
+### EmojiPicker
+
+Wraps `EmojiPicker.Root` and accepts all of its props (`onEmojiSelect`, `locale`, `skinTone`, `columns`, …).
+
+### EmojiPickerSearch
+
+Wraps `EmojiPicker.Search` with a search icon, accepting standard `<input>` props such as `placeholder`.
+
+### EmojiPickerContent
+
+Wraps `EmojiPicker.Viewport` with the loading, empty and list states already composed and styled.
+
+### EmojiPickerFooter
+
+A footer showing a preview of the active emoji and a skin tone selector. Renders a `<div>` and accepts its props.

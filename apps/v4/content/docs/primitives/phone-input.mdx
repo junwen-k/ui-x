@@ -1,0 +1,212 @@
+---
+title: Phone Input
+description: Phone Input allows user to enter phone number in E.164 format.
+links:
+  doc: https://catamphetamine.gitlab.io/react-phone-number-input/
+---
+
+<ComponentPreview name="phone-input-primitive-demo" />
+
+## About
+
+The `<PhoneInput />` component is built on top of [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/), wrapping the library to deliver a more consistent API that aligns with Base UI conventions.
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
+
+**Unstyled**: This is an unstyled primitive. For a ready-to-use, shadcn-styled version, see the [Phone Input](/docs/components/phone-input) component.
+
+</Callout>
+
+<Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950 [&_[data-slot=alert-description]]:text-foreground">
+
+**Important**: This component implements a non-standard controlled behavior that differs from typical React patterns. The underlying library maintains its own internal state alongside any external state management, making it a "semi-controlled" component. While it works somewhat reliably, it may not behave as expected if you're used to idiomatic controlled components. See the [related issue](https://gitlab.com/catamphetamine/react-phone-number-input/-/issues/249) for technical details.
+
+</Callout>
+
+## Understanding Phone Formats
+
+Phone numbers can be represented in different formats depending on the context. Understanding these formats is crucial for using the component effectively.
+
+### National Format
+
+National format represents phone numbers in their local, country-specific format. This format is most familiar to users within a specific country. For example:
+
+- US: `(234) 567-8900`
+- UK: `01234 567890`
+- MY: `012-345 6789`
+- JP: `0123-45-6789`
+
+### International Format
+
+International format follows the [E.164 standard](https://en.wikipedia.org/wiki/E.164), which provides a consistent way to represent phone numbers globally. This format can be displayed in two variants:
+
+1. **Without Country Code**
+
+   Shows only the subscriber number without the country calling code prefix, useful when the country is already known through the country select or other context. For example:
+
+   - US: `234 567 8900`
+   - UK: `1234 567890`
+   - MY: `12 345 6789`
+   - JP: `123 45 6789`
+
+2. **With Country Code**
+
+   Includes the country calling code prefix, a universal representation that works across all countries. For example:
+
+   - US: `+1 234 567 8900`
+   - UK: `+44 1234 567890`
+   - MY: `+60 12 345 6789`
+   - JP: `+81 123 45 6789`
+
+## Formatting Behavior
+
+The component automatically handles phone number formatting based on whether a country is selected.
+
+- When no country is selected, it uses international format with country code by default.
+- When a country is selected, it uses national format by default.
+
+The formatting behavior can be configured to suit different use cases.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/phone-input-primitive
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @base-ui/react @base-ui/utils react-phone-number-input
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="phone-input-primitive" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Anatomy
+
+```tsx
+import * as PhoneInputPrimitive from "@/components/ui/phone-input-primitive";
+
+export default () => (
+  <PhoneInputPrimitive.Root>
+    <PhoneInputPrimitive.CountrySelect>
+      <PhoneInputPrimitive.CountrySelectOption />
+    </PhoneInputPrimitive.CountrySelect>
+    <PhoneInputPrimitive.Input />
+  </PhoneInputPrimitive.Root>
+);
+```
+
+## Examples
+
+### Default
+
+Basic example with country select and input.
+
+<ComponentPreview name="phone-input-primitive-demo" />
+
+### Disabled
+
+<ComponentPreview name="phone-input-primitive-disabled" />
+
+### Preferred Country
+
+When you know the likely country of your users (such as for a local business signup), you can set a default country while still allowing international numbers. This lets users enter phone numbers in their national format for the default country, while maintaining the flexibility to use international formats for any other country.
+
+In this example, the default country is set to Malaysia, with the initial value forced to display in international format rather than the default national format.
+
+<ComponentPreview name="phone-input-primitive-preferred-country" />
+
+<Callout className="mt-4 border-amber-200 bg-amber-50 dark:border-amber-950 dark:bg-amber-950/50 [&_[data-slot=alert-description]]:text-foreground">
+
+**Important**: Since `react-phone-number-input` uses a function-based approach for its `inputComponent` prop, this differs from Base UI's `render` composition which expects a JSX element directly.
+
+To ensure stable behavior and prevent focus issues, it's recommended to always wrap your `render` element with `useMemo` to maintain a stable reference. Avoid passing inline elements without `useMemo`, as this will cause focus issues on each change.
+
+</Callout>
+
+## API Reference
+
+### Root
+
+Manages the phone value and selected country and provides them to the parts below. Renders no element of its own.
+
+| Prop                                      | Type                                 | Default | Description                                                                                                                                                             |
+| ----------------------------------------- | ------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`                                   | `Value`                              | -       | The phone number in E.164 format (e.g. `"+12133734253"`). Use for controlled value.                                                                                     |
+| `defaultValue`                            | `Value`                              | `""`    | The initial value when uncontrolled.                                                                                                                                    |
+| `onValueChange`                           | `(value: Value) => void`             | -       | Called when the phone number changes.                                                                                                                                   |
+| `country`                                 | `Country \| null`                    | -       | The selected country. `null` means "International". Use for controlled country.                                                                                         |
+| `defaultCountry`                          | `Country`                            | -       | The initial country when uncontrolled.                                                                                                                                  |
+| `onCountryChange`                         | `(country: Country \| null) => void` | -       | Called when the selected country changes.                                                                                                                               |
+| `preferredCountry`                        | `Country`                            | -       | Suggests a country while no country is selected: numbers can be typed in this country's national format while international numbers for any other country keep working. |
+| `defaultInternationalForPreferredCountry` | `boolean`                            | `false` | Forces international format for initial values that match the preferred country. Only valid together with `preferredCountry`.                                           |
+| `international`                           | `boolean`                            | `false` | Forces international format when a country is explicitly selected.                                                                                                      |
+| `withCountryCallingCode`                  | `boolean`                            | `false` | Keeps the country calling code visible and undeletable in international format. Only valid together with `international`.                                               |
+| `disabled`                                | `boolean`                            | `false` | Disables the input and the country select.                                                                                                                              |
+| `children`                                | `ReactNode`                          | -       | The phone input parts.                                                                                                                                                  |
+
+### Input
+
+The phone number input, formatting as you type via [react-phone-number-input](https://catamphetamine.gitlab.io/react-phone-number-input/). Renders an `<input>` by default.
+
+| Prop         | Type                                           | Default | Description                                                                                                             |
+| ------------ | ---------------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `render`     | `ReactElement`                                 | -       | Render as a different input element. Wrap it in `useMemo` — see the callout above.                                      |
+| `smartCaret` | `boolean`                                      | `true`  | Keeps the caret position stable while the value is reformatted.                                                         |
+| `...props`   | `React.ComponentProps<typeof ReactPhoneInput>` | -       | Remaining [react-phone-number-input props](https://catamphetamine.gitlab.io/react-phone-number-input/docs/) are spread. |
+
+### CountrySelect
+
+The country selector. Renders a native `<select>` wired to the country state.
+
+| Prop       | Type                             | Default | Description                         |
+| ---------- | -------------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"select">` | -       | Props spread to the select element. |
+
+### CountrySelectOption
+
+A country option. Renders an `<option>`.
+
+| Prop       | Type                             | Default | Description                         |
+| ---------- | -------------------------------- | ------- | ----------------------------------- |
+| `...props` | `React.ComponentProps<"option">` | -       | Props spread to the option element. |
+
+### CountryInternationalSelectOption
+
+The "International" option. Selecting it clears the country (`null`).
+
+| Prop       | Type                                            | Default | Description                         |
+| ---------- | ----------------------------------------------- | ------- | ----------------------------------- |
+| `...props` | `Omit<React.ComponentProps<"option">, "value">` | -       | Props spread to the option element. |
+
+### getCountryOptions
+
+A helper that returns `{ countryCode, countryCallingCode }` for every supported country — useful for rendering the options list.
+
+### usePhoneInput
+
+Hook exposing the phone input context (`value`, `country`, change handlers, `disabled`) for building custom parts. Must be used within `<PhoneInput.Root>`.

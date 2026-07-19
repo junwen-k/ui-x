@@ -1,11 +1,10 @@
 "use client";
 
-import { composeEventHandlers } from "@radix-ui/primitive";
-import * as PopoverPrimitive from "@radix-ui/react-popover";
-import { Primitive } from "@radix-ui/react-primitive";
-import type * as Radix from "@radix-ui/react-primitive";
-import { Slot } from "@radix-ui/react-slot";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
+import { useRender } from "@base-ui/react/use-render";
+import { useControlled } from "@base-ui/utils/useControlled";
+import { useStableCallback } from "@base-ui/utils/useStableCallback";
 import { format } from "date-fns";
 import * as React from "react";
 import {
@@ -25,6 +24,8 @@ export type DatePickerContextProps = {
   month?: Date;
   onMonthChange: (month: Date) => void;
   disabled?: boolean;
+  anchor: HTMLElement | null;
+  onAnchorChange: (anchor: HTMLElement | null) => void;
 } & (
   | Required<
       Pick<
@@ -64,16 +65,9 @@ export type DatePickerContextProps = {
     >
 );
 
-const DatePickerContext = React.createContext<DatePickerContextProps>({
-  mode: "single",
-  formatStr: "PPP",
-  month: undefined,
-  onMonthChange: () => {},
-  value: null,
-  onValueChange: () => {},
-  disabled: false,
-  required: false,
-});
+const DatePickerContext = React.createContext<DatePickerContextProps | null>(
+  null,
+);
 
 function useDatePicker() {
   const context = React.useContext(DatePickerContext);
@@ -84,8 +78,7 @@ function useDatePicker() {
   return context;
 }
 
-export interface DatePickerBaseProps
-  extends React.ComponentProps<typeof PopoverPrimitive.Root> {
+export interface DatePickerBaseProps extends PopoverPrimitive.Root.Props {
   mode?: DatePickerMode | undefined;
   required?: boolean;
   formatStr?: string;
@@ -165,10 +158,6 @@ export type DatePickerProps = DatePickerBaseProps &
 function DatePicker<T extends DatePickerMode = "single">({
   mode = "single" as T,
   formatStr = "PPP",
-  open,
-  onOpenChange,
-  defaultOpen,
-  modal,
   children,
   month: monthProp,
   defaultMonth,
@@ -178,17 +167,32 @@ function DatePicker<T extends DatePickerMode = "single">({
   onValueChange,
   disabled,
   required = false,
+  ...props
 }: DatePickerProps) {
-  const [value, setValue] = useControllableState<DatePickerValue<T>>({
-    prop: valueProp as DatePickerValue<T>,
-    defaultProp: defaultValue as DatePickerValue<T>,
-    onChange: onValueChange as (value: DatePickerValue<T>) => void,
+  const [value, setValueUnwrapped] = useControlled({
+    controlled: valueProp as DatePickerValue<T> | null | undefined,
+    default: (defaultValue ?? null) as DatePickerValue<T> | null,
+    name: "DatePicker",
+    state: "value",
   });
-  const [month, setMonth] = useControllableState({
-    prop: monthProp,
-    defaultProp: defaultMonth ?? new Date(),
-    onChange: onMonthChange,
+  const setValue = useStableCallback((nextValue: DatePickerValue<T> | null) => {
+    setValueUnwrapped(nextValue);
+    (
+      onValueChange as ((value: DatePickerValue<T> | null) => void) | undefined
+    )?.(nextValue);
   });
+  const { current: thisMonth } = React.useRef(new Date());
+  const [month, setMonthUnwrapped] = useControlled({
+    controlled: monthProp,
+    default: defaultMonth ?? thisMonth,
+    name: "DatePicker",
+    state: "month",
+  });
+  const setMonth = useStableCallback((nextMonth: Date) => {
+    setMonthUnwrapped(nextMonth);
+    onMonthChange?.(nextMonth);
+  });
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
 
   return (
     <DatePickerContext.Provider
@@ -202,16 +206,12 @@ function DatePicker<T extends DatePickerMode = "single">({
           value,
           onValueChange: setValue,
           disabled,
+          anchor,
+          onAnchorChange: setAnchor,
         } as DatePickerContextProps
       }
     >
-      <PopoverPrimitive.Root
-        data-slot="date-picker"
-        open={open}
-        onOpenChange={onOpenChange}
-        defaultOpen={defaultOpen}
-        modal={modal}
-      >
+      <PopoverPrimitive.Root data-slot="date-picker" {...props}>
         {children}
       </PopoverPrimitive.Root>
     </DatePickerContext.Provider>
@@ -289,32 +289,34 @@ function DatePickerDateRangeField({
 }
 
 function DatePickerClear({
-  onClick,
+  render,
   ...props
-}: React.ComponentProps<typeof Primitive.button>) {
+}: useRender.ComponentProps<"button">) {
   const { required, value, onValueChange } = useDatePicker();
 
-  return (
-    <Primitive.button
-      data-slot="date-picker-clear"
-      disabled={required || !value}
-      onClick={composeEventHandlers(
-        onClick,
-        () => !required && onValueChange(null),
-      )}
-      {...props}
-    />
-  );
+  return useRender({
+    render,
+    defaultTagName: "button",
+    props: mergeProps<"button">(
+      {
+        "data-slot": "date-picker-clear",
+        type: "button",
+        disabled: required || !value,
+        onClick: () => !required && onValueChange(null),
+      } as React.ComponentProps<"button">,
+      props,
+    ),
+  });
 }
 
-export interface DatePickerValueProps
-  extends Radix.PrimitivePropsWithRef<typeof Primitive.span> {
+export interface DatePickerValueProps extends useRender.ComponentProps<"span"> {
   placeholder?: React.ReactNode;
 }
 
 function DatePickerValue({
   placeholder,
   children,
+  render,
   ...props
 }: DatePickerValueProps) {
   const { mode, formatStr, value } = useDatePicker();
@@ -342,34 +344,35 @@ function DatePickerValue({
     return `${value.from ? format(value.from, formatStr) : "Select a date"} - ${value.to ? format(value.to, formatStr) : "Select a date"}`;
   }, [mode, value, formatStr]);
 
-  return (
-    <Primitive.span
-      data-slot="date-picker-value"
-      data-placeholder={isValueEmpty ? true : undefined}
-      {...props}
-    >
-      {isValueEmpty ? placeholder : (children ?? formattedValue)}
-    </Primitive.span>
-  );
+  return useRender({
+    render,
+    defaultTagName: "span",
+    props: mergeProps<"span">(
+      {
+        "data-slot": "date-picker-value",
+        "data-placeholder": isValueEmpty ? true : undefined,
+        children: isValueEmpty ? placeholder : (children ?? formattedValue),
+      } as React.ComponentProps<"span">,
+      props,
+    ),
+  });
 }
 
-export interface DatePickerCalendarProps
-  extends Omit<
-    DayPickerPrimitiveProps,
-    | "mode"
-    | "selected"
-    | "onSelect"
-    | "month"
-    | "onMonthChange"
-    | "disabled"
-    | "required"
-  > {
-  asChild?: boolean;
-  children?: React.ReactNode;
+export interface DatePickerCalendarProps extends Omit<
+  DayPickerPrimitiveProps,
+  | "mode"
+  | "selected"
+  | "onSelect"
+  | "month"
+  | "onMonthChange"
+  | "disabled"
+  | "required"
+> {
+  render?: React.ReactElement<DayPickerPrimitiveProps>;
 }
 
 function DatePickerCalendar({
-  asChild,
+  render,
   autoFocus = true,
   ...props
 }: DatePickerCalendarProps) {
@@ -383,65 +386,82 @@ function DatePickerCalendar({
     required,
   } = useDatePicker();
 
-  const Comp = asChild ? (Slot as typeof DayPicker) : DayPicker;
+  const calendarProps = {
+    "data-slot": "date-picker-calendar",
+    mode,
+    selected: value === null ? undefined : value,
+    required,
+    onSelect: (value: Date | Date[] | DateRange | undefined) => {
+      if (!value && !required) {
+        onValueChange(null);
+      }
+      if (mode === "single") {
+        onValueChange(value as Date);
+      }
+      if (mode === "multiple") {
+        onValueChange(value as Date[]);
+      }
+      if (mode === "range") {
+        onValueChange(value as DateRange);
+      }
+    },
+    month,
+    onMonthChange,
+    disabled,
+    autoFocus,
+    ...props,
+  } as DayPickerPrimitiveProps;
 
-  return (
-    <Comp
-      data-slot="date-picker-calendar"
-      mode={mode}
-      {...({
-        selected: value === null ? undefined : value,
-        required,
-      } as React.ComponentProps<typeof Comp>)}
-      onSelect={(value: Date | Date[] | DateRange | undefined) => {
-        if (!value && !required) {
-          onValueChange(null);
-        }
-        if (mode === "single") {
-          onValueChange(value as Date);
-        }
-        if (mode === "multiple") {
-          onValueChange(value as Date[]);
-        }
-        if (mode === "range") {
-          onValueChange(value as DateRange);
-        }
-      }}
-      month={month}
-      onMonthChange={onMonthChange}
-      disabled={disabled}
-      autoFocus={autoFocus}
-      {...props}
-    />
-  );
+  if (render) {
+    return React.cloneElement(render, mergeProps(calendarProps, render.props));
+  }
+
+  return <DayPicker {...calendarProps} />;
 }
 
-function DatePickerTrigger(
-  props: React.ComponentProps<typeof PopoverPrimitive.Trigger>,
-) {
+function DatePickerTrigger(props: PopoverPrimitive.Trigger.Props) {
   return (
     <PopoverPrimitive.Trigger data-slot="date-picker-trigger" {...props} />
   );
 }
 
-function DatePickerContent(
-  props: React.ComponentProps<typeof PopoverPrimitive.Content>,
-) {
+function DatePickerPositioner(props: PopoverPrimitive.Positioner.Props) {
+  const { anchor } = useDatePicker();
+
   return (
-    <PopoverPrimitive.Content data-slot="date-picker-content" {...props} />
+    <PopoverPrimitive.Positioner
+      data-slot="date-picker-positioner"
+      anchor={anchor ?? undefined}
+      {...props}
+    />
   );
 }
 
-function DatePickerPortal(
-  props: React.ComponentProps<typeof PopoverPrimitive.Portal>,
-) {
+function DatePickerContent(props: PopoverPrimitive.Popup.Props) {
+  return <PopoverPrimitive.Popup data-slot="date-picker-content" {...props} />;
+}
+
+function DatePickerPortal(props: PopoverPrimitive.Portal.Props) {
   return <PopoverPrimitive.Portal data-slot="date-picker-portal" {...props} />;
 }
 
-function DatePickerAnchor(
-  props: React.ComponentProps<typeof PopoverPrimitive.Anchor>,
-) {
-  return <PopoverPrimitive.Anchor data-slot="date-picker-anchor" {...props} />;
+function DatePickerAnchor({
+  render,
+  ...props
+}: useRender.ComponentProps<"div">) {
+  const { onAnchorChange } = useDatePicker();
+
+  return useRender({
+    render,
+    defaultTagName: "div",
+    ref: onAnchorChange,
+    props: mergeProps<"div">(
+      {
+        "data-slot": "date-picker-anchor",
+      } as React.ComponentProps<"div">,
+      props,
+    ),
+  });
 }
 
 function DatePickerDateFieldSeparator(
@@ -573,6 +593,7 @@ export {
   DatePickerTrigger as Trigger,
   DatePickerAnchor as Anchor,
   DatePickerPortal as Portal,
+  DatePickerPositioner as Positioner,
   DatePickerContent as Content,
   DatePickerCalendar as Calendar,
   useDatePicker,

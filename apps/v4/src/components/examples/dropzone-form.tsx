@@ -1,104 +1,63 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { XIcon } from "lucide-react";
+import { FileIcon, XIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
+import * as React from "react";
 import { ErrorCode } from "react-dropzone";
-import { useFieldArray, useForm } from "react-hook-form";
-import { codeToHtml } from "shiki";
 import { toast } from "sonner";
-import { z } from "zod";
 
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   Dropzone,
-  DropzoneDescription,
   DropzoneInput,
-  DropzoneTitle,
   DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
-import {
-  FileList,
-  FileListAction,
-  FileListDescription,
-  FileListHeader,
-  FileListIcon,
-  FileListInfo,
-  FileListItem,
-  FileListName,
-  FileListSize,
-} from "@/registry/new-york/ui/file-list";
 
 // 1 MB
 const MAX_FILE_SIZE = 1e6;
 
-const FormSchema = z.object({
-  files: z
-    .array(
-      z.object({
-        file: z
-          .instanceof(File)
-          .refine(
-            (file) => file.size <= MAX_FILE_SIZE,
-            "File exceed max file size",
-          ),
-      }),
-    )
-    .min(1, { message: "Minimum one file is required." }),
-});
-
 export default function DropzoneForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      files: [],
-    },
-  });
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "files",
-  });
-
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const html = await codeToHtml(JSON.stringify(data, null, 2), {
-      lang: "json",
-      theme: "github-dark-dimmed",
-      colorReplacements: {
-        "#22272e": "var(--color-zinc-900)",
-      },
-    });
-
-    toast("You submitted the following values:", {
-      classNames: { content: "w-full" },
-      description: (
-        <div
-          className="mt-2 [&>pre]:rounded-md [&>pre]:p-4 [&>pre]:shadow-[0_1.5px_2px_0_theme(colors.black/32%),0_0_0_1px_theme(colors.white/10%),0_-1px_0_0_theme(colors.white/4%)]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      ),
-    });
-  }
+  const [files, setFiles] = React.useState<File[]>([]);
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="w-[40rem] space-y-6"
-      >
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle>Upload your files</CardTitle>
+        <CardDescription>
+          Attach the documents you would like to share.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-6">
         <Dropzone
           maxSize={MAX_FILE_SIZE}
           onDropAccepted={(acceptedFiles) =>
-            append(acceptedFiles.map((file) => ({ file })))
+            setFiles((files) => [...files, ...acceptedFiles])
           }
           onDropRejected={(fileRejections) => {
             fileRejections.forEach((fileRejection) => {
@@ -115,66 +74,66 @@ export default function DropzoneForm() {
           }}
         >
           {({ maxSize }) => (
-            <FormField
-              control={form.control}
-              name="files"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>File upload</FormLabel>
-                  <DropzoneZone className="flex justify-center">
-                    <FormControl>
-                      <DropzoneInput
-                        disabled={field.disabled}
-                        name={field.name}
-                        onBlur={field.onBlur}
-                        ref={field.ref}
-                      />
-                    </FormControl>
-                    <div className="flex items-center gap-6">
+            <Field>
+              <FieldLabel htmlFor="dropzone-form-files">File upload</FieldLabel>
+              <DropzoneZone className="flex justify-center">
+                <DropzoneInput id="dropzone-form-files" />
+                <Empty>
+                  <EmptyHeader className="flex-row items-center gap-6 text-left">
+                    <EmptyMedia variant="icon">
                       <DropzoneUploadIcon />
-                      <div className="grid gap-0.5">
-                        <DropzoneTitle>
-                          Browse to upload your file
-                        </DropzoneTitle>
-                        <DropzoneDescription>
-                          {`Maximum file size: ${prettyBytes(maxSize ?? 0)}`}
-                        </DropzoneDescription>
-                      </div>
+                    </EmptyMedia>
+                    <div className="grid gap-0.5">
+                      <EmptyTitle>Browse to upload your file</EmptyTitle>
+                      <EmptyDescription>
+                        {`Maximum file size: ${prettyBytes(maxSize ?? 0)}`}
+                      </EmptyDescription>
                     </div>
-                  </DropzoneZone>
-                  <FormDescription>Drag and drop is supported.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                  </EmptyHeader>
+                </Empty>
+              </DropzoneZone>
+              <FieldDescription>Drag and drop is supported.</FieldDescription>
+            </Field>
           )}
         </Dropzone>
-        {!!fields.length && (
+        {!!files.length && (
           <div className="grid gap-4">
-            <h6 className="leading-none font-semibold tracking-tight">{`Files (${fields.length})`}</h6>
-            <FileList>
-              {fields.map((field, index) => (
-                <FileListItem key={field.id}>
-                  <FileListHeader>
-                    <FileListIcon />
-                    <FileListInfo>
-                      <FileListName>{field.file.name}</FileListName>
-                      <FileListDescription>
-                        <FileListSize>{field.file.size}</FileListSize>
-                      </FileListDescription>
-                    </FileListInfo>
-                    <FileListAction onClick={() => remove(index)}>
+            <h6 className="leading-none font-semibold tracking-tight">{`Files (${files.length})`}</h6>
+            <div className="grid gap-2">
+              {files.map((file, index) => (
+                <Attachment key={index} className="w-full">
+                  <AttachmentMedia>
+                    <FileIcon />
+                  </AttachmentMedia>
+                  <AttachmentContent>
+                    <AttachmentTitle>{file.name}</AttachmentTitle>
+                    <AttachmentDescription>
+                      {prettyBytes(file.size)}
+                    </AttachmentDescription>
+                  </AttachmentContent>
+                  <AttachmentActions>
+                    <AttachmentAction
+                      onClick={() =>
+                        setFiles((files) =>
+                          files.filter((_, fileIndex) => fileIndex !== index),
+                        )
+                      }
+                    >
                       <XIcon />
                       <span className="sr-only">Remove</span>
-                    </FileListAction>
-                  </FileListHeader>
-                </FileListItem>
+                    </AttachmentAction>
+                  </AttachmentActions>
+                </Attachment>
               ))}
-            </FileList>
+            </div>
           </div>
         )}
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+      </CardContent>
+      <CardFooter>
+        <Button type="submit" className="w-full">
+          Save
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

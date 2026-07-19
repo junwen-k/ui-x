@@ -5,18 +5,17 @@ import * as React from "react";
 import { getCountryCallingCode } from "react-phone-number-input";
 
 import {
-  InputBase,
-  InputBaseAdornment,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { SelectTrigger } from "@/components/ui/select";
 import {
   Country,
   PhoneInput,
   PhoneInputCountrySelect,
   PhoneInputCountrySelectContent,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 } from "@/registry/new-york/ui/phone-input";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
@@ -33,25 +32,25 @@ export default function PhoneInputSeparated() {
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <PhoneInputCountrySelect>
-            <PhoneInputCountrySelectTrigger>
+            <SelectTrigger>
               <PhoneInputCountrySelectValue />
-            </PhoneInputCountrySelectTrigger>
+            </SelectTrigger>
             <PhoneInputCountrySelectContent>
               <PhoneInputCountrySelectOptions />
             </PhoneInputCountrySelectContent>
           </PhoneInputCountrySelect>
-          <InputBase>
-            <InputBaseAdornment>
+          <InputGroup>
+            <InputGroupAddon>
               {country ? `+${getCountryCallingCode(country)}` : <PhoneIcon />}
-            </InputBaseAdornment>
-            <InputBaseControl>
-              <PhoneInputPrimitive.Input asChild>
-                <InputBaseInput
+            </InputGroupAddon>
+            <PhoneInputPrimitive.Input
+              render={
+                <InputGroupInput
                   placeholder={country === null ? "012-345 6789" : undefined}
                 />
-              </PhoneInputPrimitive.Input>
-            </InputBaseControl>
-          </InputBase>
+              }
+            />
+          </InputGroup>
         </div>
         <p className="text-muted-foreground text-sm">
           Preferred country has been set to{" "}

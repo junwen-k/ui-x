@@ -1,4 +1,7 @@
+import { createMDX } from "fumadocs-mdx/next";
 import type { NextConfig } from "next";
+
+const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -9,7 +12,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/docs/primitives",
-        destination: "/docs/primitives/combobox",
+        destination: "/docs/primitives/date-time-field",
         permanent: false,
       },
       {
@@ -24,6 +27,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/docs/:path*.md",
+        destination: "/llms.mdx/docs/:path*",
+      },
+    ];
+  },
 };
 
-export default nextConfig;
+export default withMDX(nextConfig);

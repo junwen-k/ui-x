@@ -3,8 +3,10 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-export interface TimeProps
-  extends Omit<React.ComponentPropsWithoutRef<"time">, "children"> {
+export interface TimeProps extends Omit<
+  React.ComponentProps<"time">,
+  "children"
+> {
   children: Parameters<typeof format>[0];
   dateTimeFormatStr?: Parameters<typeof format>[1];
   formatStr?: Parameters<typeof format>[1];

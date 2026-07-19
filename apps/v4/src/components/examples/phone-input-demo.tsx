@@ -2,21 +2,14 @@
 
 import * as React from "react";
 
-import {
-  ControlGroup,
-  ControlGroupItem,
-} from "@/registry/new-york/ui/control-group";
-import {
-  InputBase,
-  InputBaseControl,
-  InputBaseInput,
-} from "@/registry/new-york/ui/input-base";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { InputGroup, InputGroupInput } from "@/components/ui/input-group";
+import { SelectTrigger } from "@/components/ui/select";
 import {
   PhoneInput,
   PhoneInputCountrySelect,
   PhoneInputCountrySelectContent,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 } from "@/registry/new-york/ui/phone-input";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
@@ -24,27 +17,19 @@ import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primiti
 export default function PhoneInputDemo() {
   return (
     <PhoneInput>
-      <ControlGroup>
+      <ButtonGroup>
         <PhoneInputCountrySelect>
-          <ControlGroupItem>
-            <PhoneInputCountrySelectTrigger>
-              <PhoneInputCountrySelectValue />
-            </PhoneInputCountrySelectTrigger>
-          </ControlGroupItem>
+          <SelectTrigger>
+            <PhoneInputCountrySelectValue />
+          </SelectTrigger>
           <PhoneInputCountrySelectContent>
             <PhoneInputCountrySelectOptions />
           </PhoneInputCountrySelectContent>
         </PhoneInputCountrySelect>
-        <ControlGroupItem>
-          <InputBase>
-            <InputBaseControl>
-              <PhoneInputPrimitive.Input asChild>
-                <InputBaseInput />
-              </PhoneInputPrimitive.Input>
-            </InputBaseControl>
-          </InputBase>
-        </ControlGroupItem>
-      </ControlGroup>
+        <InputGroup>
+          <PhoneInputPrimitive.Input render={<InputGroupInput />} />
+        </InputGroup>
+      </ButtonGroup>
     </PhoneInput>
   );
 }

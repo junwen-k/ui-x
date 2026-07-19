@@ -1,3 +1,9 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+# pnpm 10 blocks dependency build scripts unless allowlisted.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - unrs-resolver

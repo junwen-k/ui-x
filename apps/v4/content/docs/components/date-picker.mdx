@@ -1,0 +1,115 @@
+---
+title: Date Picker
+description: A date picker component lets users select a date.
+links:
+  doc: /docs/primitives/date-picker
+---
+
+<ComponentPreview name="date-picker-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/date-picker
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>
+
+Add the `<Button />`, `<Calendar />`, `<DateField />`, `<DatePickerPrimitive />` and `<InputGroup />` component to your project.
+
+</Step>
+
+The `<DatePicker />` component uses `<Button />`, `<Calendar />`, `<DateField />`, `<DatePickerPrimitive />` and `<InputGroup />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [Button](https://ui.shadcn.com/docs/components/button), [Calendar](https://ui.shadcn.com/docs/components/calendar), [DateField](/docs/components/date-field#installation), [DatePickerPrimitive](/docs/primitives/date-picker#installation) and the [Input Group](https://ui.shadcn.com/docs/components/input-group) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="date-picker" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Examples
+
+### Date Picker
+
+<ComponentPreview name="date-picker-demo" />
+
+### Input
+
+<ComponentPreview name="date-picker-input" />
+
+### Form
+
+<ComponentPreview name="date-picker-form" />
+
+## Accessibility
+
+### Labeling
+
+The trigger and clear buttons in the input variant are icon-only. `<DatePickerInput />` ships a visually hidden "Clear date" label for the clear button; when composing your own icon-only triggers, give them an accessible name with `aria-label` or a visually hidden `<span className="sr-only">`.
+
+### Keyboard interactions
+
+The inline date field follows the segment keyboard model described in the [Date Time Field accessibility](/docs/components/date-time-field#accessibility) section. Inside the popover, the calendar supports the arrow keys to move between days, <Kbd>PageUp</Kbd> / <Kbd>PageDown</Kbd> to change months and <Kbd>Enter</Kbd> to select. <Kbd>Escape</Kbd> closes the popover and returns focus to the trigger.
+
+## API Reference
+
+Styled wrappers around the [Date Picker primitive](/docs/primitives/date-picker#api-reference). Each part forwards its props to the primitive part it wraps — see the primitive page for the full prop tables.
+
+### DatePicker
+
+Wraps [Root](/docs/primitives/date-picker#root) and accepts all of its props (`mode`, `value`, `onValueChange`, `formatStr`, `month`, `required`, `disabled`, …).
+
+### DatePickerTrigger
+
+Wraps [Trigger](/docs/primitives/date-picker#trigger), rendered as an outline `<Button />` with a calendar icon.
+
+### DatePickerValue
+
+Wraps [Value](/docs/primitives/date-picker#value), muting the placeholder text. Accepts `placeholder`.
+
+### DatePickerInput
+
+An [Input Group](https://ui.shadcn.com/docs/components/input-group) containing the inline date field plus clear and open buttons. Renders a single-date field or a range field automatically based on the root's `mode`; the inline field is not supported in `"multiple"` mode. Accepts the corresponding [DateField / DateRangeField props](/docs/primitives/date-picker#datefield).
+
+### DatePickerAnchor
+
+Wraps [Anchor](/docs/primitives/date-picker#anchor) for positioning the popover against a custom element.
+
+### DatePickerContent
+
+Wraps [Portal, Positioner and Content](/docs/primitives/date-picker#portal-positioner-content) with popover styling, and lifts the common positioning props.
+
+| Prop          | Type                                     | Default    | Description                                 |
+| ------------- | ---------------------------------------- | ---------- | ------------------------------------------- |
+| `align`       | `"start" \| "center" \| "end"`           | `"start"`  | Alignment against the anchor.               |
+| `alignOffset` | `number`                                 | `4`        | Offset along the alignment axis.            |
+| `side`        | `"top" \| "bottom" \| "left" \| "right"` | `"bottom"` | Side of the anchor to render against.       |
+| `sideOffset`  | `number`                                 | `0`        | Distance from the anchor.                   |
+| `...props`    | `Content props`                          | -          | Remaining props spread to the content part. |
+
+### DatePickerCalendar
+
+Wraps [Calendar](/docs/primitives/date-picker#calendar), rendering the styled [Calendar](https://ui.shadcn.com/docs/components/calendar) component. Accepts the styled calendar's props.

@@ -4,16 +4,19 @@ import {
   restrictToParentElement,
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { arrayMove } from "@dnd-kit/sortable";
 import { GripVertical, Pencil, PlusCircle, Trash2 } from "lucide-react";
 import * as React from "react";
-import { useFieldArray, useForm } from "react-hook-form";
-import { codeToHtml } from "shiki";
-import { toast } from "sonner";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -24,14 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -85,11 +81,11 @@ function Item({
             onSubmit={onEdit}
             values={{ title, description }}
           >
-            <EditItemFormDialogTrigger asChild>
-              <Button type="button" variant="outline" size="icon">
-                <Pencil className="size-4" />
-                <span className="sr-only">Edit</span>
-              </Button>
+            <EditItemFormDialogTrigger
+              render={<Button type="button" variant="outline" size="icon" />}
+            >
+              <Pencil className="size-4" />
+              <span className="sr-only">Edit</span>
             </EditItemFormDialogTrigger>
           </EditItemFormDialog>
           <Button
@@ -107,18 +103,13 @@ function Item({
   );
 }
 
-const EditItemFormDialogSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().min(1, { message: "Description is required" }),
-});
-
 interface EditItemFormDialogProps {
   children: React.ReactNode;
   title: React.ReactNode;
   description: React.ReactNode;
   actionText: React.ReactNode;
-  onSubmit: (data: z.infer<typeof EditItemFormDialogSchema>) => void;
-  values?: z.infer<typeof EditItemFormDialogSchema>;
+  onSubmit: (data: { title: string; description: string }) => void;
+  values?: { title: string; description: string };
 }
 
 const EditItemFormDialog = ({
@@ -129,78 +120,57 @@ const EditItemFormDialog = ({
   onSubmit,
   values,
 }: EditItemFormDialogProps) => {
+  const id = React.useId();
   const [open, setOpen] = React.useState(false);
-
-  const form = useForm<z.infer<typeof EditItemFormDialogSchema>>({
-    resolver: zodResolver(EditItemFormDialogSchema),
-    values,
-    defaultValues: {
-      title: "",
-      description: "",
-    },
-  });
-
-  const handleSubmit = (data: z.infer<typeof EditItemFormDialogSchema>) => {
-    onSubmit(data);
-    setOpen(false);
-    form.reset();
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {children}
       <DialogContent className="sm:max-w-[425px]">
-        <Form {...form}>
-          <form
-            onSubmit={(event) => {
-              event.stopPropagation();
-              event.preventDefault();
+        <form
+          onSubmit={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
 
-              form.handleSubmit(handleSubmit)(event);
-            }}
-          >
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>{description}</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <FormField
-                control={form.control}
+            const formData = new FormData(event.currentTarget);
+            onSubmit({
+              title: formData.get("title") as string,
+              description: formData.get("description") as string,
+            });
+            setOpen(false);
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <Field>
+              <FieldLabel htmlFor={`${id}-title`}>Title</FieldLabel>
+              <Input
+                id={`${id}-title`}
                 name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                defaultValue={values?.title}
+                required
               />
-              <FormField
-                control={form.control}
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`${id}-description`}>Description</FieldLabel>
+              <Textarea
+                id={`${id}-description`}
                 name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                defaultValue={values?.description}
+                required
               />
-            </div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="outline">
-                  Cancel
-                </Button>
-              </DialogClose>
-              <Button type="submit">{actionText}</Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            </Field>
+          </div>
+          <DialogFooter>
+            <DialogClose render={<Button type="button" variant="outline" />}>
+              Cancel
+            </DialogClose>
+            <Button type="submit">{actionText}</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );
@@ -208,7 +178,7 @@ const EditItemFormDialog = ({
 
 const EditItemFormDialogTrigger = DialogTrigger;
 
-const items = [
+const lessons = [
   {
     id: "item-1",
     title: "Introduction to React",
@@ -252,134 +222,114 @@ const items = [
   },
 ];
 
-const FormSchema = z.object({
-  items: EditItemFormDialogSchema.array().min(1, {
-    message: "Please add at least 1 item",
-  }),
-});
-
 export default function SortableForm() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      items,
-    },
-  });
-  const { fields, append, move, remove, update } = useFieldArray({
-    control: form.control,
-    name: "items",
-    keyName: "_id",
-  });
-
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const html = await codeToHtml(JSON.stringify(data, null, 2), {
-      lang: "json",
-      theme: "github-dark-dimmed",
-      colorReplacements: {
-        "#22272e": "var(--color-zinc-900)",
-      },
-    });
-
-    toast("You submitted the following values:", {
-      classNames: { content: "w-full" },
-      description: (
-        <div
-          className="mt-2 [&>pre]:rounded-md [&>pre]:p-4 [&>pre]:shadow-[0_1.5px_2px_0_theme(colors.black/32%),0_0_0_1px_theme(colors.white/10%),0_-1px_0_0_theme(colors.white/4%)]"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
-      ),
-    });
-  }
+  const [items, setItems] = React.useState(lessons);
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
-          control={form.control}
-          name="items"
-          render={() => (
-            <FormItem>
-              <Sortable
-                modifiers={[restrictToVerticalAxis, restrictToParentElement]}
-                onDragEnd={(event) => {
-                  const { active, over } = event;
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle>Course curriculum</CardTitle>
+        <CardDescription>
+          Drag and drop to reorder the lessons in your course.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Sortable
+          modifiers={[restrictToVerticalAxis, restrictToParentElement]}
+          onDragEnd={(event) => {
+            const { active, over } = event;
 
-                  if (over && active.id !== over.id) {
-                    const oldIndex = fields.findIndex(
-                      (field) => field._id === active.id,
-                    );
-                    const newIndex = fields.findIndex(
-                      (field) => field._id === over.id,
-                    );
+            if (over && active.id !== over.id) {
+              setItems((items) => {
+                const oldIndex = items.findIndex(
+                  (item) => item.id === active.id,
+                );
+                const newIndex = items.findIndex((item) => item.id === over.id);
 
-                    move(oldIndex, newIndex);
-                  }
-                }}
-              >
-                <SortableList
-                  items={fields.map((field) => field._id)}
-                  className="flex flex-col gap-3"
-                >
-                  {fields.length > 0 ? (
-                    fields.map((field, index) => (
-                      <SortableItem asChild key={field._id} id={field._id}>
-                        <Item
-                          title={field.title}
-                          description={field.description}
-                          tabIndex={undefined}
-                          onRemove={() => remove(index)}
-                          onEdit={(data) => update(index, data)}
-                          className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
-                        />
-                      </SortableItem>
-                    ))
-                  ) : (
-                    <div className="text-muted-foreground flex h-32 min-w-96 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
-                      No items added
-                    </div>
-                  )}
-                </SortableList>
-                <SortableOverlay>
-                  {(activeId) => {
-                    const activeItem = fields.find(
-                      (field) => field._id === activeId,
-                    );
-                    if (!activeItem) {
-                      return null;
-                    }
-
-                    return (
-                      <Item
-                        title={activeItem.title}
-                        description={activeItem.description}
-                        onEdit={() => {}}
-                        className="cursor-grabbing shadow-lg"
-                      />
-                    );
-                  }}
-                </SortableOverlay>
-              </Sortable>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex items-center justify-between gap-4">
-          <EditItemFormDialog
-            title="Add item"
-            description="Add a new item to your list. Click add item when you're done."
-            actionText="Add item"
-            onSubmit={(data) => append(data)}
+                return arrayMove(items, oldIndex, newIndex);
+              });
+            }
+          }}
+        >
+          <SortableList
+            items={items.map((item) => item.id)}
+            className="flex flex-col gap-3"
           >
-            <EditItemFormDialogTrigger asChild>
-              <Button type="button" variant="outline">
-                <PlusCircle />
-                Add Item
-              </Button>
-            </EditItemFormDialogTrigger>
-          </EditItemFormDialog>
-          <Button type="submit">Submit</Button>
-        </div>
-      </form>
-    </Form>
+            {items.length > 0 ? (
+              items.map((item) => (
+                <SortableItem
+                  key={item.id}
+                  id={item.id}
+                  render={
+                    <Item
+                      title={item.title}
+                      description={item.description}
+                      tabIndex={undefined}
+                      onRemove={() =>
+                        setItems((items) =>
+                          items.filter(({ id }) => id !== item.id),
+                        )
+                      }
+                      onEdit={(data) =>
+                        setItems((items) =>
+                          items.map((current) =>
+                            current.id === item.id
+                              ? { ...current, ...data }
+                              : current,
+                          ),
+                        )
+                      }
+                      className="aria-pressed:opacity-50 aria-pressed:shadow-sm"
+                    />
+                  }
+                />
+              ))
+            ) : (
+              <div className="text-muted-foreground flex h-32 flex-col items-center justify-center gap-3 rounded-lg border border-dashed text-sm">
+                No items added
+              </div>
+            )}
+          </SortableList>
+          <SortableOverlay>
+            {(activeId) => {
+              const activeItem = items.find((item) => item.id === activeId);
+              if (!activeItem) {
+                return null;
+              }
+
+              return (
+                <Item
+                  title={activeItem.title}
+                  description={activeItem.description}
+                  onEdit={() => {}}
+                  className="cursor-grabbing shadow-lg"
+                />
+              );
+            }}
+          </SortableOverlay>
+        </Sortable>
+      </CardContent>
+      <CardFooter className="justify-between gap-4">
+        <EditItemFormDialog
+          title="Add item"
+          description="Add a new item to your list. Click add item when you're done."
+          actionText="Add item"
+          onSubmit={(data) =>
+            setItems((items) => [
+              ...items,
+              { id: crypto.randomUUID(), ...data },
+            ])
+          }
+        >
+          <EditItemFormDialogTrigger
+            render={<Button type="button" variant="outline" />}
+          >
+            <PlusCircle />
+            Add Item
+          </EditItemFormDialogTrigger>
+        </EditItemFormDialog>
+        <Button type="submit">Save</Button>
+      </CardFooter>
+    </Card>
   );
 }

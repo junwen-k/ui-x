@@ -1,0 +1,157 @@
+---
+title: Confirmer
+description: Imperative confirm dialog implementation.
+links:
+  doc: https://react-call.desko.dev/
+---
+
+<ComponentPreview name="confirmer-demo" />
+
+## About
+
+The `<Confirmer />` component is built on top of [react-call](https://react-call.desko.dev/).
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<Steps>
+
+<Step>Run the following command:</Step>
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/confirmer
+```
+
+<Step>
+  Add the `<Confirmer />` component.
+</Step>
+
+```tsx title="app/layout.tsx" showLineNumbers {1,9}
+import { Confirmer } from "@/components/ui/confirmer";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <main>{children}</main>
+        <Confirmer />
+      </body>
+    </html>
+  );
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-call
+```
+
+<Step>
+
+Add the `<AlertDialog />` and `<Button />` component to your project.
+
+</Step>
+
+The `<Confirmer />` component uses `<AlertDialog />` and `<Button />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [AlertDialog](https://ui.shadcn.com/docs/components/alert-dialog) and the [Button](https://ui.shadcn.com/docs/components/button) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="confirmer" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+<Step>
+  Add the `<Confirmer />` component.
+</Step>
+
+```tsx title="app/layout.tsx" showLineNumbers {1,9}
+import { Confirmer } from "@/components/ui/confirmer";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <main>{children}</main>
+        <Confirmer />
+      </body>
+    </html>
+  );
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { confirm } from "@/components/ui/confirmer";
+```
+
+```tsx
+confirm({
+  title: "Are you absolutely sure?",
+  description:
+    "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
+}).then((confirmed) => {
+  // ...
+});
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="confirmer-demo" />
+
+## Accessibility
+
+`<Confirmer />` renders an `<AlertDialog />`, so it inherits Base UI's alert dialog semantics: the dialog traps focus while open, labels itself from `<AlertDialogTitle>` and `<AlertDialogDescription>` (the `title` and `description` options), and returns focus to the triggering element when it closes.
+
+Pressing <Kbd>Escape</Kbd> or activating the cancel button resolves `confirm()` with `false`, mirroring a dismissed dialog. Always pass a `title` (and a `description` for anything non-obvious) so screen reader users hear what they're confirming, and set `ActionProps={{ variant: "destructive" }}` rather than color alone to distinguish destructive actions.
+
+## API Reference
+
+### Confirmer
+
+The dialog host. Render it once near the root of your app; it renders nothing until `confirm` is called. Takes no props.
+
+### confirm
+
+Opens the confirm dialog imperatively and resolves with the user's choice — `true` for the action button, `false` for cancel or dismissing the dialog.
+
+```tsx
+function confirm(options?: ConfirmOptions): Promise<boolean>;
+```
+
+| Option        | Type                                             | Default           | Description                                                                                         |
+| ------------- | ------------------------------------------------ | ----------------- | --------------------------------------------------------------------------------------------------- |
+| `title`       | `ReactNode`                                      | `"Are you sure?"` | The dialog title.                                                                                   |
+| `description` | `ReactNode`                                      | -                 | The dialog description.                                                                             |
+| `cancelText`  | `ReactNode`                                      | `"Cancel"`        | The cancel button label.                                                                            |
+| `actionText`  | `ReactNode`                                      | `"Continue"`      | The action button label.                                                                            |
+| `CancelProps` | `React.ComponentProps<typeof AlertDialogCancel>` | -                 | Props spread to the cancel button.                                                                  |
+| `ActionProps` | `React.ComponentProps<typeof AlertDialogAction>` | -                 | Props spread to the action button, e.g. `{ variant: "destructive" }` for destructive confirmations. |

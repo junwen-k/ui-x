@@ -1,0 +1,127 @@
+---
+title: Phone Input
+description: Phone Input allows user to enter phone number in E.164 format.
+links:
+  doc: /docs/primitives/phone-input
+---
+
+<ComponentPreview name="phone-input-demo" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add junwen-k/ui-x/phone-input
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-phone-number-input
+```
+
+<Step>
+
+Add the `<PhoneInputPrimitive />`, `<Input />` and `<Select />` component to your project.
+
+</Step>
+
+The `<PhoneInput />` component uses `<PhoneInputPrimitive />`, `<Input />` and `<Select />` components. Make sure you have it installed in your project.
+
+See installation instructions for the [PhoneInputPrimitive](/docs/primitives/phone-input#installation), [Input](https://ui.shadcn.com/docs/components/input) and [Select](https://ui.shadcn.com/docs/components/select) components.
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="phone-input" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { SelectTrigger } from "@/components/ui/select";
+import { PhoneInput } from "@/components/ui/phone-input";
+```
+
+```tsx
+<PhoneInput>
+  <PhoneInputCountrySelect>
+    <SelectTrigger>
+      <PhoneInputCountrySelectValue />
+    </SelectTrigger>
+    <PhoneInputCountrySelectContent>
+      <PhoneInputCountrySelectOptions />
+    </PhoneInputCountrySelectContent>
+  </PhoneInputCountrySelect>
+  <PhoneInputInput />
+</PhoneInput>
+```
+
+## Examples
+
+### Default
+
+<ComponentPreview name="phone-input-demo" />
+
+### Separated
+
+<ComponentPreview name="phone-input-separated" />
+
+### Combobox
+
+<ComponentPreview name="phone-input-combobox" />
+
+### Form
+
+<ComponentPreview name="phone-input-form" />
+
+## Accessibility
+
+The country select trigger shows only a flag — give it an accessible name, e.g. `<SelectTrigger aria-label="Country" />`, and label the phone input itself like any text input (via `<Field>` / `<FieldLabel>` in forms or `aria-label`). Flags are decorative; each option in the dropdown carries the country's name as text, so the selection is not communicated by the flag alone.
+
+## API Reference
+
+Styled wrappers around the [Phone Input primitive](/docs/primitives/phone-input#api-reference) — see the primitive page for the full prop tables.
+
+### PhoneInput
+
+Wraps [Root](/docs/primitives/phone-input#root) and accepts all of its props (`value`, `onValueChange`, `country`, `onCountryChange`, `preferredCountry`, `international`, …).
+
+### PhoneInputInput
+
+Wraps [Input](/docs/primitives/phone-input#input), rendered as the styled [Input](https://ui.shadcn.com/docs/components/input) with a stable `render` reference already applied.
+
+### PhoneInputCountrySelect
+
+The country selector, built on the styled [Select](https://ui.shadcn.com/docs/components/select) and wired to the country state — `value` and `onValueChange` are managed for you. Compose it with Select's own `SelectTrigger` plus `PhoneInputCountrySelectValue` and `PhoneInputCountrySelectContent`, which layer country-aware behavior over the corresponding Select parts.
+
+### PhoneInputCountrySelectOptions
+
+Renders the full options list: the "International" item followed by every supported country with its flag, name and calling code.
+
+### PhoneInputCountrySelectItem, PhoneInputCountrySelectInternationalItem
+
+Individual option items for composing a custom list. `PhoneInputCountrySelectItem` requires a `value: Country`; the international item selects `null`.
+
+### PhoneInputFlag
+
+Renders the flag for a `country`, falling back to a globe icon for `null` (International).
