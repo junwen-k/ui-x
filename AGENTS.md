@@ -80,6 +80,31 @@ before designing a new component.
 
 ---
 
+## Anatomy & API consistency
+
+A new component's API should feel like one a consumer already knows. Before
+naming anything, look at the closest shadcn primitive and the nearest ui-x
+sibling, and match them.
+
+- **Parts are `<Component><Part>`**, PascalCase, exported root-first in
+  composition order — the same tree the docs "Usage" block shows
+  (`PhoneInput` → `PhoneInputCountrySelect` → `PhoneInputCountrySelectContent`).
+- **`data-slot` is the kebab-case of the exported name** — nothing invented
+  (`PhoneInputCountrySelectValue` → `data-slot="phone-input-country-select-value"`).
+- **Reuse the established part vocabulary.** A surface is `*Content`, an opener
+  `*Trigger`, an option `*Item`, the selected display `*Value`, the field
+  `*Input`. Don't coin a new noun for a role that already has one — a consumer
+  should be able to guess a part's name from what it does.
+- **Mirror the underlying anatomy so composition transfers.** When a part wraps
+  a shadcn primitive, keep the same shape and let it compose with that
+  primitive's own parts — `PhoneInputCountrySelect` sits inside Select's own
+  `SelectTrigger`, so anyone who knows Select already knows this.
+
+When a new component and an existing one solve the same sub-problem, they should
+read the same way. Consistency across the set beats a locally clever API.
+
+---
+
 ## The wrapping principle
 
 When you expose a sub-component, choose deliberately between **wrapping and
