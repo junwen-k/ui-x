@@ -1,6 +1,6 @@
 "use client";
 
-import { FileIcon } from "lucide-react";
+import { BanIcon, CheckCircle2Icon, FileIcon, UploadIcon } from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import * as React from "react";
 
@@ -12,14 +12,18 @@ import {
   AttachmentTitle,
 } from "@/components/ui/attachment";
 import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
+import {
   Dropzone,
-  DropzoneDescription,
-  DropzoneGroup,
   DropzoneInput,
-  DropzoneTitle,
-  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
+import * as DropzonePrimitive from "@/registry/new-york/ui/dropzone-primitive";
 
 export default function DropzoneDemo() {
   const [files, setFiles] = React.useState<File[]>([]);
@@ -35,16 +39,26 @@ export default function DropzoneDemo() {
       <div className="grid gap-4">
         <DropzoneZone>
           <DropzoneInput />
-          <DropzoneGroup className="gap-4">
-            <DropzoneUploadIcon />
-            <DropzoneGroup>
-              <DropzoneTitle>Drop files here or click to upload</DropzoneTitle>
-              <DropzoneDescription>
+          <Empty>
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <DropzonePrimitive.DragAccepted>
+                  <CheckCircle2Icon />
+                </DropzonePrimitive.DragAccepted>
+                <DropzonePrimitive.DragRejected>
+                  <BanIcon />
+                </DropzonePrimitive.DragRejected>
+                <DropzonePrimitive.DragDefault>
+                  <UploadIcon />
+                </DropzonePrimitive.DragDefault>
+              </EmptyMedia>
+              <EmptyTitle>Drop files here or click to upload</EmptyTitle>
+              <EmptyDescription>
                 You can upload files up to 10MB in size. Supported formats: JPG,
                 PNG, PDF.
-              </DropzoneDescription>
-            </DropzoneGroup>
-          </DropzoneGroup>
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
         </DropzoneZone>
         {files.length > 0 && (
           <div className="grid gap-2">

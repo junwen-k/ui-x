@@ -1,6 +1,12 @@
 "use client";
 
-import { FileIcon, XIcon } from "lucide-react";
+import {
+  BanIcon,
+  CheckCircle2Icon,
+  FileIcon,
+  UploadIcon,
+  XIcon,
+} from "lucide-react";
 import prettyBytes from "pretty-bytes";
 import * as React from "react";
 import { ErrorCode } from "react-dropzone";
@@ -24,15 +30,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import {
   Dropzone,
-  DropzoneDescription,
   DropzoneInput,
-  DropzoneTitle,
-  DropzoneUploadIcon,
   DropzoneZone,
 } from "@/registry/new-york/ui/dropzone";
+import * as DropzonePrimitive from "@/registry/new-york/ui/dropzone-primitive";
 
 // 1 MB
 const MAX_FILE_SIZE = 1e6;
@@ -73,15 +84,27 @@ export default function DropzoneForm() {
               <FieldLabel htmlFor="dropzone-form-files">File upload</FieldLabel>
               <DropzoneZone className="flex justify-center">
                 <DropzoneInput id="dropzone-form-files" />
-                <div className="flex items-center gap-6">
-                  <DropzoneUploadIcon />
-                  <div className="grid gap-0.5">
-                    <DropzoneTitle>Browse to upload your file</DropzoneTitle>
-                    <DropzoneDescription>
-                      {`Maximum file size: ${prettyBytes(maxSize ?? 0)}`}
-                    </DropzoneDescription>
-                  </div>
-                </div>
+                <Empty>
+                  <EmptyHeader className="flex-row items-center gap-6 text-left">
+                    <EmptyMedia variant="icon">
+                      <DropzonePrimitive.DragAccepted>
+                        <CheckCircle2Icon />
+                      </DropzonePrimitive.DragAccepted>
+                      <DropzonePrimitive.DragRejected>
+                        <BanIcon />
+                      </DropzonePrimitive.DragRejected>
+                      <DropzonePrimitive.DragDefault>
+                        <UploadIcon />
+                      </DropzonePrimitive.DragDefault>
+                    </EmptyMedia>
+                    <div className="grid gap-0.5">
+                      <EmptyTitle>Browse to upload your file</EmptyTitle>
+                      <EmptyDescription>
+                        {`Maximum file size: ${prettyBytes(maxSize ?? 0)}`}
+                      </EmptyDescription>
+                    </div>
+                  </EmptyHeader>
+                </Empty>
               </DropzoneZone>
               <FieldDescription>Drag and drop is supported.</FieldDescription>
             </Field>
