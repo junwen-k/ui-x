@@ -12,7 +12,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
@@ -103,14 +102,6 @@ function PhoneInputCountrySelectValue({
     >
       {children ?? <PhoneInputFlag country={country} title={country ?? ""} />}
     </SelectValue>
-  );
-}
-
-function PhoneInputCountrySelectTrigger(
-  props: React.ComponentProps<typeof SelectTrigger>,
-) {
-  return (
-    <SelectTrigger data-slot="phone-input-country-select-trigger" {...props} />
   );
 }
 
@@ -224,6 +215,5 @@ export {
   PhoneInputCountrySelectInternationalItem,
   PhoneInputCountrySelectItem,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 };

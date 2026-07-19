@@ -9,13 +9,13 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { SelectTrigger } from "@/components/ui/select";
 import {
   Country,
   PhoneInput,
   PhoneInputCountrySelect,
   PhoneInputCountrySelectContent,
   PhoneInputCountrySelectOptions,
-  PhoneInputCountrySelectTrigger,
   PhoneInputCountrySelectValue,
 } from "@/registry/new-york/ui/phone-input";
 import * as PhoneInputPrimitive from "@/registry/new-york/ui/phone-input-primitive";
@@ -32,9 +32,9 @@ export default function PhoneInputSeparated() {
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           <PhoneInputCountrySelect>
-            <PhoneInputCountrySelectTrigger>
+            <SelectTrigger>
               <PhoneInputCountrySelectValue />
-            </PhoneInputCountrySelectTrigger>
+            </SelectTrigger>
             <PhoneInputCountrySelectContent>
               <PhoneInputCountrySelectOptions />
             </PhoneInputCountrySelectContent>

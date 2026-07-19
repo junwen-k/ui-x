@@ -30,7 +30,6 @@ import {
 } from "@/registry/new-york/ui/date-picker";
 import {
   PasswordInput,
-  PasswordInputAdornment,
   PasswordInputAdornmentToggle,
 } from "@/registry/new-york/ui/password-input";
 import { PasswordInputInput } from "@/registry/new-york/ui/password-input";
@@ -153,9 +152,9 @@ export function CardWithForm() {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                 <PasswordInput>
-                  <PasswordInputAdornment>
+                  <InputGroupAddon>
                     <LockKeyholeIcon />
-                  </PasswordInputAdornment>
+                  </InputGroupAddon>
                   <PasswordInputInput
                     id={field.name}
                     autoComplete="new-password"

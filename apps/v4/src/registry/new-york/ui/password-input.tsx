@@ -32,24 +32,6 @@ function PasswordInput({
   );
 }
 
-function PasswordInputAdornment(
-  props: React.ComponentProps<typeof InputGroupAddon>,
-) {
-  return <InputGroupAddon data-slot="password-input-adornment" {...props} />;
-}
-
-function PasswordInputAdornmentButton(
-  props: React.ComponentProps<typeof InputGroupButton>,
-) {
-  return (
-    <InputGroupButton
-      data-slot="password-input-adornment-button"
-      size="icon-xs"
-      {...props}
-    />
-  );
-}
-
 function PasswordInputInput(
   props: React.ComponentProps<typeof PasswordInputPrimitive.Input>,
 ) {
@@ -83,10 +65,4 @@ function PasswordInputAdornmentToggle({
   );
 }
 
-export {
-  PasswordInput,
-  PasswordInputAdornment,
-  PasswordInputAdornmentButton,
-  PasswordInputInput,
-  PasswordInputAdornmentToggle,
-};
+export { PasswordInput, PasswordInputInput, PasswordInputAdornmentToggle };

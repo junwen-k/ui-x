@@ -15,9 +15,9 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import { InputGroupAddon } from "@/components/ui/input-group";
 import {
   PasswordInput,
-  PasswordInputAdornment,
   PasswordInputAdornmentToggle,
   PasswordInputInput,
 } from "@/registry/new-york/ui/password-input";
@@ -38,9 +38,9 @@ export default function PasswordInputForm() {
               Password
             </FieldLabel>
             <PasswordInput>
-              <PasswordInputAdornment>
+              <InputGroupAddon>
                 <LockKeyhole />
-              </PasswordInputAdornment>
+              </InputGroupAddon>
               <PasswordInputInput
                 id="password-input-form-password"
                 autoComplete="new-password"
@@ -59,9 +59,9 @@ export default function PasswordInputForm() {
               Confirm Password
             </FieldLabel>
             <PasswordInput>
-              <PasswordInputAdornment>
+              <InputGroupAddon>
                 <LockKeyhole />
-              </PasswordInputAdornment>
+              </InputGroupAddon>
               <PasswordInputInput
                 id="password-input-form-confirm-password"
                 autoComplete="new-password"
